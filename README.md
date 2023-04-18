@@ -24,10 +24,10 @@ This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modb
 * Correction of Temp to BatCurrent sensor for RS485
 * Correction of unique_id for BMS Cell mV low
 
-Connecting to your inverter can be acheived in two ways:
+Access to your inverter data can be acheived in two ways:
 
-* Using the inverters LAN port connected to your router/switch (no additional hardware required but requires Manager firmware 1.57 or later)  
-* Connecting to the inverter's RS485 modbus using an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect two wires to the inverters com connector.
+* Connecting the inverters LAN port to your router/switch (no additional hardware required, Manager firmware 1.57 or later for H1/AC1). This connections provides a limited set of data.  
+* Connecting to the inverter's RS485 modbus using an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect two wires to the inverters CT / COM connector. This connection provides a more comprehensive set of data, including BMS cell info and inverter running totals.
 
 
 ---
