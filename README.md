@@ -11,18 +11,18 @@
 
 This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modbus. The changes from the main branch include:
 
-* Simplified configuration: only 4 lines required in your HA configuration.yaml with modbus, sensors, templates and utility_meters integrations split into separate include files with variants for RS485 and LAN connections
-* Rename of modbusUSB to modbusRS485 to reflect the data set available from the different inverter ports
+* Simplified configuration: only 4 lines required in your HA configuration.yaml with modbus, sensors, templates and utility_meter integrations split into separate include files with variants for RS485 and LAN connections
+* Support for KH series inverter using modbusLAN with RS485 to Wifi/LAN adapter
+* Rename of modbusUSB to modbusRS485 to reflect the data available via the different inverter connections
 * Revised calculation for inverter power in, power out and system losses
 * Addition of HA templates for calculating inverter efficiency, cell imbalance, grid dependency and grid balance
-* Addition of RPower and EPS RVolt, RCurrent and RPower sensors for LAN and RS485 connections
-* Correction of InvBatCurrent and InvBatPower sensors for LAN and RS-485 connections
-* Correction of Temp to BatCurrent sensor for RS485
-* Correction of unique_id for BMS Cell mV low
+* Addition of RPower and EPS RVolt, EPS RCurrent and EPS RPower sensors for LAN and RS485 connections
 * Addition of BMS Cycle Count and rename / rescale of BMS Watthours Total to BMS kWh Total for consistency when working with energy values
 * Addition of inverter running totals and daily totals for Solar Energy, Battery Charge, Battery Discharge, Grid Consumption Energy, Feed In Energy, Total Yield and (Battery) Input Energy. These can be used to replace Riemann sum approximations previously used for greater accuracy and alignment with Fox cloud data.
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
-* Support for KH series inverter using modbusLAN with RS485 to Wifi/LAN adapter
+* Correction to InvBatCurrent and InvBatPower sensors for LAN and RS-485 connections
+* Correction to Temp to BatCurrent sensor for RS485
+* Correction of unique_id for BMS Cell mV low
 
 Connecting to your inverter can be acheived in two ways:
 
