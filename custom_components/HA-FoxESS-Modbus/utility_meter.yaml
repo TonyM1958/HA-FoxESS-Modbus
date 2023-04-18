@@ -1,0 +1,52 @@
+---
+#-----------------------------------------------------------------------------
+# START: utility_meter include file for HA-FoxESS-Modbus
+#-----------------------------------------------------------------------------
+
+# Utility Meters use the integral of power over time (sum) to give daily totals that
+# reset at midnight each day. Used by the energy dashboard amongst other things
+
+inverter_energy_in_daily:
+  unique_id: foxess_inv1_inverter_energy_in_daily
+  source: sensor.inverter_energy_in_sum
+  cycle: daily
+inverter_energy_out_daily:
+  unique_id: foxess_inv1_inverter_energy_out_daily
+  source: sensor.inverter_energy_out_sum
+  cycle: daily
+load_daily:
+  unique_id: foxess_inv1_load_daily
+  source: sensor.load_sum
+  cycle: daily
+pv1_daily:
+  unique_id: foxess_inv1_pv1_daily
+  source: sensor.pv1_sum
+  cycle: daily
+pv2_daily:
+  unique_id: foxess_inv1_pv2_daily
+  source: sensor.pv2_sum
+  cycle: daily
+bat_charge_daily:
+  unique_id: foxess_inv1_bat_charge_daily
+  source: sensor.bat_charge_sum
+  cycle: daily
+bat_discharge_daily:
+  unique_id: foxess_inv1_bat_discharge_daily
+  source: sensor.bat_discharge_sum
+  cycle: daily
+feedin_daily:
+  unique_id: foxess_inv1_feedin_daily
+  source: sensor.feedin_sum
+  cycle: daily
+grid_daily:
+  unique_id: foxess_inv1_grid_daily
+  source: sensor.grid_consumption_sum
+  cycle: daily
+losses_daily:
+  unique_id: foxess_inv1_losses_daily
+  source: sensor.losses_sum
+  cycle: daily
+
+  #-----------------------------------------------------------------------------
+  # END: utility_meter include file for HA-FoxESS-Modbus
+  #-----------------------------------------------------------------------------

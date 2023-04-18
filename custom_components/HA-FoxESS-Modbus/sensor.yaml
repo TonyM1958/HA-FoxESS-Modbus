@@ -1,0 +1,105 @@
+---
+#--------------------------------------------------------------------------
+# START: sensor.yaml include file for HA-FoxESS-Modbus
+#--------------------------------------------------------------------------
+
+# these integrations turns power (kW) into energy (kWh) for the energy dashboard and other uses
+
+- name: inverter_energy_in_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_inverter_energy_in_sum
+  source: sensor.inverter_power_in
+  unit_time: h
+  round: 3
+- name: inverter_energy_out_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_inverter_energy_out_sum
+  source: sensor.inverter_power_out
+  unit_time: h
+  round: 3
+- name: pv1_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_pv1_sum
+  source: sensor.pv1_power
+  unit_time: h
+  round: 2
+- name: pv2_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_pv2_sum
+  source: sensor.pv2_power
+  unit_time: h
+  round: 2
+- name: pv_total_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_pv_total_sum
+  source: sensor.pv_power_now
+  unit_time: h
+  round: 2
+- name: load_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_load_sum
+  source: sensor.load_power
+  unit_time: h
+  round: 2
+- name: bat_charge_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_bat_charge_sum
+  source: sensor.battery_charge
+  unit_time: h
+  round: 2
+- name: bat_discharge_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_bat_discharge_sum
+  source: sensor.battery_discharge
+  unit_time: h
+  round: 2
+- name: feedin_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_feedin_sum
+  source: sensor.feed_in_power
+  unit_time: h
+  round: 2
+- name: grid_consumption_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_grid_consumption_sum
+  source: sensor.grid_consumption
+  unit_time: h
+  round: 2
+- name: losses_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_losses_sum
+  source: sensor.system_losses
+  unit_time: h
+  round: 2
+
+# these statistics smooth values using a short term rolling average
+
+- name: battery_cell_imbalance_rolling
+  platform: statistics
+  unique_id: foxess_inv1_battery_cell_imbalance_rolling
+  entity_id: sensor.battery_cell_imbalance
+  state_characteristic: mean
+  sampling_size: 10
+  precision: 2
+- name: inverter_efficiency_rolling
+  platform: statistics
+  unique_id: foxess_inv1_inverter_efficiency_rolling
+  entity_id: sensor.inverter_efficiency
+  state_characteristic: mean
+  sampling_size: 24
+  precision: 1
+
+  #--------------------------------------------------------------------------
+  # END: sensor.yaml include file for HA-FoxESS-Modbus
+  #--------------------------------------------------------------------------

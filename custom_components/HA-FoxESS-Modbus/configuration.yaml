@@ -1,0 +1,19 @@
+# Source https://github.com/StealthChesnut/HA-FoxESS-Modbus
+# this is not a valid configuration file!
+# Add what follows into your configuration.yaml
+#
+#-----------------------------------------------------------------------------
+# START: configuration section for HA-FoxESS-Modbus
+#-----------------------------------------------------------------------------
+# Integrations used for HA-FoxESS-Modbus:
+modbus: !include custom_components/HA-FoxESS-Modbus/modbusRS485.yaml
+sensor: !include custom_components/HA-FoxESS-Modbus/sensor.yaml
+template: !include custom_components/HA-FoxESS-Modbus/template.yaml
+utility_meter: !include custom_components/HA-FoxESS-Modbus/utility_meter.yaml
+#
+# If you already have any sections with these names, create a local include file,
+# in your CONFIG folder, merge the contents and use your local include instead
+#
+#-----------------------------------------------------------------------------
+# END: configuration setion for HA-FoxESS-Modbus
+#-----------------------------------------------------------------------------
