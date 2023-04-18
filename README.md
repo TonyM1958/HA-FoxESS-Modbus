@@ -26,28 +26,28 @@ This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modb
 
 Access to your inverter data can be acheived in two ways:
 
-* Connecting the inverters LAN port to your router/switch (no additional hardware required, Manager firmware 1.57 or later for H1/AC1). This connections provides a limited set of data.  
-* Connecting to the inverter's RS485 modbus using an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect two wires to the inverters CT / COM connector. This connection provides a more comprehensive set of data, including BMS cell info and inverter running totals.
+* Connecting the inverters LAN port to your router/switch (no additional hardware but Manager firmware 1.57 or later required for H1/AC1). This connection provides a limited set of real time data, sufficient for general management of your equipment.
+* Connecting to the inverter's RS485 modbus using an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect two wires to the inverters CT / COM connector. This connection provides a more comprehensive set of real time data, including BMS cycle count and cell range info and inverter running totals.
 
 
 ---
 
 
+## Ethernet connection to H1, AC and AIO series inverters
+* Just plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address.
+* Edit your secrets.yaml file to add the inverter IP address
+* Select modbusLAN.yaml and templateLAN.yaml for the integrations in your HA configuration (see below)
+
 ## RS485 connection to H1, AC and AIO series inverters (recommended)
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
-* Select modbusRS485.yaml and templateRS485.yaml for the integrations in your HA configuration (see below)
 * Edit modbusRS485.yaml to select the rtu connection type if you are using an RS485 to USB adapter
-
-## Ethernet connection to H1, AC and AIO series inverters
-* Plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address.
-* Select modbusLAN.yaml and templateLAN.yaml for the integrations in your HA configuration (see below)
-* Edit your secrets.yaml file to add the inverter IP address
+* Select modbusRS485.yaml and templateRS485.yaml for the integrations in your HA configuration (see below)
 
 ## RS485 connection to KH series inverter
 
 * KH does not have a LAN port, but presents LAN type sensors over RS485. Setup an RS485 to Wifi/LAN adapter connected to your inverter as described in the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
-* Select modbusLAN.yaml and templateLAN.yaml for the integrations in your HA configuraiton (see below)
 * Edit your secrets.yaml file to add the inverter IP address
+* Select modbusLAN.yaml and templateLAN.yaml for the integrations in your HA configuraiton (see below)
 
 ## Home Assistant Installation Steps
 
