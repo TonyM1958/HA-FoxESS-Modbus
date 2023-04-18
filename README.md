@@ -52,7 +52,7 @@ Connecting to your inverter can be acheived in two ways:
 ## Home Assistant Installation Steps
 
 * Create a full backup of your HA instance
-* Mirror the folders / files provided in custom_components in the folder CONFIG/custom_components on your HA host
+* Mirror the folders / files provided in custom_components in the folder CONFIG/custom_components on your HA host (for example, using either the File Editor or Studio Code Server add-ons)
 * The folder custom_components/HA-FoxESS-Modbus contains files that include template text for updating the secrets.yaml and configuration.yaml files in your HA CONFIG folder 
 * Open template_secrets.yaml and copy the settings into your HA secrets.yaml file
 * Update your secrets.yaml with your IP address details or USB adapter port if required
