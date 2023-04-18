@@ -129,7 +129,7 @@
       device_class: frequency
 
     - name: "EPS RVolt"
-      unique_id: foxess_inv1_eps_voltage_R
+      unique_id: foxess_inv1_eps_rvolt
       scan_interval: !secret scan_interval_medium
       address: 31010
       state_class: measurement
@@ -140,7 +140,7 @@
       input_type: holding
       device_class: voltage
     - name: "EPS RCurrent"
-      unique_id: foxess_inv1_eps_current_R
+      unique_id: foxess_inv1_eps_rcurrent
       scan_interval: !secret scan_interval_medium
       address: 31011
       state_class: measurement
@@ -151,7 +151,7 @@
       input_type: holding
       device_class: current
     - name: "EPS RPower"
-      unique_id: foxess_inv1_eps_power_R
+      unique_id: foxess_inv1_eps_rpower
       scan_interval: !secret scan_interval_high
       address: 31012
       state_class: measurement

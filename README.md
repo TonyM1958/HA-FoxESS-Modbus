@@ -11,7 +11,7 @@
 
 This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modbus. The changes from the main branch include:
 
-* Simplified configuration with just 4 lines added to HA configuration.yaml for setup
+* Simplified configuration: only 4 lines required in your HA configuration.yaml with modbus, sensors, templates and utility_meters integrations split into separate include files with variants for RS485 and LAN connections
 * Rename of modbusUSB to modbusRS485 to reflect the data set available from the different inverter ports
 * Revised calculation for inverter power in, power out and system losses
 * Addition of HA templates for calculating inverter efficiency, cell imbalance, grid dependency and grid balance
@@ -35,18 +35,18 @@ Connecting to your inverter can be acheived in two ways:
 
 ## RS485 connection to H1, AC and AIO series inverters (recommended)
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
-* Select modbusRS485.yaml for the modbus integration configuration in your HA configuration (below)
+* Select modbusRS485.yaml and templateRS485.yaml for the integrations in your HA configuration (see below)
 * Edit modbusRS485.yaml to select the rtu connection type if you are using an RS485 to USB adapter
 
 ## Ethernet connection to H1, AC and AIO series inverters
 * Plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address.
-* Select modbusLAN.yaml for the modbus integration configuration in your HA configuration (below)
+* Select modbusLAN.yaml and templateLAN.yaml for the integrations in your HA configuration (see below)
 * Edit your secrets.yaml file to add the inverter IP address
 
 ## RS485 connection to KH series inverter
 
 * KH does not have a LAN port, but presents LAN type sensors over RS485. Setup an RS485 to Wifi/LAN adapter connected to your inverter as described in the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
-* Select modbusLAN.yaml for the modbus integration configuration in your HA configuraiton (below)
+* Select modbusLAN.yaml and templateLAN.yaml for the integrations in your HA configuraiton (see below)
 * Edit your secrets.yaml file to add the inverter IP address
 
 ## Home Assistant Installation Steps
@@ -57,7 +57,7 @@ Connecting to your inverter can be acheived in two ways:
 * Open template_secrets.yaml and copy the settings into your HA secrets.yaml file
 * Update your secrets.yaml with your IP address details or USB adapter port if required
 * Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuraiton.yaml. As you got this far already, you should probably know what to do!
-* Comment / uncomment the connection method you are using (see above, chose either modbusRS485.yaml or modbusLAN.yaml for the modbus integration configuration)
+* Comment / uncomment the connection method you are using (see above, chose either modbusRS485.yaml and templateRS485.yaml or modbusLAN.yaml and templateLAN.yaml for the integrations)
 * Go to Developer Tools and check your configuration is valid (if not, correct the problem) and then Restart HA
 * Go to Settings / Devices & Services / Entities and check the entiries that are now available.
 * Add the required entities to your dashboard(s)
