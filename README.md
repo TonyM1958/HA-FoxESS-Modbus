@@ -59,6 +59,6 @@ Connecting to your inverter can be acheived in two ways:
 * Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuraiton.yaml. As you got this far already, you should probably know what to do!
 * Comment / uncomment the connection method you are using (see above, chose either modbusRS485.yaml and templateRS485.yaml or modbusLAN.yaml and templateLAN.yaml for the integrations)
 * Go to Developer Tools and check your configuration is valid (if not, correct the problem) and then Restart HA
-* Go to Settings / Devices & Services / Entities and check the entiries that are now available.
+* Go to Settings / Devices & Services / Entities and check the entities that are now available.
 * Add the required entities to your dashboard(s)
 
