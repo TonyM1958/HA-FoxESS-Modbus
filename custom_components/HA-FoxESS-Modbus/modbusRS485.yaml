@@ -8,20 +8,20 @@
 
   # ------------------------ RS485 to USB  ----------------------------------
   # Connection details for RS485 to USB. Enter the port in secrets.yaml
-  type: serial
-  port: !secret foxess_inv1_tty
-  baudrate: 9600
-  bytesize: 8
-  method: rtu
-  parity: N
-  stopbits: 1
+  # Comment out the LAN section below and uncomment this section to use this
+  # type: serial
+  # port: !secret foxess_inv1_tty
+  # baudrate: 9600
+  # bytesize: 8
+  # method: rtu
+  # parity: N
+  # stopbits: 1
 
   # ----------------------- RS485 to WIFI/LAN --------------------------------
   # Connection details for RS485 to Wifi/LAN. Enter the IP address in secrets.yaml
-  # Comment out the previous section and uncomment this section to use this
-  #  type: tcp
-  #  host: !secret foxess_inv1_ip_address
-  #  port: 502
+  type: tcp
+  host: !secret foxess_inv1_ip_address
+  port: 502
   # ---------------------------------------------------------------------------
 
   # list of modbus addresses to read

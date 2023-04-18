@@ -1,5 +1,5 @@
 <h2 align="center">
-   <a href="https://www.fox-ess.com">FoxESS</a> and<a href="https://www.home-assistant.io"> Home Assistant</a> integration via Modbus RS485
+   <a href="https://www.fox-ess.com">FoxESS</a> and<a href="https://www.home-assistant.io"> Home Assistant</a> integration
    </br></br>
    <img src="https://github.com/home-assistant/brands/raw/master/custom_integrations/foxess/logo.png" >
    </br>
@@ -24,29 +24,29 @@ This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modb
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
 * Support for KH series inverter using modbusLAN with RS485 to Wifi/LAN adapter
 
----
-
 Connecting to your inverter can be acheived in two ways:
 
 * Using the inverters LAN port connected to your router/switch (no additional hardware required but requires Manager firmware 1.57 or later)  
 * Connecting to the RS485 modbus using an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect two wires to the inverters com connector.
 
+
 ---
 
-## RS485 Connection to H1, AC and AIO series inverters (recommended)
-* Hardware configuration instructions can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
-* Select the modbusRS485.yaml file for your HA configuration (below)
-* Edit modbusRS485.yaml to select the tcp connection type if you are using RS485 to Wifi/LAN adapter
 
-## Ethernet Connection to H1, AC and AIO series inverters
+## RS485 connection to H1, AC and AIO series inverters (recommended)
+* Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
+* Select modbusRS485.yaml for the modbus integration configuration in your HA configuration (below)
+* Edit modbusRS485.yaml to select the rtu connection type if you are using an RS485 to USB adapter
+
+## Ethernet connection to H1, AC and AIO series inverters
 * Plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address.
-* Select the modbusLAN.yaml file for your HA configuration (below)
+* Select modbusLAN.yaml for the modbus integration configuration in your HA configuration (below)
 * Edit your secrets.yaml file to add the inverter IP address
 
-## RS485 Connection to KH series inverter
+## RS485 connection to KH series inverter
 
-* KH does not have a LAN port, but presents LAN type sensors over RS485. Setup an RS485 to Wifi/LAN adapter connected to your inverter.
-* Select the modbusLAN in your HA configuraiton (below)
+* KH does not have a LAN port, but presents LAN type sensors over RS485. Setup an RS485 to Wifi/LAN adapter connected to your inverter as described in the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
+* Select modbusLAN.yaml for the modbus integration configuration in your HA configuraiton (below)
 * Edit your secrets.yaml file to add the inverter IP address
 
 ## Home Assistant Installation Steps
@@ -57,7 +57,7 @@ Connecting to your inverter can be acheived in two ways:
 * Open template_secrets.yaml and copy the settings into your HA secrets.yaml file
 * Update your secrets.yaml with your IP address details or USB adapter port if required
 * Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Info on doing this is provided in the file template_configuraiton.yaml
-* Comment / uncomment the connection method you are using (see above, chose either modbusRS485.yaml or modbusLAN.yaml)
+* Comment / uncomment the connection method you are using (see above, chose either modbusRS485.yaml or modbusLAN.yaml for the modbus integration configuration)
 * Go to Developer Tools and check your configuration is valid (if not, correct the problem) and then Restart HA
 * Go to Settings / Devices & Services / Entities and check the entiries that are now available.
 * Add the required entities to your dashboard(s)
