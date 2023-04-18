@@ -3,17 +3,20 @@
 # Add what follows into your configuration.yaml
 #
 #-----------------------------------------------------------------------------
-# START: configuration section for HA-FoxESS-Modbus
+# START: HA-FoxESS-Modbus configuration
 #-----------------------------------------------------------------------------
+# If you have a complex HA setup and already have any sections with these names,
+# create a local include file in your CONFIG folder, merge the contents of the
+# relevant file and reference your local include here. Comment / uncomment
+# the line relevant to your inverter connection (RS485 or LAN)
+
 # Integrations used for HA-FoxESS-Modbus:
 modbus: !include custom_components/HA-FoxESS-Modbus/modbusRS485.yaml
+#modbus: !include custom_components/HA-FoxESS-Modbus/modbusLAN.yaml
 sensor: !include custom_components/HA-FoxESS-Modbus/sensor.yaml
 template: !include custom_components/HA-FoxESS-Modbus/template.yaml
 utility_meter: !include custom_components/HA-FoxESS-Modbus/utility_meter.yaml
 #
-# If you already have any sections with these names, create a local include file,
-# in your CONFIG folder, merge the contents and use your local include instead
-#
 #-----------------------------------------------------------------------------
-# END: configuration setion for HA-FoxESS-Modbus
+# END: HA-FoxESS-Modbus configuration
 #-----------------------------------------------------------------------------
