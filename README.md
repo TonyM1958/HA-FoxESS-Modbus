@@ -11,23 +11,23 @@
 
 This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modbus. The changes from the main branch include:
 
-* Simplified configuration with 4 lines added into configuration.yaml for the a HA setup
-* Rename of modbusUSB to modbusRS485 to properly reflect configuration required for different inverter connection methods
-* Addition of templates for calculating inverter efficiency, cell imbalance, grid dependency and grid balance
+* Simplified configuration with just 4 lines added to HA configuration.yaml for setup
+* Rename of modbusUSB to modbusRS485 to reflect the data set available from the different inverter ports
 * Revised calculation for inverter power in, power out and system losses
-* Addition of RPower and EPS RVolt, RCurrent and RPower sensors for both LAN and RS485 connections
-* Correction of InvBatCurrent and InvBatPower sensors for both LAN and RS-485 connections
+* Addition of HA templates for calculating inverter efficiency, cell imbalance, grid dependency and grid balance
+* Addition of RPower and EPS RVolt, RCurrent and RPower sensors for LAN and RS485 connections
+* Correction of InvBatCurrent and InvBatPower sensors for LAN and RS-485 connections
 * Correction of Temp to BatCurrent sensor for RS485
 * Correction of unique_id for BMS Cell mV low
-* Addition of BMS Cycle Count and rename of BMS Watthours Total to BMS kWh Total for consistency for RS485
-* Addition of inverter running totals and daily totals for Solar Energy, Battery Charge, Battery Discharge, Grid Consumption Energy, Feed In Energy, Total Yield and (Battery) Input Energy
+* Addition of BMS Cycle Count and rename / rescale of BMS Watthours Total to BMS kWh Total for consistency when working with energy values
+* Addition of inverter running totals and daily totals for Solar Energy, Battery Charge, Battery Discharge, Grid Consumption Energy, Feed In Energy, Total Yield and (Battery) Input Energy. These can be used to replace some of the Riemann sum approximations previously used for greater accuracy and alignment with Fox cloud data.
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
 * Support for KH series inverter using modbusLAN with RS485 to Wifi/LAN adapter
 
 Connecting to your inverter can be acheived in two ways:
 
 * Using the inverters LAN port connected to your router/switch (no additional hardware required but requires Manager firmware 1.57 or later)  
-* Connecting to the RS485 modbus using an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect two wires to the inverters com connector.
+* Connecting to the inverter's RS485 modbus using an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect two wires to the inverters com connector.
 
 
 ---
@@ -56,7 +56,7 @@ Connecting to your inverter can be acheived in two ways:
 * The folder custom_components/HA-FoxESS-Modbus contains files that include template text for updating the secrets.yaml and configuration.yaml files in your HA CONFIG folder 
 * Open template_secrets.yaml and copy the settings into your HA secrets.yaml file
 * Update your secrets.yaml with your IP address details or USB adapter port if required
-* Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Info on doing this is provided in the file template_configuraiton.yaml
+* Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuraiton.yaml. As you got this far already, you should probably know what to do!
 * Comment / uncomment the connection method you are using (see above, chose either modbusRS485.yaml or modbusLAN.yaml for the modbus integration configuration)
 * Go to Developer Tools and check your configuration is valid (if not, correct the problem) and then Restart HA
 * Go to Settings / Devices & Services / Entities and check the entiries that are now available.
