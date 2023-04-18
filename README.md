@@ -20,7 +20,7 @@ This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modb
 * Correction of Temp to BatCurrent sensor for RS485
 * Correction of unique_id for BMS Cell mV low
 * Addition of BMS Cycle Count and rename / rescale of BMS Watthours Total to BMS kWh Total for consistency when working with energy values
-* Addition of inverter running totals and daily totals for Solar Energy, Battery Charge, Battery Discharge, Grid Consumption Energy, Feed In Energy, Total Yield and (Battery) Input Energy. These can be used to replace some of the Riemann sum approximations previously used for greater accuracy and alignment with Fox cloud data.
+* Addition of inverter running totals and daily totals for Solar Energy, Battery Charge, Battery Discharge, Grid Consumption Energy, Feed In Energy, Total Yield and (Battery) Input Energy. These can be used to replace Riemann sum approximations previously used for greater accuracy and alignment with Fox cloud data.
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
 * Support for KH series inverter using modbusLAN with RS485 to Wifi/LAN adapter
 
