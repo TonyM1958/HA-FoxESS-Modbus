@@ -92,8 +92,8 @@
       unique_id: foxess_inv1_inverter_efficiency
       unit_of_measurement: "%"
       state: >
-        {% set power_out = states('sensor.inverter_power_out') | float() %}
-        {% set power_in = states('sensor.inverter_power_in') | float() %}
+        {% set power_out = states('sensor.inverter_power_out') | float(default=0) %}
+        {% set power_in = states('sensor.inverter_power_in') | float(default=0) %}
         {% set efficiency = power_out / power_in * 100 if power_in > 0.0 else null %}
         {% set efficiency = 100 if efficiency > 100 else efficiency %}
         {{ efficiency | round(1) }}
@@ -102,8 +102,8 @@
       unique_id: foxess_inv1_inverter_efficiency_daily
       unit_of_measurement: "%"
       state: >
-        {% set energy_out = states('sensor.inverter_energy_out_daily') | float() %}
-        {% set energy_in = states('sensor.inverter_energy_in_daily') | float() %}
+        {% set energy_out = states('sensor.inverter_energy_out_daily') | float(default=0) %}
+        {% set energy_in = states('sensor.inverter_energy_in_daily') | float(default=0) %}
         {% set efficiency = energy_out / energy_in * 100 if energy_in > 0.0 else null %}
         {% set efficiency = 100 if efficiency > 100 else efficiency %}
         {{ efficiency | round(1) }}
@@ -114,8 +114,8 @@
       unique_id: foxess_inv1_net_import_daily
       unit_of_measurement: "kWh"
       state: >
-        {{( states('sensor.grid_consumption_energy_today') | float()
-          - states('sensor.feed_in_energy_today') | float()
+        {{( states('sensor.grid_consumption_energy_today') | float(default=0)
+          - states('sensor.feed_in_energy_today') | float(default=0)
           ) | round(3) }}
     # calculate grid dependency - difference between load power consumed and solar power generated
     - name: "grid_dependency_daily"
@@ -123,8 +123,8 @@
       unique_id: foxess_inv1_grid_dependency_daily
       unit_of_measurement: "kWh"
       state: >
-        {{( states('sensor.load_daily') | float()
-          - states('sensor.solar_energy_today') | float()
+        {{( states('sensor.load_daily') | float(default=0)
+          - states('sensor.solar_energy_today') | float(default=0)
           ) | round(3) }}
 
     # separate battery power into charge and discharge based on sign

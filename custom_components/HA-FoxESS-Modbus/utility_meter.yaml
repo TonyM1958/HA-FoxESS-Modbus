@@ -59,6 +59,18 @@ grid_monthly:
   unique_id: foxess_inv1_grid_monthly
   source: sensor.grid_consumption_energy_total
   cycle: monthly
+pv_yearly:
+  unique_id: foxess_inv1_pv_yearly
+  source: sensor.solar_energy_total
+  cycle: yearly
+feedin_yearly:
+  unique_id: foxess_inv1_feedin_yearly
+  source: sensor.feed_in_energy_total
+  cycle: yearly
+grid_yearly:
+  unique_id: foxess_inv1_grid_yearly
+  source: sensor.grid_consumption_energy_total
+  cycle: yearly
 
   #-----------------------------------------------------------------------------
   # END: utility_meter include file for HA-FoxESS-Modbus

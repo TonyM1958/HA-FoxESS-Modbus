@@ -6,7 +6,19 @@
 # these templates perform maths operations on sensor values to create derrived values
 
 - sensor:
+    # approximation for the energy remaining in the battery
+    # ---- adjust capacity value to match your battery configuration ----
+    - name: "BMS kWh Remaining"
+      unique_id: foxess_inv1_bms_kwh_remaining
+      device_class: energy
+      unit_of_measurement: "kWh"
+      state: >
+        {% set capacity = 4 * 2.56 * 0.9 %}
+        {% set soc = states('sensor.battery_soc') | float(default=0) %}
+        {% set energy = capacity * soc / 100 %}
+        {{ energy | round(3) }}
     # calculate the number of hours that the battery can power the current load for
+    # ---- adjust capacity value to match your battery configuration ----
     - name: "battery_duration"
       unique_id: foxess_inv1_battery_duration
       icon: "mdi:timer-play"
@@ -75,8 +87,8 @@
       unique_id: foxess_inv1_inverter_efficiency
       unit_of_measurement: "%"
       state: >
-        {% set power_out = states('sensor.inverter_power_out') | float() %}
-        {% set power_in = states('sensor.inverter_power_in') | float() %}
+        {% set power_out = states('sensor.inverter_power_out') | float(default=0) %}
+        {% set power_in = states('sensor.inverter_power_in') | float(default=0) %}
         {% set efficiency = power_out / power_in * 100 if power_in > 0.0 else null %}
         {% set efficiency = 100 if efficiency > 100 else efficiency %}
         {{ efficiency | round(1) }}
@@ -85,8 +97,8 @@
       unique_id: foxess_inv1_inverter_efficiency_daily
       unit_of_measurement: "%"
       state: >
-        {% set energy_out = states('sensor.inverter_energy_out_daily') | float() %}
-        {% set energy_in = states('sensor.inverter_energy_in_daily') | float() %}
+        {% set energy_out = states('sensor.inverter_energy_out_daily') | float(default=0) %}
+        {% set energy_in = states('sensor.inverter_energy_in_daily') | float(default=0) %}
         {% set efficiency = energy_out / energy_in * 100 if energy_in > 0.0 else null %}
         {% set efficiency = 100 if efficiency > 100 else efficiency %}
         {{ efficiency | round(1) }}
@@ -97,8 +109,8 @@
       unique_id: foxess_inv1_net_import_daily
       unit_of_measurement: "kWh"
       state: >
-        {{( states('sensor.grid_daily') | float()
-          - states('sensor.feed_in_daily') | float()
+        {{( states('sensor.grid_daily') | float(default=0)
+          - states('sensor.feedin_daily') | float(default=0)
           ) | round(3) }}
     # calculate grid dependency - difference between load power consumed and solar power generated
     - name: "grid_dependency_daily"
@@ -106,8 +118,8 @@
       unique_id: foxess_inv1_grid_dependency_daily
       unit_of_measurement: "kWh"
       state: >
-        {{( states('sensor.load_daily') | float()
-          - states('sensor.pv_energy_daily') | float()
+        {{( states('sensor.load_daily') | float(default=0)
+          - states('sensor.pv_energy_daily') | float(default=0)
           ) | round(3) }}
 
     # separate battery power into charge and discharge based on sign
@@ -168,39 +180,77 @@
       state: >
         {{ ((states('sensor.pv1_daily') | float(default=0) + states('sensor.pv2_daily') | float(default=0) ) * 1 ) | round(2) }}
 
-    # format time periods for display
-    - name: "Time Period 1 - Start Time"
-      icon: "mdi:calendar-clock"
-      unique_id: foxess_inv1_time_period_1_start_time
+    # Alias counters available via RS485
+    - name: "Solar Energy Total"
+      device_class: "energy"
+      unique_id: foxess_inv1_solar_energy_total
+      unit_of_measurement: "kWh"
+      state_class: total_increasing
       state: >
-        {% set raw_time = states('sensor.time_period_1_start') | int %}
-        {% set hours = raw_time // 256 %}
-        {% set minutes = raw_time - (hours * 256) %}
-        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
-    - name: "Time Period 1 - End Time"
-      icon: "mdi:calendar-clock"
-      unique_id: foxess_inv1_time_period_1_end_time
+        {{ states('sensor.pv_total_sum') }}
+    - name: "Solar Energy Today"
+      device_class: "energy"
+      unique_id: foxess_inv1_solar_energy_today
+      unit_of_measurement: "kWh"
+      state_class: total
       state: >
-        {% set raw_time = states('sensor.time_period_1_end') | int %}
-        {% set hours = raw_time // 256 %}
-        {% set minutes = raw_time - (hours * 256) %}
-        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
-    - name: "Time Period 2 - Start Time"
-      icon: "mdi:calendar-clock"
-      unique_id: foxess_inv1_time_period_2_start_time
+        {{ states('sensor.pv_energy_daily') }}
+    - name: "Battery Charge Total"
+      device_class: "energy"
+      unique_id: foxess_inv1_battery_charge_total
+      unit_of_measurement: "kWh"
+      state_class: total_increasing
       state: >
-        {% set raw_time = states('sensor.time_period_2_start') | int %}
-        {% set hours = raw_time // 256 %}
-        {% set minutes = raw_time - (hours * 256) %}
-        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
-    - name: "Time Period 2 - End Time"
-      icon: "mdi:calendar-clock"
-      unique_id: foxess_inv1_time_period_2_end_time
+        {{ states('sensor.bat_charge_sum') }}
+    - name: "Battery Charge Today"
+      device_class: "energy"
+      unique_id: foxess_inv1_battery_charge_today
+      unit_of_measurement: "kWh"
+      state_class: total
       state: >
-        {% set raw_time = states('sensor.time_period_2_end') | int %}
-        {% set hours = raw_time // 256 %}
-        {% set minutes = raw_time - (hours * 256) %}
-        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+        {{ states('sensor.bat_charge_daily') }}
+    - name: "Battery Discharge Total"
+      device_class: "energy"
+      unique_id: foxess_inv1_battery_discharge_total
+      unit_of_measurement: "kWh"
+      state_class: total_increasing
+      state: >
+        {{ states('sensor.bat_discharge_sum') }}
+    - name: "Battery Discharge Today"
+      device_class: "energy"
+      unique_id: foxess_inv1_battery_discharge_today
+      unit_of_measurement: "kWh"
+      state_class: total
+      state: >
+        {{ states('sensor.bat_discharge_daily') }}
+    - name: "Feed In Energy Total"
+      device_class: "energy"
+      unique_id: foxess_inv1_feed_in_energy_total
+      unit_of_measurement: "kWh"
+      state_class: total_increasing
+      state: >
+        {{ states('sensor.feedin_sum') }}
+    - name: "Feed In Energy Today"
+      device_class: "energy"
+      unique_id: foxess_inv1_feed_in_energy_today
+      unit_of_measurement: "kWh"
+      state_class: total
+      state: >
+        {{ states('sensor.feedin_daily') }}
+    - name: "Grid Consumption Energy Total"
+      device_class: "energy"
+      unique_id: foxess_inv1_grid_consumption_energy_total
+      unit_of_measurement: "kWh"
+      state_class: total_increasing
+      state: >
+        {{ states('sensor.grid_consumption_sum') }}
+    - name: "Grid Consumption Energy Today"
+      device_class: "energy"
+      unique_id: foxess_inv1_grid_consumption_energy_today
+      unit_of_measurement: "kWh"
+      state_class: total
+      state: >
+        {{ states('sensor.grid_daily') }}
 
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus

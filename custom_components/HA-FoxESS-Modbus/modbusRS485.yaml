@@ -183,7 +183,7 @@
       input_type: input
       device_class: frequency
     - name: "EPS RVolt"
-      unique_id: foxess_inv1_esp_rvolt
+      unique_id: foxess_inv1_eps_rvolt
       scan_interval: !secret scan_interval_medium
       slave: 247
       address: 11015
