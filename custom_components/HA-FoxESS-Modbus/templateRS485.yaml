@@ -11,8 +11,8 @@
       unique_id: foxess_inv1_battery_cell_imbalance
       unit_of_measurement: "%"
       state: >
-        {% set cell_high = states('sensor.bms_cell_mv_high') | float() %}
-        {% set cell_low = states('sensor.bms_cell_mv_low') | float() %}
+        {% set cell_high = states('sensor.bms_cell_mv_high') | float(default=0) %}
+        {% set cell_low = states('sensor.bms_cell_mv_low') | float(default=0) %}
         {% set imbalance = (cell_high-cell_low) / (cell_high + cell_low) * 200 if cell_low > 0.0 else 0.0 %}
         {% set imbalance = 0.0 if cell_high < cell_low else imbalance %}
         {{ imbalance | round(2) }}
@@ -21,8 +21,8 @@
       unique_id: foxess_inv1_battery_cell_temperature
       unit_of_measurement: "°C"
       state: >
-        {% set temp_high = states('sensor.bms_cell_temp_high') | float() %}
-        {% set temp_low = states('sensor.bms_cell_temp_low') | float() %}
+        {% set temp_high = states('sensor.bms_cell_temp_high') | float(default=0) %}
+        {% set temp_low = states('sensor.bms_cell_temp_low') | float(default=0) %}
         {% set temp = (temp_high + temp_low) / 2 %}
         {{ temp | round(1) }}
     # calculate the number of hours that the battery can power the current load for
@@ -32,8 +32,8 @@
       unit_of_measurement: "h"
       state: >
         {% set min_soc = 4 * 2.56 * 0.12 %}
-        {% set energy = states('sensor.bms_kwh_remaining') | float() %}
-        {% set power = states('sensor.load_power') | float() %}
+        {% set energy = states('sensor.bms_kwh_remaining') | float(default=0) %}
+        {% set power = states('sensor.load_power') | float(default=0) %}
         {% set power = 0.1 if power < 0.1 else power %}
         {% set hours = ((energy - min_soc) / power) | int  %}
         {% set hours = 24 if hours > 24 else hours  %}
@@ -45,8 +45,8 @@
       device_class: "energy"
       unit_of_measurement: "kWh"
       state: >
-        {{( states('sensor.battery_charge_today')|float()
-          - states('sensor.battery_discharge_today')|float()
+        {{( states('sensor.battery_charge_today')|float(default=0)
+          - states('sensor.battery_discharge_today')|float(default=0)
           ) | round(3) }}
 
     # calculate power flowing into inverter from solar, battery and grid
@@ -55,10 +55,10 @@
       unique_id: foxess_inv1_inverter_power_in
       unit_of_measurement: "kW"
       state: >
-        {% set pv_power_in = states('sensor.pv_power_now') | float() %}
-        {% set rpower = states('sensor.RPower') | float() %}
+        {% set pv_power_in = states('sensor.pv_power_now') | float(default=0) %}
+        {% set rpower = states('sensor.RPower') | float(default=0) %}
         {% set rpower_in = 0.0 if rpower > 0.0 else rpower * -1.0 %}
-        {% set bat_power = states('sensor.InvBatPower') | float() %}
+        {% set bat_power = states('sensor.InvBatPower') | float(default=0) %}
         {% set bat_power_in = 0.0 if bat_power < 0.0 else bat_power %}
         {% set power_in = pv_power_in + rpower_in + bat_power_in %}
         {{ power_in | round(3) }}
@@ -68,10 +68,10 @@
       unique_id: foxess_inv1_inverter_power_out
       unit_of_measurement: "kW"
       state: >
-        {% set rpower = states('sensor.RPower') | float() %}
+        {% set rpower = states('sensor.RPower') | float(default=0) %}
         {% set rpower_out = 0 if rpower < 0.0 else rpower %}
-        {% set eps_power_out = states('sensor.EPS_RPower') | float() %}
-        {% set bat_power = states('sensor.InvBatPower') | float() %}
+        {% set eps_power_out = states('sensor.EPS_RPower') | float(default=0) %}
+        {% set bat_power = states('sensor.InvBatPower') | float(default=0) %}
         {% set bat_power_out = 0 if bat_power > 0.0 else bat_power * -1.0 %}
         {% set power_out = rpower_out + eps_power_out + bat_power_out %}
         {{ power_out | round(3) }}
@@ -110,7 +110,7 @@
 
     # calculate grid balance - difference between grid power imported and exported
     - name: "net_import_daily"
-      device_class: "power"
+      device_class: "energy"
       unique_id: foxess_inv1_net_import_daily
       unit_of_measurement: "kWh"
       state: >
@@ -119,7 +119,7 @@
           ) | round(3) }}
     # calculate grid dependency - difference between load power consumed and solar power generated
     - name: "grid_dependency_daily"
-      device_class: "power"
+      device_class: "energy"
       unique_id: foxess_inv1_grid_dependency_daily
       unit_of_measurement: "kWh"
       state: >

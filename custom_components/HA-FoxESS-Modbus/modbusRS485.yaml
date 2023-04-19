@@ -8,20 +8,20 @@
 
   # ------------------------ RS485 to USB  ----------------------------------
   # Connection details for RS485 to USB. Enter the port in secrets.yaml
-  # Comment out the LAN section below and uncomment this section to use this
-  # type: serial
-  # port: !secret foxess_inv1_tty
-  # baudrate: 9600
-  # bytesize: 8
-  # method: rtu
-  # parity: N
-  # stopbits: 1
+  type: serial
+  port: !secret foxess_inv1_tty
+  baudrate: 9600
+  bytesize: 8
+  method: rtu
+  parity: N
+  stopbits: 1
 
   # ----------------------- RS485 to WIFI/LAN --------------------------------
   # Connection details for RS485 to Wifi/LAN. Enter the IP address in secrets.yaml
-  type: tcp
-  host: !secret foxess_inv1_ip_address
-  port: 502
+  # Comment out the previous section and uncomment this section to use this
+  #  type: tcp
+  #  host: !secret foxess_inv1_ip_address
+  #  port: 502
   # ---------------------------------------------------------------------------
 
   # list of modbus addresses to read
@@ -334,7 +334,7 @@
       scale: 0.01
       precision: 2
       device_class: energy
-      state_class: measurement
+      state_class: total
       unit_of_measurement: "kWh"
     - name: "Battery Temp"
       unique_id: foxess_inv1_battery_temperature
@@ -428,7 +428,7 @@
       scale: 0.001
       precision: 3
       device_class: energy
-      state_class: measurement
+      state_class: total_increasing
       unit_of_measurement: "kWh"
 
     - name: "Solar Energy Total"
@@ -441,7 +441,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total_increasing
       unit_of_measurement: "kWh"
     - name: "Solar Energy Today"
       unique_id: foxess_inv1_solar_energy_today
@@ -453,7 +453,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total
       unit_of_measurement: "kWh"
     - name: "Battery Charge Total"
       unique_id: foxess_inv1_battery_charge_total
@@ -465,7 +465,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total_increasing
       unit_of_measurement: "kWh"
     - name: "Battery Charge Today"
       unique_id: foxess_inv1_battery_charge_today
@@ -477,7 +477,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total
       unit_of_measurement: "kWh"
     - name: "Battery Discharge Total"
       unique_id: foxess_inv1_battery_discharge_total
@@ -489,7 +489,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total_increasing
       unit_of_measurement: "kWh"
     - name: "Battery Discharge Today"
       unique_id: foxess_inv1_battery_discharge_today
@@ -501,7 +501,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total
       unit_of_measurement: "kWh"
     - name: "Feed In Energy Total"
       unique_id: foxess_inv1_feed_in_energy_total
@@ -513,7 +513,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total_increasing
       unit_of_measurement: "kWh"
     - name: "Feed In Energy Today"
       unique_id: foxess_inv1_feed_in_energy_today
@@ -525,7 +525,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total
       unit_of_measurement: "kWh"
     - name: "Grid Consumption Energy Total"
       unique_id: foxess_inv1_grid_consumption_energy_total
@@ -537,7 +537,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total_increasing
       unit_of_measurement: "kWh"
     - name: "Grid Consumption Energy Today"
       unique_id: foxess_inv1_grid_consumption_energy_today
@@ -549,7 +549,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total
       unit_of_measurement: "kWh"
     - name: "Total Yield Total"
       unique_id: foxess_inv1_total_yield_total
@@ -561,7 +561,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total_increasing
       unit_of_measurement: "kWh"
     - name: "Total Yield Today"
       unique_id: foxess_inv1_total_yield_today
@@ -573,7 +573,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total
       unit_of_measurement: "kWh"
     - name: "Input Energy Total"
       unique_id: foxess_inv1_input_energy_total
@@ -585,7 +585,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total_increasing
       unit_of_measurement: "kWh"
     - name: "Input Energy Today"
       unique_id: foxess_inv1_input_energy_today
@@ -597,7 +597,7 @@
       scale: 0.1
       precision: 1
       device_class: energy
-      state_class: measurement
+      state_class: total
       unit_of_measurement: "kWh"
 
     - name: "Work Mode"

@@ -3,8 +3,8 @@
 # START: utility_meter include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
 
-# Utility Meters use the integral of power over time (sum) to give daily totals that
-# reset at midnight each day. Used by the energy dashboard amongst other things
+# Utility Meters take the integral of power over time (sum) and produce daily totals
+# that reset at midnight each day. Used by the energy dashboard amongst other things
 
 inverter_energy_in_daily:
   unique_id: foxess_inv1_inverter_energy_in_daily

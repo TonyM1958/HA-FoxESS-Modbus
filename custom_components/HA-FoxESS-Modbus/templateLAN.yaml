@@ -14,9 +14,9 @@
       state: >
         {% set capacity = 4 * 2.56 * 0.9 %}
         {% set min_soc = capacity * 0.12 %}
-        {% set soc = states('sensor.battery_soc') | float() %}
+        {% set soc = states('sensor.battery_soc') | float(default=0) %}
         {% set energy = capacity * soc / 100 %}
-        {% set power = states('sensor.load_power') | float() %}
+        {% set power = states('sensor.load_power') | float(default=0) %}
         {% set power = 0.1 if power < 0.1 else power %}
         {% set hours = ((energy - min_soc) / power) | int  %}
         {% set hours = 24 if hours > 24 else hours  %}
@@ -28,8 +28,8 @@
       device_class: "energy"
       unit_of_measurement: "kWh"
       state: >
-        {{( states('sensor.battery_charge_today')|float()
-          - states('sensor.battery_discharge_today')|float()
+        {{( states('sensor.battery_charge_today')|float(default=0)
+          - states('sensor.battery_discharge_today')|float(default=0)
           ) | round(3) }}
 
     # calculate power flowing into inverter from solar, battery and grid
@@ -38,10 +38,10 @@
       unique_id: foxess_inv1_inverter_power_in
       unit_of_measurement: "kW"
       state: >
-        {% set pv_power_in = states('sensor.pv_power_now') | float() %}
-        {% set rpower = states('sensor.RPower') | float() %}
+        {% set pv_power_in = states('sensor.pv_power_now') | float(default=0) %}
+        {% set rpower = states('sensor.RPower') | float(default=0) %}
         {% set rpower_in = 0.0 if rpower > 0.0 else rpower * -1.0 %}
-        {% set bat_power = states('sensor.InvBatPower') | float() %}
+        {% set bat_power = states('sensor.InvBatPower') | float(default=0) %}
         {% set bat_power_in = 0.0 if bat_power < 0.0 else bat_power %}
         {% set power_in = pv_power_in + rpower_in + bat_power_in %}
         {{ power_in | round(3) }}
@@ -51,10 +51,10 @@
       unique_id: foxess_inv1_inverter_power_out
       unit_of_measurement: "kW"
       state: >
-        {% set rpower = states('sensor.RPower') | float() %}
+        {% set rpower = states('sensor.RPower') | float(default=0) %}
         {% set rpower_out = 0 if rpower < 0.0 else rpower %}
-        {% set eps_power_out = states('sensor.EPS_RPower') | float() %}
-        {% set bat_power = states('sensor.InvBatPower') | float() %}
+        {% set eps_power_out = states('sensor.EPS_RPower') | float(default=0) %}
+        {% set bat_power = states('sensor.InvBatPower') | float(default=0) %}
         {% set bat_power_out = 0 if bat_power > 0.0 else bat_power * -1.0 %}
         {% set power_out = rpower_out + eps_power_out + bat_power_out %}
         {{ power_out | round(3) }}
@@ -93,7 +93,7 @@
 
     # calculate grid balance - difference between grid power imported and exported
     - name: "net_import_daily"
-      device_class: "power"
+      device_class: "energy"
       unique_id: foxess_inv1_net_import_daily
       unit_of_measurement: "kWh"
       state: >
@@ -102,7 +102,7 @@
           ) | round(3) }}
     # calculate grid dependency - difference between load power consumed and solar power generated
     - name: "grid_dependency_daily"
-      device_class: "power"
+      device_class: "energy"
       unique_id: foxess_inv1_grid_dependency_daily
       unit_of_measurement: "kWh"
       state: >
