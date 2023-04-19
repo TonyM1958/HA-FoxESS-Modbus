@@ -3,8 +3,8 @@
 # START: utility_meter include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
 
-# Utility Meters take the integral of power over time (sum) and produce daily totals
-# that reset at midnight each day. Used by the energy dashboard amongst other things
+# Utility Meters take the integral of power over time (sum) and produce daily or
+# monthly totals that reset. Used by the energy dashboard amongst other things
 
 inverter_energy_in_daily:
   unique_id: foxess_inv1_inverter_energy_in_daily
@@ -28,24 +28,37 @@ pv2_daily:
   cycle: daily
 bat_charge_daily:
   unique_id: foxess_inv1_bat_charge_daily
-  source: sensor.bat_charge_sum
+  source: sensor.battery_charge_total
   cycle: daily
 bat_discharge_daily:
   unique_id: foxess_inv1_bat_discharge_daily
-  source: sensor.bat_discharge_sum
+  source: sensor.battery_discharge_total
   cycle: daily
 feedin_daily:
   unique_id: foxess_inv1_feedin_daily
-  source: sensor.feedin_sum
+  source: sensor.feed_in_energy_total
   cycle: daily
 grid_daily:
   unique_id: foxess_inv1_grid_daily
-  source: sensor.grid_consumption_sum
+  source: sensor.grid_consumption_energy_total
   cycle: daily
 losses_daily:
   unique_id: foxess_inv1_losses_daily
   source: sensor.losses_sum
   cycle: daily
+
+pv_monthly:
+  unique_id: foxess_inv1_pv_monthly
+  source: sensor.solar_energy_total
+  cycle: monthly
+feedin_monthly:
+  unique_id: foxess_inv1_feedin_monthly
+  source: sensor.feed_in_energy_total
+  cycle: monthly
+grid_monthly:
+  unique_id: foxess_inv1_grid_monthly
+  source: sensor.grid_consumption_energy_total
+  cycle: monthly
 
   #-----------------------------------------------------------------------------
   # END: utility_meter include file for HA-FoxESS-Modbus
