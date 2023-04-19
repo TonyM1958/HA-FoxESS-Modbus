@@ -14,6 +14,7 @@ This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modb
 * Simplified configuration: only 4 lines required in your HA configuration.yaml with modbus, sensors, templates and utility_meter integrations split into separate include files with variants for RS485 and LAN connections
 * Support for KH series inverter using modbusLAN with RS485 to Wifi/LAN adapter
 * Rename of modbusUSB to modbusRS485 to reflect the data available via the different inverter connections
+* Parameterization and grouping of sensor scan_interval so they are more uniform and easier to change in a consistent way when required
 * Revised calculation for inverter power in, power out and system losses
 * Addition of HA templates for calculating inverter efficiency, cell imbalance, grid dependency and grid balance
 * Addition of RPower and EPS RVolt, EPS RCurrent and EPS RPower sensors for LAN and RS485 connections
