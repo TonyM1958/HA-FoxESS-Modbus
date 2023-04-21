@@ -266,8 +266,9 @@
       precision: 3
       input_type: input
       device_class: power
-    - name: "AmbTemp"
-      unique_id: foxess_inv1_ambient_temperature
+
+    - name: "InvTemp"
+      unique_id: foxess_inv1_inverter_temperature
       scan_interval: !secret scan_interval_low
       slave: 247
       address: 11024
@@ -278,8 +279,8 @@
       precision: 1
       device_class: temperature
       input_type: input
-    - name: "InvTemp"
-      unique_id: foxess_inv1_inverter_temperature
+    - name: "AmbTemp"
+      unique_id: foxess_inv1_ambient_temperature
       scan_interval: !secret scan_interval_low
       slave: 247
       address: 11025
@@ -590,6 +591,30 @@
     - name: "Input Energy Today"
       unique_id: foxess_inv1_input_energy_today
       address: 11089
+      scan_interval: !secret scan_interval_low
+      slave: 247
+      input_type: input
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      device_class: energy
+      state_class: total
+      unit_of_measurement: "kWh"
+    - name: "Load Energy Total"
+      unique_id: foxess_inv1_load_energy_total
+      address: 11090
+      scan_interval: !secret scan_interval_low
+      slave: 247
+      input_type: input
+      data_type: uint32
+      scale: 0.1
+      precision: 1
+      device_class: energy
+      state_class: total_increasing
+      unit_of_measurement: "kWh"
+    - name: "Load Energy Today"
+      unique_id: foxess_inv1_load_energy_today
+      address: 11092
       scan_interval: !secret scan_interval_low
       slave: 247
       input_type: input

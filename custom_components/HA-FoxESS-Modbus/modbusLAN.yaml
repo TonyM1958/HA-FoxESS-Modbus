@@ -207,8 +207,8 @@
       input_type: holding
       device_class: power
 
-    - name: "AmbTemp"
-      unique_id: foxess_inv1_ambient_temperature
+    - name: "InvTemp"
+      unique_id: foxess_inv1_inverter_temperature
       scan_interval: !secret scan_interval_low
       address: 31018
       state_class: measurement
@@ -218,8 +218,8 @@
       precision: 1
       device_class: temperature
       input_type: holding
-    - name: "InvTemp"
-      unique_id: foxess_inv1_inverter_temperature
+    - name: "AmbTemp"
+      unique_id: foxess_inv1_ambient_temperature
       scan_interval: !secret scan_interval_low
       address: 31019
       state_class: measurement
