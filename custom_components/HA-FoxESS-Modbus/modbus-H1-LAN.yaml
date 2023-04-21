@@ -2,8 +2,7 @@
 # ---------------------------------------------------------------------------
 # START: modbus include file for HA-FoxESS-Modbus LAN connection
 # ---------------------------------------------------------------------------
-# Supports direct ethernet port connection to H1 series and AC series
-# and RS485 connection to KH series using RS-485 to LAN/Wifi adapter.
+# Supports direct ethernet port connection to H1 series and AC series.
 - name: FoxESSInverterModbus
 
   # ---------------------------Direct LAN Connection-------------------------
@@ -16,6 +15,45 @@
 
   # list of modbus addresses to read
   sensors:
+    - name: "Inverter Model"
+      unique_id: foxess_inv1_inverter_model
+      scan_interval: !secret scan_interval_static
+      address: 30000
+      count: 7
+      data_type: string
+      input_type: input
+    - name: "Serial Number"
+      unique_id: foxess_inv1_serial_number
+      scan_interval: !secret scan_interval_static
+      address: 30008
+      count: 7
+      data_type: string
+      input_type: input
+    - name: "Master Version"
+      unique_id: foxess_inv1_master_version
+      address: 30016
+      scan_interval: !secret scan_interval_static
+      input_type: input
+      data_type: int16
+      scale: 0.01
+      precision: 2
+    - name: "Slave Version"
+      unique_id: foxess_inv1_slave_version
+      address: 30017
+      scan_interval: !secret scan_interval_static
+      input_type: input
+      data_type: int16
+      scale: 0.01
+      precision: 2
+    - name: "Manager Version"
+      unique_id: foxess_inv1_manager_version
+      address: 30018
+      scan_interval: !secret scan_interval_static
+      input_type: input
+      data_type: int16
+      scale: 0.01
+      precision: 2
+
     - name: "PV1 Voltage"
       unique_id: foxess_inv1_pv1_voltage
       scan_interval: !secret scan_interval_medium

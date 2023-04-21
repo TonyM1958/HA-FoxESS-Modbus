@@ -11,10 +11,12 @@
 # Comment / uncomment the lines relevant to your inverter connection (RS485 or LAN)
 
 # Integrations used for HA-FoxESS-Modbus:
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusLAN.yaml
-#template: !include custom_components/HA-FoxESS-Modbus/templateLAN.yaml
-modbus: !include custom_components/HA-FoxESS-Modbus/modbusRS485.yaml
-template: !include custom_components/HA-FoxESS-Modbus/templateRS485.yaml
+#modbus: !include custom_components/HA-FoxESS-Modbus/modbus-H1-LAN.yaml
+#template: !include custom_components/HA-FoxESS-Modbus/template-H1-LAN.yaml
+#modbus: !include custom_components/HA-FoxESS-Modbus/modbus-KH-LAN.yaml
+#template: !include custom_components/HA-FoxESS-Modbus/template-KH-LAN.yaml
+modbus: !include custom_components/HA-FoxESS-Modbus/modbus-H1-RS485.yaml
+template: !include custom_components/HA-FoxESS-Modbus/template-H1-RS485.yaml
 sensor: !include custom_components/HA-FoxESS-Modbus/sensor.yaml
 utility_meter: !include custom_components/HA-FoxESS-Modbus/utility_meter.yaml
 #
