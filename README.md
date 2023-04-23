@@ -60,6 +60,7 @@ Access to your inverter data can be acheived in two ways:
 * Open template_secrets.yaml and copy the settings into your HA secrets.yaml file
 * Update your secrets.yaml with your IP address details or USB adapter port if required
 * Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuraiton.yaml. As you got this far already, you should probably know what to do!
+* Use modbusH1.yaml for single phase inverters. If you have a 3 phase inverter, comment out the line with modbusH1.yaml and uncomment the line with modbusH3.yaml
 * Go to Developer Tools and check your configuration is valid (if not, correct the problem) and then Restart HA
 * Go to Settings / Devices & Services / Entities and check the entities that are now available.
 * Add the required entities to your dashboard(s)
