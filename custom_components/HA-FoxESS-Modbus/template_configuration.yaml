@@ -8,15 +8,12 @@
 # If you have a complex HA setup and already have any sections with these names,
 # create a local include file in your CONFIG folder, merge the contents of the
 # relevant file and reference your local include here.
-# Comment / uncomment the lines relevant to your inverter connection (RS485 or LAN)
+# Use modbusH1 for single phase inverters or modbusH3 for 3 phase inverters
 
-# Integrations used for HA-FoxESS-Modbus:
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbus-H1-LAN.yaml
-#template: !include custom_components/HA-FoxESS-Modbus/template-H1-LAN.yaml
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbus-KH-LAN.yaml
-#template: !include custom_components/HA-FoxESS-Modbus/template-KH-LAN.yaml
-modbus: !include custom_components/HA-FoxESS-Modbus/modbus-H1-RS485.yaml
-template: !include custom_components/HA-FoxESS-Modbus/template-H1-RS485.yaml
+# Integrations used by HA-FoxESS-Modbus:
+modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1.yaml
+#modbus: !include custom_components/HA-FoxESS-Modbus/modbusH3.yaml
+template: !include custom_components/HA-FoxESS-Modbus/template-H1.yaml
 sensor: !include custom_components/HA-FoxESS-Modbus/sensor.yaml
 utility_meter: !include custom_components/HA-FoxESS-Modbus/utility_meter.yaml
 #
