@@ -28,11 +28,11 @@ pv2_daily:
   cycle: daily
 bat_charge_daily:
   unique_id: foxess_inv1_bat_charge_daily
-  source: sensor.battery_charge_total
+  source: sensor.charge_energy_total
   cycle: daily
 bat_discharge_daily:
   unique_id: foxess_inv1_bat_discharge_daily
-  source: sensor.battery_discharge_total
+  source: sensor.discharge_energy_total
   cycle: daily
 feedin_daily:
   unique_id: foxess_inv1_feedin_daily
@@ -47,37 +47,37 @@ losses_daily:
   source: sensor.losses_sum
   cycle: daily
 
-pv_monthly:
-  unique_id: foxess_inv1_pv_monthly
-  source: sensor.solar_energy_total
+pv_energy_monthly:
+  unique_id: foxess_inv1_pv_energy_monthly
+  source: sensor.pv_energy_total
   cycle: monthly
-feedin_monthly:
-  unique_id: foxess_inv1_feedin_monthly
+feed_in_energy_monthly:
+  unique_id: foxess_inv1_feed_in_energy_monthly
   source: sensor.feed_in_energy_total
   cycle: monthly
-grid_monthly:
-  unique_id: foxess_inv1_grid_monthly
+grid_consumption_energy_monthly:
+  unique_id: foxess_inv1_grid_consumption_energy_monthly
   source: sensor.grid_consumption_energy_total
   cycle: monthly
-load_monthly:
-  unique_id: foxess_inv1_load_monthly
+load_energy_monthly:
+  unique_id: foxess_inv1_load_energy_monthly
   source: sensor.load_energy_total
   cycle: monthly
 
-pv_yearly:
-  unique_id: foxess_inv1_pv_yearly
-  source: sensor.solar_energy_total
+pv_energy_yearly:
+  unique_id: foxess_inv1_pv_energy_yearly
+  source: sensor.pv_energy_total
   cycle: yearly
-feedin_yearly:
-  unique_id: foxess_inv1_feedin_yearly
+feed_in_energy_yearly:
+  unique_id: foxess_inv1_feed_in_energy_yearly
   source: sensor.feed_in_energy_total
   cycle: yearly
-grid_yearly:
-  unique_id: foxess_inv1_grid_yearly
+grid_consumption_energy_yearly:
+  unique_id: foxess_inv1_grid_consumption_energy_yearly
   source: sensor.grid_consumption_energy_total
   cycle: yearly
-load_yearly:
-  unique_id: foxess_inv1_load_yearly
+load_energy_yearly:
+  unique_id: foxess_inv1_load_energy_yearly
   source: sensor.load_energy_total
   cycle: yearly
 

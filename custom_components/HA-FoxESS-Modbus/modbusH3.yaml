@@ -211,7 +211,7 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_high
-    - name: "Grid Frequency"
+    - name: "RFreq"
       unique_id: foxess_inv1_grid_frequency
       address: 31009 # input 11014
       slave: !secret foxess_inv1_slave
@@ -222,7 +222,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "EPS RVolt"
-      unique_id: foxess_inv1_eps_voltage_R
+      unique_id: foxess_inv1_eps_rvolt
       address: 31010 # input 11015
       slave: !secret foxess_inv1_slave
       device_class: voltage
@@ -232,7 +232,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS RCurrent"
-      unique_id: foxess_inv1_eps_current_R
+      unique_id: foxess_inv1_eps_rcurrent
       address: 31011 # input 11016
       slave: !secret foxess_inv1_slave
       device_class: current
@@ -242,7 +242,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS RPower"
-      unique_id: foxess_inv1_eps_power_R
+      unique_id: foxess_inv1_eps_rpower
       address: 31012 # input 11017
       slave: !secret foxess_inv1_slave
       device_class: power
@@ -251,7 +251,7 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_high
-    - name: "EPS Frequency"
+    - name: "EPS RFreq"
       unique_id: foxess_inv1_eps_frequency
       address: 31013 # input 11020
       slave: !secret foxess_inv1_slave
@@ -365,8 +365,8 @@
     # Inverter energy meters
     # -------------------------------------------------------------------------
 
-    - name: "PV Energy Total"
-      unique_id: foxess_inv1_pv_energy_total
+    - name: "Solar Energy Total"
+      unique_id: foxess_inv1_solar_energy_total
       address: 32000 # input 11069
       slave: !secret foxess_inv1_slave
       data_type: uint32
@@ -376,8 +376,8 @@
       precision: 1
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
-    - name: "PV Energy Today"
-      unique_id: foxess_inv1_pv_energy_today
+    - name: "Solar Energy Today"
+      unique_id: foxess_inv1_solar_energy_today
       address: 32002 # input 11071
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -387,8 +387,8 @@
       precision: 1
       state_class: total
       scan_interval: !secret scan_interval_low
-    - name: "Battery Charge Energy Total"
-      unique_id: foxess_inv1_charge_energy_total
+    - name: "Battery Charge Total"
+      unique_id: foxess_inv1_battery_charge_total
       address: 32003 # input 11072
       slave: !secret foxess_inv1_slave
       data_type: uint32
@@ -398,8 +398,8 @@
       precision: 1
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
-    - name: "Battery Charge Energy Today"
-      unique_id: foxess_inv1_charge_energy_today
+    - name: "Battery Charge Today"
+      unique_id: foxess_inv1_battery_charge_today
       address: 32005 # input 11074
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -409,8 +409,8 @@
       precision: 1
       state_class: total
       scan_interval: !secret scan_interval_low
-    - name: "Battery Discharge Energy Total"
-      unique_id: foxess_inv1_discharge_energy_total
+    - name: "Battery Discharge Total"
+      unique_id: foxess_inv1_battery_discharge_total
       address: 32006 # input 11075
       slave: !secret foxess_inv1_slave
       data_type: uint32
@@ -420,8 +420,8 @@
       precision: 1
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
-    - name: "Battery Discharge Energy Today"
-      unique_id: foxess_inv1_discharge_energy_today
+    - name: "Battery Discharge Today"
+      unique_id: foxess_inv1_battery_discharge_today
       address: 32008 # input 11077
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -475,8 +475,8 @@
       precision: 1
       state_class: total
       scan_interval: !secret scan_interval_low
-    - name: "Output Energy Total"
-      unique_id: foxess_inv1_output_energy_total
+    - name: "Total Yield Total"
+      unique_id: foxess_inv1_total_yield_total
       address: 32015 # input 11084
       slave: !secret foxess_inv1_slave
       data_type: uint32
@@ -486,8 +486,8 @@
       precision: 1
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
-    - name: "Output Energy Today"
-      unique_id: foxess_inv1_output_energy_today
+    - name: "Total Yield Today"
+      unique_id: foxess_inv1_total_yield_today
       address: 32017 # input 11086
       slave: !secret foxess_inv1_slave
       data_type: uint16

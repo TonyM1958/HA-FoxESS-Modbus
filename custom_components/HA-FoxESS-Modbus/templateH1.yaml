@@ -139,23 +139,23 @@
         {% set efficiency = 100 if efficiency > 100 else efficiency %}
         {{ efficiency | round(1) }}
 
-    # calculate grid balance - difference between grid power imported and exported
-    - name: "Net Import Daily"
+    # calculate grid dependency - difference between load power consumed and solar power generated
+    - name: "Grid Dependency Today"
       device_class: "energy"
-      unique_id: foxess_inv1_net_import_daily
+      unique_id: foxess_inv1_grid_dependency_today
+      unit_of_measurement: "kWh"
+      state: >
+        {{( states('sensor.load_energy_today') | float(default=0)
+          - states('sensor.pv_energy_today') | float(default=0)
+          ) | round(3) }}
+    # calculate grid balance - difference between grid power imported and exported
+    - name: "Grid Balance Today"
+      device_class: "energy"
+      unique_id: foxess_inv1_grid_balance_today
       unit_of_measurement: "kWh"
       state: >
         {{( states('sensor.grid_consumption_energy_today') | float(default=0)
           - states('sensor.feed_in_energy_today') | float(default=0)
-          ) | round(3) }}
-    # calculate grid dependency - difference between load power consumed and solar power generated
-    - name: "Grid Dependency Daily"
-      device_class: "energy"
-      unique_id: foxess_inv1_grid_dependency_daily
-      unit_of_measurement: "kWh"
-      state: >
-        {{( states('sensor.load_daily') | float(default=0)
-          - states('sensor.solar_energy_today') | float(default=0)
           ) | round(3) }}
 
     # separate battery power into charge and discharge based on sign
