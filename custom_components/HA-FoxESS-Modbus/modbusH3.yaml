@@ -511,6 +511,30 @@
       unit_of_measurement: "%"
       state_class: measurement
       scan_interval: !secret scan_interval_low
+    - name: "Inverter State Code"
+      unique_id: foxess_inv1_state_code
+      address: 31041
+      slave: !secret foxess_inv1_slave
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Inverter Fault 1 Code"
+      unique_id: foxess_inv1_fault1_code
+      address: 31044
+      slave: !secret foxess_inv1_slave
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Inverter Fault 2 Code"
+      unique_id: foxess_inv1_fault2_code
+      address: 31045
+      slave: !secret foxess_inv1_slave
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Inverter Fault 3 Code"
+      unique_id: foxess_inv1_fault3_code
+      address: 31046
+      slave: !secret foxess_inv1_slave
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
 
     # -------------------------------------------------------------------------
     # Inverter energy meters
