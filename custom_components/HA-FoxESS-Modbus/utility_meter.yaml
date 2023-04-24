@@ -47,40 +47,6 @@ losses_daily:
   source: sensor.losses_sum
   cycle: daily
 
-pv_energy_monthly:
-  unique_id: foxess_inv1_pv_energy_monthly
-  source: sensor.pv_energy_total
-  cycle: monthly
-feed_in_energy_monthly:
-  unique_id: foxess_inv1_feed_in_energy_monthly
-  source: sensor.feed_in_energy_total
-  cycle: monthly
-grid_consumption_energy_monthly:
-  unique_id: foxess_inv1_grid_consumption_energy_monthly
-  source: sensor.grid_consumption_energy_total
-  cycle: monthly
-load_energy_monthly:
-  unique_id: foxess_inv1_load_energy_monthly
-  source: sensor.load_energy_total
-  cycle: monthly
-
-pv_energy_yearly:
-  unique_id: foxess_inv1_pv_energy_yearly
-  source: sensor.pv_energy_total
-  cycle: yearly
-feed_in_energy_yearly:
-  unique_id: foxess_inv1_feed_in_energy_yearly
-  source: sensor.feed_in_energy_total
-  cycle: yearly
-grid_consumption_energy_yearly:
-  unique_id: foxess_inv1_grid_consumption_energy_yearly
-  source: sensor.grid_consumption_energy_total
-  cycle: yearly
-load_energy_yearly:
-  unique_id: foxess_inv1_load_energy_yearly
-  source: sensor.load_energy_total
-  cycle: yearly
-
   #-----------------------------------------------------------------------------
   # END: utility_meter include file for HA-FoxESS-Modbus
   #-----------------------------------------------------------------------------

@@ -76,8 +76,8 @@
       device_class: "energy"
       unit_of_measurement: "kWh"
       state: >
-        {{( states('sensor.battery_charge_today')|float(default=0)
-          - states('sensor.battery_discharge_today')|float(default=0)
+        {{( states('sensor.charge_energy_today')|float(default=0)
+          - states('sensor.discharge_energy_today')|float(default=0)
           ) | round(3) }}
 
     # calculate power flowing into inverter from solar, battery and grid

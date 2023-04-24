@@ -33,7 +33,7 @@
       unique_id: foxess_inv1_inverter_model
       address: 30000 # input 10000
       slave: !secret foxess_inv1_slave
-      count: 8
+      count: 15
       data_type: string
       scan_interval: !secret scan_interval_static
     #- name: "Serial Number"
@@ -387,7 +387,7 @@
       precision: 1
       state_class: total
       scan_interval: !secret scan_interval_low
-    - name: "Battery Charge Energy Total"
+    - name: "Charge Energy Total"
       unique_id: foxess_inv1_charge_energy_total
       address: 32003 # input 11072
       slave: !secret foxess_inv1_slave
@@ -398,7 +398,7 @@
       precision: 1
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
-    - name: "Battery Charge Energy Today"
+    - name: "Charge Energy Today"
       unique_id: foxess_inv1_charge_energy_today
       address: 32005 # input 11074
       slave: !secret foxess_inv1_slave
@@ -409,7 +409,7 @@
       precision: 1
       state_class: total
       scan_interval: !secret scan_interval_low
-    - name: "Battery Discharge Energy Total"
+    - name: "Discharge Energy Total"
       unique_id: foxess_inv1_discharge_energy_total
       address: 32006 # input 11075
       slave: !secret foxess_inv1_slave
@@ -420,7 +420,7 @@
       precision: 1
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
-    - name: "Battery Discharge Energy Today"
+    - name: "Discharge Energy Today"
       unique_id: foxess_inv1_discharge_energy_today
       address: 32008 # input 11077
       slave: !secret foxess_inv1_slave
@@ -497,7 +497,7 @@
       precision: 1
       state_class: total
       scan_interval: !secret scan_interval_low
-    - name: "Input Energy Total"
+    - name: "Input Energy Total" # battery force charge
       unique_id: foxess_inv1_input_energy_total
       address: 32018 # input 11087
       slave: !secret foxess_inv1_slave
@@ -508,7 +508,7 @@
       precision: 1
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
-    - name: "Input Energy Today"
+    - name: "Input Energy Today" # battery force charge
       unique_id: foxess_inv1_input_energy_today
       address: 32020 # input 11089
       slave: !secret foxess_inv1_slave
