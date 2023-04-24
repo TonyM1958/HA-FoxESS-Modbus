@@ -20,8 +20,8 @@ This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modb
 * Added BMS Cycle Count and rename / rescale of BMS Watthours Total to BMS kWh Total for consistency when working with energy values
 * Added running and daily totals for PV Energy, Charge Energy, Discharge Energy, Grid Consumption Energy, Feed In Energy, Output Energy and Input Energy. These replace Riemann sum approximations for RS485 giving greater accuracy and alignment with Fox cloud data. Where available, these sensors are aliased to the Riemann sums for consistency when using a LAN connection.
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
-* Added HA templates for battery capacity, min soc and battery remaining. These entities are dynamic where RC485 data is available, static otherwise
-* Added entities that load inverter model, serial number, firmware versions and battery firmware versions
+* Added HA templates for battery capacity, min soc and battery remaining. These are dynamic if BMS data is available.
+* Added entities for inverter model and firmware versions and BMS / battery firmware versions
 * Corrected InvBatCurrent and InvBatPower sensors for LAN and RS-485 connections
 * Corrected Temp to BatCurrent sensor for RS485
 * Corrected unique_id for BMS Cell mV low
@@ -37,18 +37,18 @@ Access to your inverter data can be acheived in two ways:
 
 ## Ethernet connection to H1, AC and AIO series inverters
 * Just plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address.
-* Edit modbusH1.yaml to select the modbus tcp connection
+* Edit modbusH1.yaml to select the modbus tcp connection for H1, AC and AIO inverters.
 * Edit your secrets.yaml file to add the inverter IP address
 
-## RS485 connection to H1, AC and AIO series inverters (recommended)
+## RS485 connection to H1, AC, AIO and KH series inverters (recommended)
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
 * Edit modbusH1.yaml to select the modbus rtu connection type with RS485 to USB adapter or the modbus tcp connection type for RS485 to Wifi/LAN adapter
 * Edit your secrets.yaml file to add the inverter IP address if required
 
-## RS485 connection to KH series inverter
-* Setup an RS485 to Wifi/LAN adapter connected to your inverter as described in the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
-* Edit modbusH1.yaml to select the modbus tcp connection
-* Edit your secrets.yaml file to add the inverter IP address
+## RS485 connection to H3 series inverter
+* Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
+* Edit modbusH3.yaml to select the modbus rtu connection type with RS485 to USB adapter or the modbus tcp connection type for RS485 to Wifi/LAN adapter
+* Edit your secrets.yaml file to add the inverter IP address if required
 
 ## Home Assistant Installation Steps
 
@@ -59,7 +59,7 @@ Access to your inverter data can be acheived in two ways:
 * Open template_secrets.yaml and copy the settings into your HA secrets.yaml file
 * Update your secrets.yaml with your IP address details or USB adapter port if required
 * Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuraiton.yaml. As you got this far already, you should probably know what to do!
-* Use modbusH1.yaml for single phase inverters. If you have a 3 phase inverter, comment out the line with modbusH1.yaml and uncomment the line with modbusH3.yaml
+* Select modbusH1.yaml for single phase inverters. If you have a 3 phase inverter, comment out the line with modbusH1.yaml and uncomment the line with modbusH3.yaml
 * Go to Developer Tools and check your configuration is valid (if not, correct the problem) and then Restart HA
 * Go to Settings / Devices & Services / Entities and check the entities that are now available.
 * Add the required entities to your dashboard(s)
