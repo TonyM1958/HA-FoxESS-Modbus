@@ -302,7 +302,7 @@
       precision: 1
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Ambient Temperature"
+    - name: "Inner Temperature"
       unique_id: foxess_inv1_ambient_temperature
       address: 31019 # input 11025
       slave: !secret foxess_inv1_slave
