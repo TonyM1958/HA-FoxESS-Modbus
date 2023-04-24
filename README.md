@@ -35,8 +35,8 @@ Access to your inverter data can be acheived in two ways:
 ---
 
 
-## Ethernet connection to H1, AC and AIO series inverters
-* Just plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address.
+## Ethernet connection to H1, AC and AIO series inverters (not recommended)
+* Plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address. Note: a restricted data set of is provided via this port and many sensors will not be available, including your inverter energy meters and battery management information. 
 * Edit modbusH1.yaml to select the modbus tcp connection for H1, AC and AIO inverters.
 * Edit your secrets.yaml file to add the inverter IP address
 
