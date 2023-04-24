@@ -8,13 +8,12 @@
 # If you have a complex HA setup and already have any sections with these names,
 # create a local include file in your CONFIG folder, merge the contents of the
 # relevant file and reference your local include here.
-# Use H1 files for single phase inverters or H3 files for 3 phase inverters
+# Use H1 file for single phase inverters or H3 file for 3 phase inverters
 
 # Integrations used by HA-FoxESS-Modbus:
 modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1.yaml
-template: !include custom_components/HA-FoxESS-Modbus/templateH1.yaml
 #modbus: !include custom_components/HA-FoxESS-Modbus/modbusH3.yaml
-#template: !include custom_components/HA-FoxESS-Modbus/templateH3.yaml
+template: !include custom_components/HA-FoxESS-Modbus/template.yaml
 sensor: !include custom_components/HA-FoxESS-Modbus/sensor.yaml
 utility_meter: !include custom_components/HA-FoxESS-Modbus/utility_meter.yaml
 #
