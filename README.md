@@ -18,8 +18,7 @@ This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modb
 * Added HA templates for calculating inverter efficiency, cell imbalance, grid dependency and grid balance
 * Added RPower and EPS RVolt, EPS RCurrent and EPS RPower sensors for LAN and RS485 connections
 * Added BMS Cycle Count and rename / rescale of BMS Watthours Total to BMS kWh Total for consistency when working with energy values
-* Added running and daily totals for Solar Energy, Battery Charge, Battery Discharge, Grid Consumption Energy, Feed In Energy, Total Yield and (Battery) Input Energy. These replace Riemann sum approximations for RS485 giving greater accuracy and alignment with Fox cloud data. Where available, these sensors are aliased to the Riemann sums for consistency when using a LAN connection.
-* Added monthly and yearly totals for solar energy, feed in energy and grid consumption
+* Added running and daily totals for PV Energy, Charge Energy, Discharge Energy, Grid Consumption Energy, Feed In Energy, Output Energy and Input Energy. These replace Riemann sum approximations for RS485 giving greater accuracy and alignment with Fox cloud data. Where available, these sensors are aliased to the Riemann sums for consistency when using a LAN connection.
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
 * Added HA templates for battery capacity, min soc and battery remaining. These entities are dynamic where RC485 data is available, static otherwise
 * Added entities that load inverter model, serial number, firmware versions and battery firmware versions

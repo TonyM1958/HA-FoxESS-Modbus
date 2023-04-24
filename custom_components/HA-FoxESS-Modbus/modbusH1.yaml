@@ -292,7 +292,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
 
-    - name: "InvTemp"
+    - name: "Inverter Temperature"
       unique_id: foxess_inv1_inverter_temperature
       address: 31018 # input 11024
       slave: !secret foxess_inv1_slave
@@ -302,7 +302,7 @@
       precision: 1
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "AmbTemp"
+    - name: "Ambient Temperature"
       unique_id: foxess_inv1_ambient_temperature
       address: 31019 # input 11025
       slave: !secret foxess_inv1_slave
@@ -342,7 +342,7 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_high
-    - name: "Battery Temp"
+    - name: "Battery Temperature"
       unique_id: foxess_inv1_battery_temperature
       address: 31023 # input 11038
       slave: !secret foxess_inv1_slave
