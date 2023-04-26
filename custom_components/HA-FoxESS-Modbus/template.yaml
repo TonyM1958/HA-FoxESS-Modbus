@@ -38,6 +38,7 @@
         {% set energy = capacity * soc / 100 if energy < 0.0 else energy %}
         {{ energy | round(2) }}
     # calculate the number of hours that the battery can power the current load for
+    # 5% loss allowance for inverter converting battery DC  to house AC power
     - name: "Battery Duration"
       unique_id: foxess_inv1_battery_duration
       icon: "mdi:timer-play"
@@ -47,7 +48,7 @@
         {% set min_soc = states('sensor.battery_min_soc') | float(default=0.10) %}
         {% set reserve = capacity * min_soc %}
         {% set energy = states('sensor.battery_remaining') | float(default=0) %}
-        {% set power = states('sensor.load_power') | float(default=0) %}
+        {% set power = states('sensor.load_power') | float(default=0) * 1.05 %}
         {% set power = 0.1 if power < 0.1 else power %}
         {% set hours = ((energy - reserve) / power) | int  %}
         {% set hours = 24 if hours > 24 else hours  %}
