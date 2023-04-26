@@ -53,13 +53,13 @@ Access to your inverter data can be acheived in two ways:
 ## Home Assistant Installation Steps
 
 * Create a full backup of your HA instance
-* Mirror the folders / files provided in custom_components in the folder CONFIG/custom_components on your HA host (for example, using either the File Editor or Studio Code Server add-ons)
-* The folder custom_components/HA-FoxESS-Modbus contains files that include template text for updating the secrets.yaml and configuration.yaml files in your HA CONFIG folder 
-* Open modbusH1.yaml and comment / uncomment the settings for your connection type: use modbus rtu for a USB connection or modbus tcp for a LAN connection
+* Copy the folders / files provided under custom_components into the folder /config/custom_components on your HA host (for example, using either the File Editor or Studio Code Server add-ons)
+* The folder custom_components/HA-FoxESS-Modbus contains files with template text for updating configuration.yaml and secrets.yaml in your /config folder 
+* Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuration.yaml. As you got this far already, you should probably know what to do!
+* Select modbusH1.yaml for single phase inverters. If you have a 3 phase inverter, comment out the line with modbusH1.yaml and uncomment the line with modbusH3.yaml
+* Open modbusH1.yaml or modbusH3.yaml and update the settings for your connection type: use modbus rtu for a USB connection or modbus tcp for a LAN connection
 * Open template_secrets.yaml and copy the settings into your HA secrets.yaml file
 * Update your secrets.yaml with your IP address details or USB adapter port if required
-* Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuraiton.yaml. As you got this far already, you should probably know what to do!
-* Select modbusH1.yaml for single phase inverters. If you have a 3 phase inverter, comment out the line with modbusH1.yaml and uncomment the line with modbusH3.yaml
 * Go to Developer Tools and check your configuration is valid (if not, correct the problem) and then Restart HA
 * Go to Settings / Devices & Services / Entities and check the entities that are now available.
 * Add the required entities to your dashboard(s)
