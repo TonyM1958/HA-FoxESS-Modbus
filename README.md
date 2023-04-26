@@ -12,7 +12,7 @@
 This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modbus. The changes from the main branch include:
 
 * Simplified configuration: only 4 lines required in your HA configuration.yaml with modbus, sensors, templates and utility_meter integrations split into separate include files
-* Support for single phase inverters (including H1, AC1 AIO and KH series) and three phase inverter (H3 series)
+* Support for single phase inverters (including H1, AC1 AIO and KH series) and three phase inverter (H3 and AC3 series)
 * Parameterization and grouping of sensor scan_interval so they are more uniform and easier to change in a consistent way when required
 * Revised calculation for inverter power in, power out and system losses
 * Added HA templates for calculating inverter efficiency, cell imbalance, grid dependency and grid balance
@@ -46,7 +46,7 @@ Access to your inverter data can be acheived in two ways:
 * Edit modbusH1.yaml to select the modbus rtu connection type with RS485 to USB adapter or the modbus tcp connection type for RS485 to Wifi/LAN adapter
 * Edit your secrets.yaml file to add the inverter IP address if required
 
-## RS485 connection to H3 series inverter
+## RS485 connection to H3 or AC3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
 * Connect RS485A to pin 1 and RS485B to pin 2 of the Meter/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Edit modbusH3.yaml to select the modbus rtu connection type with RS485 to USB adapter or the modbus tcp connection type for RS485 to Wifi/LAN adapter
