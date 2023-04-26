@@ -12,13 +12,13 @@
 This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modbus. The changes from the main branch include:
 
 * Simplified configuration: only 4 lines required in your HA configuration.yaml with modbus, sensors, templates and utility_meter integrations split into separate include files
-* Support for single phase inverters including H1, AC1 AIO and KH series
+* Support for single phase inverters (including H1, AC1 AIO and KH series) and three phase inverter (H3 series)
 * Parameterization and grouping of sensor scan_interval so they are more uniform and easier to change in a consistent way when required
 * Revised calculation for inverter power in, power out and system losses
 * Added HA templates for calculating inverter efficiency, cell imbalance, grid dependency and grid balance
 * Added RPower and EPS RVolt, EPS RCurrent and EPS RPower sensors for LAN and RS485 connections
 * Added BMS Cycle Count and rename / rescale of BMS Watthours Total to BMS kWh Total for consistency when working with energy values
-* Added total and today registers values for PV Energy, Charge Energy, Discharge Energy, Grid Consumption Energy, Feed In Energy, Output Energy and Input Energy. These replace Riemann sum approximations for RS485 giving greater accuracy and alignment with Fox cloud data. There is also a code variant so these values can be used for the utility meters that feed the energy dashboard.
+* Added inverter energy meter total / today register values for PV Energy, Charge Energy, Discharge Energy, Grid Consumption Energy, Feed In Energy, Output Energy and Input Energy. These replace the Riemann sum values for RS485, giving greater accuracy and alignment with Fox cloud data. There is a code variant for these values to be used for the utility meters that feed the energy dashboard.
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
 * Added HA templates for battery capacity, min soc and battery remaining. These are dynamic if BMS data is available.
 * Added entities for inverter model and firmware versions and BMS / battery firmware versions
@@ -28,25 +28,27 @@ This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modb
 
 Access to your inverter data can be acheived in two ways:
 
-* Connecting the inverters LAN port to your router/switch (no additional hardware but Manager firmware 1.57 or later required for H1/AC1). This connection provides a limited set of real time data, sufficient for general management of your equipment.
-* Connecting to the inverter's RS485 modbus using an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect two wires to the inverters CT / COM connector. This connection provides a more comprehensive set of real time data, including BMS cycle count and cell range info and inverter running totals.
+* Connecting the inverters LAN port, where available, to your router/switch (no additional hardware but Manager firmware 1.57 or later required for H1/AC1). This connection provides a limited set of real time data, sufficient for general management of your equipment.
+* Connecting the inverter's RS485 modbus to an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect 2 wires to the inverters CT / COM connector. This connection is recommended as it provides more comprehensive real time data, including BMS cycle count and cell range info and inverter running totals.
 
 
 ---
 
 
-## Ethernet connection to H1, AC and AIO series inverters (not recommended)
+## Ethernet connection to H1, AC and AIO series inverters
 * Plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address. Note: a restricted data set of is provided via this port and many sensors will not be available, including your inverter energy meters and battery management information. 
 * Edit modbusH1.yaml to select the modbus tcp connection for H1, AC and AIO inverters.
 * Edit your secrets.yaml file to add the inverter IP address
 
 ## RS485 connection to H1, AC, AIO and KH series inverters (recommended)
-* Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
+* Hardware configuration instructions can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
+* Connect RS485A to pin 4 and RS485B to pin 3 of the Meter/CT/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Edit modbusH1.yaml to select the modbus rtu connection type with RS485 to USB adapter or the modbus tcp connection type for RS485 to Wifi/LAN adapter
 * Edit your secrets.yaml file to add the inverter IP address if required
 
 ## RS485 connection to H3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
+* Connect RS485A to pin 1 and RS485B to pin 2 of the Meter/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Edit modbusH3.yaml to select the modbus rtu connection type with RS485 to USB adapter or the modbus tcp connection type for RS485 to Wifi/LAN adapter
 * Edit your secrets.yaml file to add the inverter IP address if required
 
