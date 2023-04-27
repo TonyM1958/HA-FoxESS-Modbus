@@ -233,6 +233,15 @@
       state: >
         {{ (states('sensor.pv1_power') | float(default=0) + states('sensor.pv2_power') | float(default=0) ) * 1 }}
 
+    - name: "Work Mode Text"
+      unique_id: foxess_inv1_work_mode_text
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set mode = states('sensor.work_mode') | int(default=-1) %}
+        {% set result = 'Self Use' if mode == 0 else 'Unknown' %}
+        {% set result = 'Feed In First' if mode == 1 else result %}
+        {% set result = 'Backup' if mode == 2 else result %}
+        {{ result }}
     - name: "Time Period 1 Start Time"
       unique_id: foxess_inv1_time_period_1_start_time
       icon: "mdi:calendar-clock"
