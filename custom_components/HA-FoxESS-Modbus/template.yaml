@@ -242,38 +242,28 @@
         {% set result = 'Feed In First' if mode == 1 else result %}
         {% set result = 'Backup' if mode == 2 else result %}
         {{ result }}
-    - name: "Time Period 1 Start Time"
-      unique_id: foxess_inv1_time_period_1_start_time
+    - name: "Time Period 1"
+      unique_id: foxess_inv1_time_period_1
       icon: "mdi:calendar-clock"
       state: >
-        {% set raw_time = states('sensor.time_period_1_start') | int %}
-        {% set hours = raw_time // 256 %}
-        {% set minutes = raw_time - (hours * 256) %}
-        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
-    - name: "Time Period 1 End Time"
-      unique_id: foxess_inv1_time_period_1_end_time
+        {% set s = states('sensor.time_period_1_start') | int(default=0) %}
+        {% set start_time = ('0' + (s // 256) | string)[-2:] + ':' + ('0' + (s % 256) | string)[-2:] %}
+        {% set e = states('sensor.time_period_1_end') | int(default=0) %}
+        {% set end_time = ('0' + (e // 256) | string)[-2:] + ':' + ('0' + (e % 256) | string)[-2:] %}
+        {% set enabled = states('binary_sensor.time_period_1_enabled') | string %}
+        {% set action = 'Charge' if enabled == 'on' else 'Hold' %}
+        {{ action + ' ' + start_time + ' - ' + end_time }}
+    - name: "Time Period 2"
+      unique_id: foxess_inv1_time_period_2
       icon: "mdi:calendar-clock"
       state: >
-        {% set raw_time = states('sensor.time_period_1_end') | int %}
-        {% set hours = raw_time // 256 %}
-        {% set minutes = raw_time - (hours * 256) %}
-        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
-    - name: "Time Period 2 Start Time"
-      unique_id: foxess_inv1_time_period_2_start_time
-      icon: "mdi:calendar-clock"
-      state: >
-        {% set raw_time = states('sensor.time_period_2_start') | int %}
-        {% set hours = raw_time // 256 %}
-        {% set minutes = raw_time - (hours * 256) %}
-        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
-    - name: "Time Period 2 End Time"
-      unique_id: foxess_inv1_time_period_2_end_time
-      icon: "mdi:calendar-clock"
-      state: >
-        {% set raw_time = states('sensor.time_period_2_end') | int %}
-        {% set hours = raw_time // 256 %}
-        {% set minutes = raw_time - (hours * 256) %}
-        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+        {% set s = states('sensor.time_period_2_start') | int(default=0) %}
+        {% set start_time = ('0' + (s // 256) | string)[-2:] + ':' + ('0' + (s % 256) | string)[-2:] %}
+        {% set e = states('sensor.time_period_2_end') | int(default=0) %}
+        {% set end_time = ('0' + (e // 256) | string)[-2:] + ':' + ('0' + (e % 256) | string)[-2:] %}
+        {% set enabled = states('binary_sensor.time_period_2_enabled') | string %}
+        {% set action = 'Charge' if enabled == 'on' else 'Hold' %}
+        {{ action + ' ' + start_time + ' - ' + end_time }}
 
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus
