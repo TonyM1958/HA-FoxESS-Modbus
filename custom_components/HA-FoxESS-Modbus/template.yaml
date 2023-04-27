@@ -20,16 +20,9 @@
         {% set result = current if remaining < 0.0 else remaining %}
         {% set result = capacity if result < 0.0 else result %}
         {{ result | round(2) }}
-    # battery minimum state of charge
-    # ---------- add your min soc on grid ----------
-    - name: "Battery Min Soc"
-      unique_id: foxess_inv1_battery_min_soc
-      state: >
-        {% set min_soc = 0.12 %}
-        {{ min_soc }}
-    # calculate remaining energy in battery
-    - name: "Battery Remaining"
-      unique_id: foxess_inv1_battery_remaining
+    # calculate the energy in battery
+    - name: "Battery Energy"
+      unique_id: foxess_inv1_battery_energy
       unit_of_measurement: "kWh"
       state: >
         {% set capacity = states('sensor.battery_capacity') | float(default=0) %}
@@ -45,9 +38,9 @@
       unit_of_measurement: "h"
       state: >
         {% set capacity = states('sensor.battery_capacity') | float(default=0) %}
-        {% set min_soc = states('sensor.battery_min_soc') | float(default=0.10) %}
-        {% set reserve = capacity * min_soc %}
-        {% set energy = states('sensor.battery_remaining') | float(default=0) %}
+        {% set min_soc = states('sensor.min_soc_on_grid') | float(default=10) %}
+        {% set reserve = capacity * min_soc / 100 %}
+        {% set energy = states('sensor.battery_energy') | float(default=0) %}
         {% set power = states('sensor.load_power') | float(default=0) * 1.05 %}
         {% set power = 0.1 if power < 0.1 else power %}
         {% set hours = ((energy - reserve) / power) | int  %}
@@ -247,23 +240,25 @@
       icon: "mdi:calendar-clock"
       state: >
         {% set s = states('sensor.time_period_1_start') | int(default=0) %}
-        {% set start_time = ('0' + (s // 256) | string)[-2:] + ':' + ('0' + (s % 256) | string)[-2:] %}
+        {% set start_time = ('0' + (s // 256) | string)[-2:] + '.' + ('0' + (s % 256) | string)[-2:] %}
         {% set e = states('sensor.time_period_1_end') | int(default=0) %}
-        {% set end_time = ('0' + (e // 256) | string)[-2:] + ':' + ('0' + (e % 256) | string)[-2:] %}
+        {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
         {% set enabled = states('binary_sensor.time_period_1_enabled') | string %}
-        {% set action = 'Charge' if enabled == 'on' else 'Hold' %}
-        {{ action + ' ' + start_time + ' - ' + end_time }}
+        {% set action = 'Force charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
+        {% set action = '' if e == 0 and s == 0 else action %}
+        {{ action + start_time + ' - ' + end_time }}
     - name: "Time Period 2"
       unique_id: foxess_inv1_time_period_2
       icon: "mdi:calendar-clock"
       state: >
         {% set s = states('sensor.time_period_2_start') | int(default=0) %}
-        {% set start_time = ('0' + (s // 256) | string)[-2:] + ':' + ('0' + (s % 256) | string)[-2:] %}
+        {% set start_time = ('0' + (s // 256) | string)[-2:] + '.' + ('0' + (s % 256) | string)[-2:] %}
         {% set e = states('sensor.time_period_2_end') | int(default=0) %}
-        {% set end_time = ('0' + (e // 256) | string)[-2:] + ':' + ('0' + (e % 256) | string)[-2:] %}
+        {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
         {% set enabled = states('binary_sensor.time_period_2_enabled') | string %}
-        {% set action = 'Charge' if enabled == 'on' else 'Hold' %}
-        {{ action + ' ' + start_time + ' - ' + end_time }}
+        {% set action = 'Force charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
+        {% set action = '' if e == 0 and s == 0 else action %}
+        {{ action + start_time + ' - ' + end_time }}
 
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus
