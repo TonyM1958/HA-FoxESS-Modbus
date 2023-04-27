@@ -839,6 +839,50 @@
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
 
+    # -------------------------------------------------------------------------
+    # Inverter Control registers
+    # these entities will be unavailable when using direct LAN connection
+    # -------------------------------------------------------------------------
+
+    - name: "Time Period 1 Start"
+      unique_id: foxess_inv1_time_period_1_start
+      address: 41002
+      scan_interval: 60
+      slave: 247
+      input_type: input
+    - name: "Time Period 1 End"
+      unique_id: foxess_inv1_time_period_1_end
+      address: 41003
+      scan_interval: 60
+      slave: 247
+      input_type: input
+    - name: "Time Period 2 Start"
+      unique_id: foxess_inv1_time_period_2_start
+      address: 41005
+      scan_interval: 60
+      slave: 247
+      input_type: input
+    - name: "Time Period 2 End"
+      unique_id: foxess_inv1_time_period_2_end
+      address: 41006
+      scan_interval: 60
+      slave: 247
+      input_type: input
+
+  binary_sensors:
+    - name: "Time Period 1 Enabled"
+      unique_id: foxess_inv1_time_period_1_enabled
+      address: 41001
+      scan_interval: 60
+      slave: 247
+      input_type: input
+    - name: "Time Period 2 Enabled"
+      unique_id: foxess_inv1_time_period_2_enabled
+      address: 41004
+      scan_interval: 60
+      slave: 247
+      input_type: input
+
   # ---------------------------------------------------------------------------
   # END: modbus include file for HA-FoxESS-Modbus RS485 connection
   # ---------------------------------------------------------------------------

@@ -233,6 +233,39 @@
       state: >
         {{ (states('sensor.pv1_power') | float(default=0) + states('sensor.pv2_power') | float(default=0) ) * 1 }}
 
+    - name: "Time Period 1 Start Time"
+      unique_id: foxess_inv1_time_period_1_start_time
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set raw_time = states('sensor.time_period_1_start') | int %}
+        {% set hours = raw_time // 256 %}
+        {% set minutes = raw_time - (hours * 256) %}
+        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+    - name: "Time Period 1 End Time"
+      unique_id: foxess_inv1_time_period_1_end_time
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set raw_time = states('sensor.time_period_1_end') | int %}
+        {% set hours = raw_time // 256 %}
+        {% set minutes = raw_time - (hours * 256) %}
+        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+    - name: "Time Period 2 Start Time"
+      unique_id: foxess_inv1_time_period_2_start_time
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set raw_time = states('sensor.time_period_2_start') | int %}
+        {% set hours = raw_time // 256 %}
+        {% set minutes = raw_time - (hours * 256) %}
+        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+    - name: "Time Period 2 End Time"
+      unique_id: foxess_inv1_time_period_2_end_time
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set raw_time = states('sensor.time_period_2_end') | int %}
+        {% set hours = raw_time // 256 %}
+        {% set minutes = raw_time - (hours * 256) %}
+        {{ strptime(hours | string + ":" + minutes | string, '%H:%M').time() }}
+
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus
   #-----------------------------------------------------------------------------
