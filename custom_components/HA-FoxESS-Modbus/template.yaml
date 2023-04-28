@@ -54,9 +54,8 @@
       state: >
         {% set cell_high = states('sensor.bms_cell_mv_high') | float(default=-1) %}
         {% set cell_low = states('sensor.bms_cell_mv_low') | float(default=-1) %}
-        {% set imbalance = (cell_high-cell_low) / (cell_high + cell_low) * 200 if cell_low > 0.0 else -1 %}
-        {% set imbalance = 0.0 if cell_high < cell_low else imbalance %}
-        {% set imbalance = 'Unavailable' if imbalance < 0.0 else imbalance | round(2) %}
+        {% set imbalance = ((cell_high - cell_low) | abs) / (cell_high + cell_low) * 200 %}
+        {% set imbalance = 'Unavailable' if cell_high <= -1 or cell_low <= -1 else imbalance | round(2) %}
         {{ imbalance }}
     # calculate average cell temperature using the min and max cell temperature
     - name: "Battery Cell Temperature"
@@ -66,7 +65,7 @@
         {% set temp_high = states('sensor.bms_cell_temp_high') | float(default=-50) %}
         {% set temp_low = states('sensor.bms_cell_temp_low') | float(default=-50) %}
         {% set temp = (temp_high + temp_low) / 2 %}
-        {% set temp = 'Unavailable' if temp <= -20 else temp | round(1) %}
+        {% set temp = 'Unavailable' if temp_high <= -50 or temp_low <= -50 else temp | round(1) %}
         {{ temp }}
     # calculate the amount of energy stored in the battery today
     - name: "Battery Backfill"
@@ -247,7 +246,7 @@
         {% set enabled = states('binary_sensor.time_period_1_enabled') | string %}
         {% set action = 'Force charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
         {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
-        {% set result = 'Unavailable' if s < 0 or e < 0 else result %}
+        {% set result = 'Unavailable' if s <= -1 or e <= -1 else result %}
         {{ result }}
     - name: "Time Period 2"
       unique_id: foxess_inv1_time_period_2
@@ -260,7 +259,7 @@
         {% set enabled = states('binary_sensor.time_period_2_enabled') | string %}
         {% set action = 'Force charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
         {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
-        {% set result = 'Unavailable' if s < 0 or e < 0 else result %}
+        {% set result = 'Unavailable' if s <= -1 or e <= -1 else result %}
         {{ result }}
 
   #-----------------------------------------------------------------------------
