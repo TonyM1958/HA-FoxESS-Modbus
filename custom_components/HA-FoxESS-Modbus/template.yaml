@@ -65,8 +65,8 @@
       state: >
         {% set temp_high = states('sensor.bms_cell_temp_high') | float(default=-50) %}
         {% set temp_low = states('sensor.bms_cell_temp_low') | float(default=-50) %}
-        {% set temp = (temp_high + temp_low) / 2 | round(1) %}
-        {% set temp = 'Unavailable' if temp <= -20 else temp %}
+        {% set temp = (temp_high + temp_low) / 2 %}
+        {% set temp = 'Unavailable' if temp <= -20 else temp | round(1) %}
         {{ temp }}
     # calculate the amount of energy stored in the battery today
     - name: "Battery Backfill"
