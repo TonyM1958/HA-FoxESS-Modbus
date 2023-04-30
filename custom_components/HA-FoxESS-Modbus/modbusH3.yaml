@@ -843,6 +843,48 @@
     # Inverter Control registers
     # these entities will be unavailable when using direct LAN connection
     # -------------------------------------------------------------------------
+    - name: "Datetime Years"
+      unique_id: foxess_inv1_datetime_years
+      address: 40000
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Datetime Months"
+      unique_id: foxess_inv1_datetime_months
+      address: 40001
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Datetime Days"
+      unique_id: foxess_inv1_datetime_days
+      address: 40002
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Datetime Hours"
+      unique_id: foxess_inv1_datetime_hours
+      address: 40003
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Datetime Minutes"
+      unique_id: foxess_inv1_datetime_minutes
+      address: 40004
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Datetime Seconds"
+      unique_id: foxess_inv1_datetime_seconds
+      address: 40005
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
 
     - name: "Work Mode"
       unique_id: foxess_inv1_work_mode
@@ -876,6 +918,28 @@
       slave: !secret foxess_inv1_slave
       scan_interval: !secret scan_interval_low
 
+    - name: "Max Charge Current"
+      unique_id: foxess_inv1_max_charge_current
+      address: 41007
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Max Discharge Current"
+      unique_id: foxess_inv1_max_discharge_current
+      address: 41008
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
     - name: "Min SoC"
       unique_id: foxess_inv1_min_soc
       address: 41009
@@ -901,6 +965,18 @@
       slave: !secret foxess_inv1_slave
       device_class: battery
       unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Export Limit"
+      unique_id: foxess_inv1_export_limit
+      address: 41012
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 1
       state_class: measurement
       scan_interval: !secret scan_interval_low
 

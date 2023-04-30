@@ -76,7 +76,37 @@
         {{( states('sensor.charge_energy_today')|float(default=0)
           - states('sensor.discharge_energy_today')|float(default=0)
           ) | round(3) }}
+    # calculate days since the sytsem was installed
+    - name: "Installed Days"
+      unique_id: foxess_inv1_installed_days
+      unit_of_measurement: "days"
+      state: >
+        {% set date_install = as_timestamp(strptime('17-01-2023', '%d-%m-%Y')) %}
+        {% set date_now = as_timestamp(now()) %}
+        {% set installed_days = (date_now - date_install) | int // 60 // 60 // 24 %}
+        {{ installed_days }}
+    # calculate years of battery life remaining
+    - name: "Battery Life Remaining"
+      unique_id: foxess_inv1_battery_life_remaining
+      unit_of_measurement: "years"
+      state: >
+        {% set installed_days = states('sensor.installed_days') | int %}
+        {% set cycles_now = states('sensor.bms_cycle_count') | int %}
+        {% set years_remaining = installed_days / cycles_now * 6000 / 365 %}
+        {{ years_remaining | round(0) }}
 
+    # inverter date and time setting
+    - name: "Inverter Date Time"
+      unique_id: foxess_inv1_inverter_datetime
+      icon: mdi:clock
+      state: >
+        {% set dt = states('sensor.datetime_years') %}
+        {% set dt = dt + '-' + ('0' + states('sensor.datetime_months'))[-2:] %}
+        {% set dt = dt + '-' + ('0' + states('sensor.datetime_days'))[-2:] %}
+        {% set dt = dt + ' ' + ('0' + states('sensor.datetime_hours'))[-2:] %}
+        {% set dt = dt + ':' + ('0' + states('sensor.datetime_minutes'))[-2:] %}
+        {% set dt = dt + ':' + ('0' + states('sensor.datetime_seconds'))[-2:] %}
+        {{ dt }}
     # calculate power flowing into inverter from solar, battery and grid
     - name: "Inverter Power In"
       device_class: "power"
