@@ -6,8 +6,14 @@
 # these templates perform maths operations on sensor values to create derrived values
 
 - sensor:
+    # system installation date for calculating ageing
+    # ---------- enter your installation date here ------------------
+    - name: "Install Date"
+      unique_id: foxess_inv1_install_date
+      state: >
+        {{ '17-01-2023' }}
     # battery capacity
-    # ---------- add your battery capacity ----------
+    # ---------- enter your nominal battery capacity below ----------
     - name: "Battery Capacity"
       unique_id: foxess_inv1_battery_capacity
       unit_of_measurement: "kWh"
@@ -41,7 +47,7 @@
         {% set min_soc = states('sensor.min_soc_on_grid') | float(default=10) %}
         {% set reserve = capacity * min_soc / 100 %}
         {% set energy = states('sensor.battery_energy') | float(default=0) %}
-        {% set power = states('sensor.load_power') | float(default=0) * 1.05 %}
+        {% set power = states('sensor.load_power_rolling') | float(default=0) * 1.05 %}
         {% set power = 0.1 if power < 0.1 else power %}
         {% set hours = ((energy - reserve) / power) | int  %}
         {% set hours = 24 if hours > 24 else hours  %}
@@ -54,9 +60,9 @@
       state: >
         {% set cell_high = states('sensor.bms_cell_mv_high') | float(default=-1) %}
         {% set cell_low = states('sensor.bms_cell_mv_low') | float(default=-1) %}
-        {% set imbalance = (cell_high-cell_low) / (cell_high + cell_low) * 200 if cell_low > 0.0 else 'unknown' %}
-        {% set imbalance = 0.0 if cell_high < cell_low else imbalance %}
-        {{ imbalance | round(2) }}
+        {% set imbalance = ((cell_high - cell_low) | abs) / (cell_high + cell_low) * 200 %}
+        {% set imbalance = 'Unavailable' if cell_high <= -1 or cell_low <= -1 else imbalance | round(2) %}
+        {{ imbalance }}
     # calculate average cell temperature using the min and max cell temperature
     - name: "Battery Cell Temperature"
       unique_id: foxess_inv1_battery_cell_temperature
@@ -65,8 +71,8 @@
         {% set temp_high = states('sensor.bms_cell_temp_high') | float(default=-50) %}
         {% set temp_low = states('sensor.bms_cell_temp_low') | float(default=-50) %}
         {% set temp = (temp_high + temp_low) / 2 %}
-        {% set temp = 'unknown' if temp <= -20 else temp %}
-        {{ temp | round(1) }}
+        {% set temp = 'Unavailable' if temp_high <= -50 or temp_low <= -50 else temp | round(1) %}
+        {{ temp }}
     # calculate the amount of energy stored in the battery today
     - name: "Battery Backfill"
       unique_id: foxess_inv1_battery_backfill
@@ -76,7 +82,45 @@
         {{( states('sensor.charge_energy_today')|float(default=0)
           - states('sensor.discharge_energy_today')|float(default=0)
           ) | round(3) }}
+    # calculate days since the sytsem was installed
+    - name: "Installed Days"
+      unique_id: foxess_inv1_installed_days
+      unit_of_measurement: "days"
+      state: >
+        {% set date_install = as_timestamp(strptime(states('sensor.install_date'), '%d-%m-%Y')) %}
+        {% set date_now = as_timestamp(now()) %}
+        {% set installed_days = (date_now - date_install) | int // 60 // 60 // 24 %}
+        {{ installed_days }}
+    # calculate years of battery life remaining
+    - name: "Battery Life Remaining"
+      unique_id: foxess_inv1_battery_life_remaining
+      unit_of_measurement: "years"
+      state: >
+        {% set installed_days = states('sensor.installed_days') | int %}
+        {% set cycles_now = states('sensor.bms_cycle_count') | int %}
+        {% set years_remaining = installed_days / cycles_now * 6000 / 365 %}
+        {{ years_remaining | round(0) }}
 
+    # inverter date and time setting
+    - name: "Inverter Date Time"
+      unique_id: foxess_inv1_inverter_datetime
+      icon: mdi:clock
+      state: >
+        {% set t = states('sensor.datetime_years') %}
+        {% set t = t + '-' + ('0' + states('sensor.datetime_months'))[-2:] %}
+        {% set t = t + '-' + ('0' + states('sensor.datetime_days'))[-2:] %}
+        {% set t = t + ' ' + ('0' + states('sensor.datetime_hours'))[-2:] %}
+        {% set t = t + ':' + ('0' + states('sensor.datetime_minutes'))[-2:] %}
+        {% set t = t + ':' + ('0' + states('sensor.datetime_seconds'))[-2:] %}
+        {{ t }}
+    # inverter time setting
+    - name: "Inverter Time"
+      unique_id: foxess_inv1_inverter_time
+      icon: mdi:clock
+      state: >
+        {% set t = ('0' + states('sensor.datetime_hours'))[-2:] %}
+        {% set t = t + ':' + ('0' + states('sensor.datetime_minutes'))[-2:] %}
+        {{ t }}
     # calculate power flowing into inverter from solar, battery and grid
     - name: "Inverter Power In"
       device_class: "power"
@@ -231,7 +275,7 @@
       icon: "mdi:calendar-clock"
       state: >
         {% set mode = states('sensor.work_mode') | int(default=-1) %}
-        {% set result = 'Self Use' if mode == 0 else 'Unknown' %}
+        {% set result = 'Self Use' if mode == 0 else 'Unavailable' %}
         {% set result = 'Feed In First' if mode == 1 else result %}
         {% set result = 'Backup' if mode == 2 else result %}
         {{ result }}
@@ -239,26 +283,28 @@
       unique_id: foxess_inv1_time_period_1
       icon: "mdi:calendar-clock"
       state: >
-        {% set s = states('sensor.time_period_1_start') | int(default=0) %}
+        {% set s = states('sensor.time_period_1_start') | int(default=-1) %}
         {% set start_time = ('0' + (s // 256) | string)[-2:] + '.' + ('0' + (s % 256) | string)[-2:] %}
-        {% set e = states('sensor.time_period_1_end') | int(default=0) %}
+        {% set e = states('sensor.time_period_1_end') | int(default=-1) %}
         {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
         {% set enabled = states('binary_sensor.time_period_1_enabled') | string %}
         {% set action = 'Force charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
-        {% set action = '' if e == 0 and s == 0 else action %}
-        {{ action + start_time + ' - ' + end_time }}
+        {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
+        {% set result = 'Unavailable' if s <= -1 or e <= -1 else result %}
+        {{ result }}
     - name: "Time Period 2"
       unique_id: foxess_inv1_time_period_2
       icon: "mdi:calendar-clock"
       state: >
-        {% set s = states('sensor.time_period_2_start') | int(default=0) %}
+        {% set s = states('sensor.time_period_2_start') | int(default=-1) %}
         {% set start_time = ('0' + (s // 256) | string)[-2:] + '.' + ('0' + (s % 256) | string)[-2:] %}
-        {% set e = states('sensor.time_period_2_end') | int(default=0) %}
+        {% set e = states('sensor.time_period_2_end') | int(default=-1) %}
         {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
         {% set enabled = states('binary_sensor.time_period_2_enabled') | string %}
         {% set action = 'Force charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
-        {% set action = '' if e == 0 and s == 0 else action %}
-        {{ action + start_time + ' - ' + end_time }}
+        {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
+        {% set result = 'Unavailable' if s <= -1 or e <= -1 else result %}
+        {{ result }}
 
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus
