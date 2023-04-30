@@ -6,8 +6,14 @@
 # these templates perform maths operations on sensor values to create derrived values
 
 - sensor:
+    # system installation date for calculating ageing
+    # ---------- enter your installation date here ------------------
+    - name: "Install Date"
+      unique_id: foxess_inv1_install_date
+      state: >
+        {{ '17-01-2023' }}
     # battery capacity
-    # ---------- add your battery capacity ----------
+    # ---------- enter your nominal battery capacity below ----------
     - name: "Battery Capacity"
       unique_id: foxess_inv1_battery_capacity
       unit_of_measurement: "kWh"
@@ -81,7 +87,7 @@
       unique_id: foxess_inv1_installed_days
       unit_of_measurement: "days"
       state: >
-        {% set date_install = as_timestamp(strptime('17-01-2023', '%d-%m-%Y')) %}
+        {% set date_install = as_timestamp(strptime(states('sensor.install_date'), '%d-%m-%Y')) %}
         {% set date_now = as_timestamp(now()) %}
         {% set installed_days = (date_now - date_install) | int // 60 // 60 // 24 %}
         {{ installed_days }}
