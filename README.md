@@ -54,6 +54,7 @@ Access to your inverter data can be acheived in two ways:
 
 ## Home Assistant Installation Steps
 
+* See [wiki](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-Home-Assistant-on-a-USFF-PC) for info on setting up a host computer to run Home Assistant
 * Create a full backup of your HA instance
 * Copy the folders / files provided under custom_components into the folder /config/custom_components on your HA host (for example, using either the File Editor or Studio Code Server add-ons)
 * The folder custom_components/HA-FoxESS-Modbus contains files with template text for updating configuration.yaml and secrets.yaml in your /config folder 
