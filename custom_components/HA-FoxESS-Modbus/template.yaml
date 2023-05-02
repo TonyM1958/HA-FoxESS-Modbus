@@ -197,12 +197,8 @@
       unique_id: foxess_inv1_grid_dependency_today
       unit_of_measurement: "kWh"
       state: >
-        {% set load_today = states('sensor.load_energy_today') | float(default=-1) %}
-        {% set load_daily = states('sensor.load_daily') | float(default=0) %}
-        {% set load = load_today if load_today >= 0.0 else load_daily %}
-        {% set pv_today = states('sensor.pv_energy_today') | float(default=-1) %}
-        {% set pv_daily = states('sensor.pv_energy_daily') | float(default=0) %}
-        {% set pv = pv_today if pv_today >= 0.0 else pv_daily %}
+        {% set load = states('sensor.load_daily') | float(default=0) %}
+        {% set pv = states('sensor.pv_energy_daily') | float(default=0) %}
         {% set dependency = load - pv %}
         {{ dependency | round(2) }}
     # calculate grid balance - difference between grid power imported and exported
