@@ -11,6 +11,8 @@
   resources:
     - type: processor_use
     - type: memory_use
+    - type: disk_free
+      arg: /
     - type: disk_use
       arg: /config
 
