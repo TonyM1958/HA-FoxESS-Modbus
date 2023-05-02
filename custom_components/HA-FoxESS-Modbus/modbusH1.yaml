@@ -27,7 +27,14 @@
   #delay: 1
   # ---------------------------------------------------------------------------
 
-  # list of modbus addresses to read
+  # ---------------------------------------------------------------------------
+  # List of modbus addresses to read.
+  # ---------------------------------------------------------------------------
+  # Some addresses are not available when using the LAN connection. These will
+  # show as unavailable in HA and log an illegal address error. You can stop
+  # these errors by commenting out the unavailable sensors, restarting HA
+  # and removing them from Devices & Services / Entities if required.
+  # ---------------------------------------------------------------------------
   sensors:
     # -------------------------------------------------------------------------
     # Inverter information

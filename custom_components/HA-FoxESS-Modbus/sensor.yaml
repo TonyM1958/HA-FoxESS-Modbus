@@ -3,7 +3,21 @@
 # START: sensor.yaml include file for HA-FoxESS-Modbus
 #--------------------------------------------------------------------------
 
-# these integrations turns power (kW) into energy (kWh) for the energy dashboard and other uses
+#--------------------------------------------------------------------------
+# optional: system load monitoring. Comment out if not required
+#--------------------------------------------------------------------------
+
+- platform: systemmonitor
+  resources:
+    - type: processor_use
+    - type: memory_use
+    - type: disk_use
+      arg: /config
+
+#--------------------------------------------------------------------------
+# these integrations turn power (kW) into energy (kWh) for the energy
+# dashboard and other uses
+#--------------------------------------------------------------------------
 
 - name: inverter_energy_in_sum
   method: left
@@ -83,7 +97,11 @@
   unit_time: h
   round: 1
 
-# these statistics smooth values using a short term rolling average
+#--------------------------------------------------------------------------
+# these statistics smooth noisy values by creating a rolling average to
+# give better trending when displayed as graphs. Increasing the sample
+# size will produce smoother values but increase the lag
+#--------------------------------------------------------------------------
 
 - name: battery_cell_imbalance_rolling
   platform: statistics
