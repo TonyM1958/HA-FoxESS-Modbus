@@ -13,12 +13,12 @@
       state: >
         {{ '17-01-2023' }}
     # battery capacity
-    # ---------- enter your nominal battery capacity below ----------
+    # ---------- enter your specified battery capacity below ----------
     - name: "Battery Capacity"
       unique_id: foxess_inv1_battery_capacity
       unit_of_measurement: "kWh"
       state: >
-        {% set capacity = 4 * 2.56 * 0.9 %}
+        {% set capacity = 6 * 2.56 * 0.9 %}
         {% set remaining = states('sensor.bms_kwh_remaining') | float(default=-1) %}
         {% set soc = states('sensor.battery_soc') | float(default=-1) %}
         {% set remaining = -1 if soc < 100.0 else remaining %}

@@ -376,27 +376,47 @@
       unit_of_measurement: "%"
       state_class: measurement
       scan_interval: !secret scan_interval_low
+
+    # test values - all TO BE CONFIRMED
+    - name: "31025"
+      unique_id: foxess_inv1_31025
+      address: 31025
+      slave: !secret foxess_inv1_slave
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "31026"
+      unique_id: foxess_inv1_31026
+      address: 31026
+      slave: !secret foxess_inv1_slave
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
     - name: "Inverter State Code"
       unique_id: foxess_inv1_state_code
-      address: 31031
+      address: 31027
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Inverter Fault 1 Code"
       unique_id: foxess_inv1_fault1_code
-      address: 31034
+      address: 31028
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Inverter Fault 2 Code"
       unique_id: foxess_inv1_fault2_code
-      address: 31035
+      address: 31029
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Inverter Fault 3 Code"
       unique_id: foxess_inv1_fault3_code
-      address: 31036
+      address: 31030
+      slave: !secret foxess_inv1_slave
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "31039"
+      unique_id: foxess_inv1_31039
+      address: 31039
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_low
