@@ -13,12 +13,12 @@
       state: >
         {{ '17-01-2023' }}
     # battery capacity
-    # ---------- enter your nominal battery capacity below ----------
+    # ---------- enter your specified battery capacity below ----------
     - name: "Battery Capacity"
       unique_id: foxess_inv1_battery_capacity
       unit_of_measurement: "kWh"
       state: >
-        {% set capacity = 4 * 2.56 * 0.9 %}
+        {% set capacity = 6 * 2.56 * 0.9 %}
         {% set remaining = states('sensor.bms_kwh_remaining') | float(default=-1) %}
         {% set soc = states('sensor.battery_soc') | float(default=-1) %}
         {% set remaining = -1 if soc < 100.0 else remaining %}
@@ -197,12 +197,8 @@
       unique_id: foxess_inv1_grid_dependency_today
       unit_of_measurement: "kWh"
       state: >
-        {% set load_today = states('sensor.load_energy_today') | float(default=-1) %}
-        {% set load_daily = states('sensor.load_daily') | float(default=0) %}
-        {% set load = load_today if load_today >= 0.0 else load_daily %}
-        {% set pv_today = states('sensor.pv_energy_today') | float(default=-1) %}
-        {% set pv_daily = states('sensor.pv_energy_daily') | float(default=0) %}
-        {% set pv = pv_today if pv_today >= 0.0 else pv_daily %}
+        {% set load = states('sensor.load_daily') | float(default=0) %}
+        {% set pv = states('sensor.pv_energy_daily') | float(default=0) %}
         {% set dependency = load - pv %}
         {{ dependency | round(2) }}
     # calculate grid balance - difference between grid power imported and exported
@@ -279,6 +275,17 @@
         {% set result = 'Self Use' if mode == 0 else 'Unavailable' %}
         {% set result = 'Feed In First' if mode == 1 else result %}
         {% set result = 'Backup' if mode == 2 else result %}
+        {{ result }}
+    - name: "Inverter State"
+      unique_id: foxess_inv1_state
+      icon: "mdi:play"
+      state: >
+        {% set mode = states('sensor.inverter_state_code') | int(default=-1) %}
+        {% set result = 'Stopped' if mode == 0 else 'Unavailable' %}
+        {% set result = 'Checking' if mode == 1 else result %}
+        {% set result = 'On Grid' if mode == 2 else result %}
+        {% set result = 'EPS (Grid Lost)' if mode == 3 else result %}
+        {% set result = 'Fault' if mode >= 4 else result %}
         {{ result }}
     - name: "Time Period 1"
       unique_id: foxess_inv1_time_period_1
