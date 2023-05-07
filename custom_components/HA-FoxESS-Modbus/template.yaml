@@ -263,9 +263,9 @@
       state: >
         {% set pv1 = states('sensor.pv1_power') | float(default=0) %}
         {% set pv2 = states('sensor.pv2_power') | float(default=0) %}
-        {% set pv_power = pv1 + pv2 %}
-        {% set pv_power = 0 if pv_power < 0.0 else pv_power %}
-        {{ pv_power }}
+        {% set pv = pv1 + pv2 %}
+        {% set pv = 0.0 if pv < 0.0 else pv %}
+        {{ pv }}
     - name: "Work Mode Text"
       unique_id: foxess_inv1_work_mode_text
       icon: "mdi:calendar-clock"
