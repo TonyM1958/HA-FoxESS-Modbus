@@ -1,0 +1,15 @@
+# optional if you use mariadb instead of built-in db
+db_url: !secret mariadb_url
+
+# recorder settings
+purge_keep_days: 30
+exclude:
+  entities:
+    - sensor.datetime_seconds
+    - sensor.datetime_minutes
+    - sensor.datetime_hours
+    - sensor.datetime_days
+    - sensor.datetime_months
+    - sensor.datetime_years
+    - sensor.inverter_datetime
+    - sensor.inverter_time

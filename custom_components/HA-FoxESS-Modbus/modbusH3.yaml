@@ -511,6 +511,26 @@
       unit_of_measurement: "%"
       state_class: measurement
       scan_interval: !secret scan_interval_low
+    - name: "BMS Max Charge Current"
+      unique_id: foxess_inv1_bms_charge_rate
+      address: 31039
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "BMS Max Discharge Current"
+      unique_id: foxess_inv1_bms_discharge_rate
+      address: 31040
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: !secret scan_interval_medium
     - name: "Inverter State Code"
       unique_id: foxess_inv1_state_code
       address: 31041
@@ -755,28 +775,6 @@
       precision: 2
       state_class: total
       scan_interval: !secret scan_interval_low
-    - name: "BMS Charge Rate"
-      unique_id: foxess_inv1_bms_charge_rate
-      address: 11041
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      device_class: current
-      unit_of_measurement: "A"
-      scale: 0.1
-      precision: 1
-      state_class: measurement
-      scan_interval: !secret scan_interval_medium
-    - name: "BMS Discharge Rate"
-      unique_id: foxess_inv1_bms_discharge_rate
-      address: 11042
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      device_class: current
-      unit_of_measurement: "A"
-      state_class: measurement
-      scale: 0.1
-      precision: 1
-      scan_interval: !secret scan_interval_medium
     - name: "BMS Cell Temp High"
       unique_id: foxess_inv1_bms_cell_temperature_high
       address: 11043
