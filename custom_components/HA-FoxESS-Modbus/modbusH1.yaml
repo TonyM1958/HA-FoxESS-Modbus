@@ -36,7 +36,6 @@
   # and removing them from Devices & Services / Entities if required.
   # ---------------------------------------------------------------------------
   sensors:
-    
     # -------------------------------------------------------------------------
     # Inverter information
     # -------------------------------------------------------------------------
@@ -942,13 +941,6 @@
     - name: "11033"
       unique_id: foxess_inv1_11033
       address: 11033
-      slave: !secret foxess_inv1_slave
-      input_type: input
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "11036"
-      unique_id: foxess_inv1_11036
-      address: 11036
       slave: !secret foxess_inv1_slave
       input_type: input
       state_class: measurement
