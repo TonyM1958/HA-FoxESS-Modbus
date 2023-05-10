@@ -207,12 +207,8 @@
       unique_id: foxess_inv1_grid_balance_today
       unit_of_measurement: "kWh"
       state: >
-        {% set grid_today = states('sensor.grid_consumption_energy_today') | float(default=-1) %}
-        {% set grid_daily = states('sensor.grid_daily') | float(default=0) %}
-        {% set grid = grid_today if grid_today >= 0.0 else grid_daily %}
-        {% set feedin_today = states('sensor.feed_in_energy_today') | float(default=-1) %}
-        {% set feedin_daily = states('sensor.feedin_daily') | float(default=0) %}
-        {% set feedin = feedin_today if feedin_today >= 0.0 else feedin_daily %}
+        {% set grid = states('sensor.grid_daily') | float(default=0) %}
+        {% set feedin = states('sensor.feedin_daily') | float(default=0) %}
         {% set balance = grid - feedin %}
         {{ balance | round(2) }}
 
@@ -265,8 +261,11 @@
       unique_id: foxess_inv1_pv_power_now
       unit_of_measurement: "kW"
       state: >
-        {{ (states('sensor.pv1_power') | float(default=0) + states('sensor.pv2_power') | float(default=0) ) * 1 }}
-
+        {% set pv1 = states('sensor.pv1_power') | float(default=0) %}
+        {% set pv2 = states('sensor.pv2_power') | float(default=0) %}
+        {% set pv = pv1 + pv2 %}
+        {% set pv = 0.0 if pv < 0.0 else pv %}
+        {{ pv }}
     - name: "Work Mode Text"
       unique_id: foxess_inv1_work_mode_text
       icon: "mdi:calendar-clock"
@@ -284,8 +283,8 @@
         {% set result = 'Stopped' if mode == 0 else 'Unavailable' %}
         {% set result = 'Checking' if mode == 1 else result %}
         {% set result = 'On Grid' if mode == 2 else result %}
-        {% set result = 'EPS (Grid Lost)' if mode == 3 else result %}
-        {% set result = 'Fault' if mode >= 4 else result %}
+        {% set result = 'off Grid / EPS' if mode == 3 else result %}
+        {% set result = mode if mode >= 4 else result %}
         {{ result }}
     - name: "Time Period 1"
       unique_id: foxess_inv1_time_period_1
