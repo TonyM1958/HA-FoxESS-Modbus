@@ -36,19 +36,22 @@ Access to your inverter data can be acheived in two ways:
 
 
 ## Ethernet connection to H1, AC and AIO series inverters
-* Plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address. Note: a restricted data set of is provided via this port and many sensors will not be available, including your inverter energy meters and battery management information. 
+* Plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address. Note: a restricted data set of is provided via this port and many sensors will not be available, including your inverter energy meters and battery management information.
+* Go the inverter front panel, Settings, Communications, Ethernet and check the IP address is set correctly. 
 * Edit modbusH1.yaml to select the modbus tcp connection for H1, AC and AIO inverters.
 * Edit your secrets.yaml file to add the inverter IP address
 
 ## RS485 connection to H1, AC, AIO and KH series inverters (recommended)
 * Hardware configuration instructions can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
 * Connect RS485A to pin 4 and RS485B to pin 3 of the Meter/CT/RS485 connector using a suitable length of UTP cable (e.g. network cable)
+* Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
 * Edit modbusH1.yaml to select the modbus rtu connection type with RS485 to USB adapter or the modbus tcp connection type for RS485 to Wifi/LAN adapter
 * Edit your secrets.yaml file to add the inverter IP address if required
 
 ## RS485 connection to H3 or AC3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/StealthChesnut/HA-FoxESS-Modbus/wiki/)
 * Connect RS485A to pin 1 and RS485B to pin 2 of the Meter/RS485 connector using a suitable length of UTP cable (e.g. network cable)
+* Go to inverter front panel, Settings, Communication, RS485, Device ID and set the slave ID for the inverter to 247 (the default is 000)
 * Edit modbusH3.yaml to select the modbus rtu connection type with RS485 to USB adapter or the modbus tcp connection type for RS485 to Wifi/LAN adapter
 * Edit your secrets.yaml file to add the inverter IP address if required
 
