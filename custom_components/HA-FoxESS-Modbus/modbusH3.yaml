@@ -841,43 +841,43 @@
     # Inverter Control registers
     # these entities will be unavailable when using direct LAN connection
     # -------------------------------------------------------------------------
-    - name: "Datetime Years"
-      unique_id: foxess_inv1_datetime_years
+    - name: "RTC Years"
+      unique_id: foxess_inv1_rtc_years
       address: 40000
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_low
-    - name: "Datetime Months"
-      unique_id: foxess_inv1_datetime_months
+    - name: "RTC Months"
+      unique_id: foxess_inv1_rtc_months
       address: 40001
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_low
-    - name: "Datetime Days"
-      unique_id: foxess_inv1_datetime_days
+    - name: "RTC Days"
+      unique_id: foxess_inv1_rtc_days
       address: 40002
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_low
-    - name: "Datetime Hours"
-      unique_id: foxess_inv1_datetime_hours
+    - name: "RTC Hours"
+      unique_id: foxess_inv1_rtc_hours
       address: 40003
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_low
-    - name: "Datetime Minutes"
-      unique_id: foxess_inv1_datetime_minutes
+    - name: "RTC Minutes"
+      unique_id: foxess_inv1_rtc_minutes
       address: 40004
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_low
-    - name: "Datetime Seconds"
-      unique_id: foxess_inv1_datetime_seconds
+    - name: "RTC Seconds"
+      unique_id: foxess_inv1_rtc_seconds
       address: 40005
       input_type: input
       slave: !secret foxess_inv1_slave
