@@ -77,3 +77,4 @@ After you have installed and setup HA, configure it by editing template.yaml as 
 * FInd the sensor Install Date and update the date in quotes. This value is used when calculating the remaining battery life.
 * Find the line containing _capacity = (6 * 2.56 * 0.9)_ in the sensor Battery Capacity. This is your default battery capacity - change the calculation to refelct your configuration: set the first number to the number of batteries you have installed and the second number to the capacity of a battery in kWh (HV2600 = 2.56kWh, HV2500 = 2.45kWh, ECS4100 = 4.03 kWh, ESC2900 = 2.88kWh).
 
+When you are finished editing, close the file and restart HA in Settings, Developer Tools.
