@@ -361,7 +361,7 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_high
-    - name: "Battery Temperature"
+    - name: "BMS Temperature"
       unique_id: foxess_inv1_battery_temperature
       address: 31023 # input 11038
       slave: !secret foxess_inv1_slave
@@ -753,7 +753,7 @@
       state_class: total
       scan_interval: !secret scan_interval_low
 
-    - name: "Charge Cut Voltage"
+    - name: "BMS Charge Cut Voltage"
       unique_id: foxess_inv1_charge_cut_voltage
       address: 11039
       input_type: input
@@ -765,7 +765,7 @@
       precision: 1
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Discharge Cut Voltage"
+    - name: "BMS Discharge Cut Voltage"
       unique_id: foxess_inv1_discharge_cut_voltage
       address: 11040
       input_type: input
@@ -818,7 +818,7 @@
       unit_of_measurement: "mV"
       state_class: measurement
       scan_interval: !secret scan_interval_medium
-    - name: "BMS Subsystem Number"
+    - name: "BMS Battery Count"
       unique_id: foxess_inv1_bms_subsystem_number
       address: 11047
       input_type: input
@@ -846,7 +846,7 @@
       precision: 3
       state_class: total_increasing
       scan_interval: !secret scan_interval_low
-    - name: "Bat Min SoC"
+    - name: "BMS SoC"
       unique_id: foxess_inv1_bat_min_soc
       address: 11050
       input_type: input
@@ -856,7 +856,7 @@
       unit_of_measurement: "%"
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Bat Charge Request"
+    - name: "BMS Charge Request"
       unique_id: foxess_inv1_bat_charge_request
       address: 11051
       input_type: input
@@ -864,7 +864,7 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Bat Charge Limit"
+    - name: "BMS Charge Limit"
       unique_id: foxess_inv1_bat_charge_limit
       address: 11052
       input_type: input
@@ -872,7 +872,7 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Bat Discharge Limit"
+    - name: "BMS Discharge Limit"
       unique_id: foxess_inv1_bat_discharge_limit
       address: 11053
       input_type: input
@@ -880,7 +880,7 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Bat Module Type"
+    - name: "BMS Module Type"
       unique_id: foxess_inv1_bat_module_type
       address: 11054
       input_type: input
@@ -898,7 +898,7 @@
       unit_of_measurement: "s"
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Battery Status Code"
+    - name: "BMS Status Code"
       unique_id: foxess_inv1_battery_status_code
       address: 11057
       input_type: input
@@ -906,24 +906,24 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "BMS Connection State Code"
-      unique_id: foxess_inv1_bms_connection_state_code
+    - name: "BMS Connection Code"
+      unique_id: foxess_inv1_bms_connection_code
       address: 11058
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Meter 1 Connection State Code"
-      unique_id: foxess_inv1_meter1_connection_state_code
+    - name: "Meter 1 Connection Code"
+      unique_id: foxess_inv1_meter1_connection_code
       address: 11059
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Meter 2 Connection State Code"
-      unique_id: foxess_inv1_meter2_connection_state_code
+    - name: "Meter 2 Connection Code"
+      unique_id: foxess_inv1_meter2_connection_code
       address: 11060
       input_type: input
       slave: !secret foxess_inv1_slave

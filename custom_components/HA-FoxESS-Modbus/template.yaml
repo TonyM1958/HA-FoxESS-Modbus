@@ -31,11 +31,12 @@
       unique_id: foxess_inv1_battery_energy
       unit_of_measurement: "kWh"
       state: >
-        {% set capacity = states('sensor.battery_capacity') | float(default=0) %}
-        {% set soc = states('sensor.battery_soc') | float(default=0) %}
+        {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
+        {% set soc = states('sensor.battery_soc') | float(default=-1) %}
+        {% set calculated = (capacity * soc / 100) | round(2) if capacity >= 0.0 and soc >= 0.0 else 'Unavailable' %}
         {% set energy = states('sensor.bms_kwh_remaining') | float(default=-1) %}
-        {% set energy = capacity * soc / 100 if energy < 0.0 else energy %}
-        {{ energy | round(2) }}
+        {% set energy = calculated if energy < 0.0 else energy %}
+        {{ energy }}
     # calculate the number of hours that the battery can power the current load for
     # 5% loss allowance for inverter converting battery DC  to house AC power
     - name: "Battery Duration"
@@ -197,20 +198,20 @@
       unique_id: foxess_inv1_grid_dependency_today
       unit_of_measurement: "kWh"
       state: >
-        {% set load = states('sensor.load_daily') | float(default=0) %}
-        {% set pv = states('sensor.pv_energy_daily') | float(default=0) %}
-        {% set dependency = load - pv %}
-        {{ dependency | round(2) }}
+        {% set load = states('sensor.load_daily') | float(default=-1) %}
+        {% set pv = states('sensor.pv_energy_daily') | float(default=-1) %}
+        {% set dependency = (load - pv) | round(2) if load >= 0.0 or pv >= 0.0 else 'Unavailable' %}
+        {{ dependency }}
     # calculate grid balance - difference between grid power imported and exported
     - name: "Grid Balance Today"
       device_class: "energy"
       unique_id: foxess_inv1_grid_balance_today
       unit_of_measurement: "kWh"
       state: >
-        {% set grid = states('sensor.grid_daily') | float(default=0) %}
-        {% set feedin = states('sensor.feedin_daily') | float(default=0) %}
-        {% set balance = grid - feedin %}
-        {{ balance | round(2) }}
+        {% set grid = states('sensor.grid_daily') | float(default=-1) %}
+        {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
+        {% set balance = (grid - feedin) | round(2) if grid >= 0.0 and feedin >= 0.0 else 'Unavailable' %}
+        {{ balance }}
 
     # separate battery power into charge and discharge based on sign
     - name: "Battery Discharge"
@@ -218,42 +219,34 @@
       unique_id: foxess_inv1_battery_discharge
       unit_of_measurement: "kW"
       state: >
-        {% if (states('sensor.InvBatPower') | float(default=0) ) > 0 %}
-        {{ states('sensor.InvBatPower') | float(default=0) * 1 }}
-        {% else %}
-        0 
-        {% endif %}
+        {% set result = states('sensor.InvBatPower') | float(default=0) %}
+        {% set result = 0.0 if result < 0.0 else result %}
+        {{ result }}
     - name: "Battery Charge"
       device_class: "power"
       unique_id: foxess_inv1_battery_charge
       unit_of_measurement: "kW"
       state: >
-        {% if (states('sensor.InvBatPower') | float(default=0) ) < 0 %}
-        {{ states('sensor.InvBatPower') | float(default=0) * -1 }}
-        {% else %}
-        0 
-        {% endif %}
+        {% set result = states('sensor.InvBatPower') | float(default=0) %}
+        {% set result = 0.0 if result > 0.0 else result * -1 %}
+        {{ result }}
     # separate grid import and export power based on sign of grid CT
     - name: "Feed In Power"
       device_class: "power"
       unique_id: foxess_inv1_feed_in_power
       unit_of_measurement: "kW"
       state: >
-        {% if (states('sensor.grid_ct') | float(default=0) ) > 0 %}
-        {{ states('sensor.grid_ct') | float(default=0) * 1 }}
-        {% else %}
-        0 
-        {% endif %}
+        {% set result = states('sensor.grid_ct') | float(default=0) %}
+        {% set result = 0.0 if result < 0.0 else result %}
+        {{ result }}
     - name: "Grid Consumption"
       device_class: "power"
       unique_id: foxess_inv1_grid_consumption
       unit_of_measurement: "kW"
       state: >
-        {% if (states('sensor.grid_ct') | float(default=0) ) < 0 %}
-        {{ states('sensor.grid_ct') | float(default=0) * -1 }}
-        {% else %}
-        0 
-        {% endif %}
+        {% set result = states('sensor.grid_ct') | float(default=0) %}
+        {% set result = 0.0 if result > 0.0 else result * -1 %}
+        {{ result }}
 
     # sum power being produced by PV strings
     - name: "PV Power Now"

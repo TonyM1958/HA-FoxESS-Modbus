@@ -5,11 +5,11 @@ db_url: !secret mariadb_url
 purge_keep_days: 30
 exclude:
   entities:
-    - sensor.datetime_seconds
-    - sensor.datetime_minutes
-    - sensor.datetime_hours
-    - sensor.datetime_days
-    - sensor.datetime_months
-    - sensor.datetime_years
+    - sensor.rtc_seconds
+    - sensor.rtc_minutes
+    - sensor.rtc_hours
+    - sensor.rtc_days
+    - sensor.rtc_months
+    - sensor.rtc_years
     - sensor.inverter_datetime
     - sensor.inverter_time
