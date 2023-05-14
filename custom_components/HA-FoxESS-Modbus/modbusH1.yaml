@@ -1092,8 +1092,8 @@
       data_type: uint16
       scan_interval: !secret scan_interval_low
 
-    - name: "Work Mode"
-      unique_id: foxess_inv1_work_mode
+    - name: "Work Mode Code"
+      unique_id: foxess_inv1_work_mode_code
       address: 41000
       input_type: input
       slave: !secret foxess_inv1_slave

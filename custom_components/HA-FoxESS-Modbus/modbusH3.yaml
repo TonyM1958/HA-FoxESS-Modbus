@@ -883,9 +883,58 @@
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_low
+    - name: "Grid Code"
+      unique_id: foxess_inv1_grid_code
+      address: 40006
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "PV Config Code"
+      unique_id: foxess_inv1_pv_config_code
+      address: 40008
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "DRM0 State"
+      unique_id: foxess_inv1_drm0_state
+      address: 40009
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Meter 1 Code"
+      unique_id: foxess_inv1_meter1_code
+      address: 40010
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Meter 2 Code"
+      unique_id: foxess_inv1_meter2_code
+      address: 40011
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Modbus Address"
+      unique_id: foxess_inv1_modbus_address
+      address: 40012
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Password"
+      unique_id: foxess_inv1_password
+      address: 40013
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
 
-    - name: "Work Mode"
-      unique_id: foxess_inv1_work_mode
+    - name: "Work Mode Code"
+      unique_id: foxess_inv1_work_mode_code
       address: 41000
       input_type: input
       slave: !secret foxess_inv1_slave

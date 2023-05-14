@@ -18,14 +18,14 @@
       unique_id: foxess_inv1_battery_capacity
       unit_of_measurement: "kWh"
       state: >
-        {% set capacity = 6 * 2.56 * 0.9 %}
+        {% set capacity = (6 * 2.56 * 0.9) | round(2) %}
         {% set remaining = states('sensor.bms_kwh_remaining') | float(default=-1) %}
         {% set soc = states('sensor.battery_soc') | float(default=-1) %}
         {% set remaining = -1 if soc < 100.0 else remaining %}
         {% set current = states('sensor.battery_capacity') | float(default=-1) %}
         {% set result = current if remaining < 0.0 else remaining %}
         {% set result = capacity if result < 0.0 else result %}
-        {{ result | round(2) }}
+        {{ result }}
     # calculate the energy in battery
     - name: "Battery Energy"
       unique_id: foxess_inv1_battery_energy
@@ -42,17 +42,16 @@
     - name: "Battery Duration"
       unique_id: foxess_inv1_battery_duration
       icon: "mdi:timer-play"
-      unit_of_measurement: "h"
+      unit_of_measurement: "hours"
       state: >
-        {% set capacity = states('sensor.battery_capacity') | float(default=0) %}
-        {% set min_soc = states('sensor.min_soc_on_grid') | float(default=10) %}
-        {% set reserve = capacity * min_soc / 100 %}
-        {% set energy = states('sensor.battery_energy') | float(default=0) %}
-        {% set power = states('sensor.load_power_rolling') | float(default=0) * 1.05 %}
-        {% set power = 0.1 if power < 0.1 else power %}
-        {% set hours = ((energy - reserve) / power) | int  %}
-        {% set hours = 24 if hours > 24 else hours  %}
-        {% set hours = 0 if hours < 0 else hours  %}
+        {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
+        {% set min_soc = states('sensor.min_soc_on_grid') | float(default=-1) %}
+        {% set reserve = capacity * min_soc / 100 if capacity >= 0.0 and min_soc >= 0.0 else -1 %}
+        {% set energy = states('sensor.battery_energy') | float(default=-1) %}
+        {% set power = states('sensor.load_power_rolling') | float(default=-1) * 1.05 %}
+        {% set hours = ((energy - reserve) / power) | int if energy >= 0.0 and reserve >= 0.0 and power > 0.0 else 0  %}
+        {% set hours = 24 if hours is number and hours > 24 else hours  %}
+        {% set hours = 0 if hours is number and hours < 0 else hours  %}
         {{ hours }}
     # calculate cell imbalance as % using the difference between min and max cell voltage
     - name: "Battery Cell Imbalance"
@@ -80,9 +79,10 @@
       device_class: "energy"
       unit_of_measurement: "kWh"
       state: >
-        {{( states('sensor.charge_energy_today')|float(default=0)
-          - states('sensor.discharge_energy_today')|float(default=0)
-          ) | round(3) }}
+        {% set charge = states('sensor.charge_energy_today') | float(default=-1) %}
+        {% set discharge = states('sensor.discharge_energy_today') | float(default=-1) %}
+        {% set result = (charge - discharge) | round(3) if charge >= 0.0 and discharge >= 0.0 else 'Unavailable' %}
+        {{ result }}
     # calculate days since the sytsem was installed
     - name: "Installed Days"
       unique_id: foxess_inv1_installed_days
@@ -259,14 +259,23 @@
         {% set pv = pv1 + pv2 %}
         {% set pv = 0.0 if pv < 0.0 else pv %}
         {{ pv }}
-    - name: "Work Mode Text"
-      unique_id: foxess_inv1_work_mode_text
+    - name: "Work Mode"
+      unique_id: foxess_inv1_work_mode
       icon: "mdi:calendar-clock"
       state: >
-        {% set mode = states('sensor.work_mode') | int(default=-1) %}
-        {% set result = 'Self Use' if mode == 0 else 'Unavailable' %}
-        {% set result = 'Feed In First' if mode == 1 else result %}
-        {% set result = 'Backup' if mode == 2 else result %}
+        {% set code = states('sensor.work_mode_code') | int(default=-1) %}
+        {% set result = 'Self Use' if code == 0 else 'Unavailable' %}
+        {% set result = 'Feed In First' if code == 1 else result %}
+        {% set result = 'Backup' if code == 2 else result %}
+        {{ result }}
+    - name: "Grid Safety"
+      unique_id: foxess_inv1_grid_safety
+      icon: "mdi:transmission-tower"
+      state: >
+        {% set code = states('sensor.grid_code') | int(default=-1) %}
+        {% set result = 'G98_UK' if code == 2 else 'Unavailable' %}
+        {% set result = 'G99_UK' if code == 3 else result %}
+        {% set result = code if code > 3 else result %}
         {{ result }}
     - name: "Inverter State"
       unique_id: foxess_inv1_state
