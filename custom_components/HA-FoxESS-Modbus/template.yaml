@@ -344,7 +344,6 @@
         {% set result = 'Offline' if code == 2 else result %}
         {% set result = code if code > 2 else result %}
         {{ result }}
-
     - name: "EPS Frequency Setting"
       unique_id: foxess_inv1_eps_frequency_setting
       device_class: frequency
@@ -362,7 +361,9 @@
         {% set result = 'Checking' if mode == 1 else result %}
         {% set result = 'On Grid' if mode == 2 else result %}
         {% set result = 'off Grid / EPS' if mode == 3 else result %}
-        {% set result = mode if mode >= 4 else result %}
+        {% set result = 'Fault (recoverable)' if mode == 4 else result %}
+        {% set result = 'Fault (not recoverable)' if mode == 5 else result %}
+        {% set result = mode if mode >= 5 else result %}
         {{ result }}
     - name: "Time Period 1"
       unique_id: foxess_inv1_time_period_1
