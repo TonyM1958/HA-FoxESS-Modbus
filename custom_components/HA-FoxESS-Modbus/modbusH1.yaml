@@ -1049,8 +1049,8 @@
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_low
-    - name: "PV Config"
-      unique_id: foxess_inv1_pv_config
+    - name: "PV Config Code"
+      unique_id: foxess_inv1_pv_config_code
       address: 40008
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -1192,8 +1192,8 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "EPS Frequency Setting"
-      unique_id: foxess_inv1_eps_frequency_setting
+    - name: "EPS Frequency Code"
+      unique_id: foxess_inv1_eps_frequency_code
       address: 41014
       input_type: input
       slave: !secret foxess_inv1_slave
