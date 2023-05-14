@@ -268,14 +268,90 @@
         {% set result = 'Feed In First' if code == 1 else result %}
         {% set result = 'Backup' if code == 2 else result %}
         {{ result }}
-    - name: "Grid Safety"
-      unique_id: foxess_inv1_grid_safety
+    - name: "Grid Safety Setting"
+      unique_id: foxess_inv1_grid_safety_setting
       icon: "mdi:transmission-tower"
       state: >
         {% set code = states('sensor.grid_code') | int(default=-1) %}
         {% set result = 'G98_UK' if code == 2 else 'Unavailable' %}
         {% set result = 'G99_UK' if code == 3 else result %}
         {% set result = code if code > 3 else result %}
+        {{ result }}
+    - name: "PV Config Setting"
+      unique_id: foxess_inv1_pv_config_setting
+      icon: "mdi:view-parallel"
+      state: >
+        {% set code = states('sensor.pv_config_code') | int(default=-1) %}
+        {% set result = 'Independent' if code == 0 else 'Unavailable' %}
+        {% set result = 'Parallel' if code == 1 else result %}
+        {% set result = code if code > 1 else result %}
+        {{ result }}
+    - name: "Meter 1 Setting"
+      unique_id: foxess_inv1_meter1_setting
+      icon: "mdi:meter-electric"
+      state: >
+        {% set code = states('sensor.meter_1_code') | int(default=-1) %}
+        {% set result = 'Meter' if code == 0 else 'Unavailable' %}
+        {% set result = 'CT' if code == 1 else result %}
+        {% set result = 'Disabled' if code == 2 else result %}
+        {% set result = code if code > 2 else result %}
+        {{ result }}
+    - name: "Meter 1 Connection"
+      unique_id: foxess_inv1_meter1_connection
+      icon: "mdi:network"
+      state: >
+        {% set code = states('sensor.meter_1_connection_code') | int(default=-1) %}
+        {% set result = 'Not Connected' if code == 0 else 'Unavailable' %}
+        {% set result = 'OK' if code == 1 else result %}
+        {% set result = code if code > 1 else result %}
+        {{ result }}
+    - name: "Meter 2 Setting"
+      unique_id: foxess_inv1_meter2_setting
+      icon: "mdi:meter-electric"
+      state: >
+        {% set code = states('sensor.meter_2_code') | int(default=-1) %}
+        {% set result = 'Meter' if code == 0 else 'Unavailable' %}
+        {% set result = 'CT' if code == 1 else result %}
+        {% set result = 'Disabled' if code == 2 else result %}
+        {% set result = code if code > 2 else result %}
+        {{ result }}
+    - name: "Meter 2 Connection"
+      unique_id: foxess_inv1_meter2_connection
+      icon: "mdi:network"
+      state: >
+        {% set code = states('sensor.meter_2_connection_code') | int(default=-1) %}
+        {% set result = 'Not Connected' if code == 0 else 'Unavailable' %}
+        {% set result = 'OK' if code == 1 else result %}
+        {% set result = code if code > 1 else result %}
+        {{ result }}
+    - name: "BMS Connection"
+      unique_id: foxess_inv1_bms_connection
+      icon: "mdi:network"
+      state: >
+        {% set code = states('sensor.bms_connection_code') | int(default=-1) %}
+        {% set result = 'Initialising' if code == 0 else 'Unavailable' %}
+        {% set result = 'OK' if code == 1 else result %}
+        {% set result = 'Not Connected' if code == 2 else result %}
+        {% set result = code if code > 2 else result %}
+        {{ result }}
+    - name: "BMS Status"
+      unique_id: foxess_inv1_bms_status
+      icon: "mdi:list-status"
+      state: >
+        {% set code = states('sensor.battery_status_code') | int(default=-1) %}
+        {% set result = 'Idle' if code == 0 else 'Unavailable' %}
+        {% set result = 'Normal' if code == 1 else result %}
+        {% set result = 'Offline' if code == 2 else result %}
+        {% set result = code if code > 2 else result %}
+        {{ result }}
+
+    - name: "EPS Frequency Setting"
+      unique_id: foxess_inv1_eps_frequency_setting
+      device_class: frequency
+      unit_of_measurement: "Hz"
+      state: >
+        {% set code = states('sensor.eps_frequency_code') | int(default=-1) %}
+        {% set result = 60.0 if code == 1 else 50.0 %}
         {{ result }}
     - name: "Inverter State"
       unique_id: foxess_inv1_state
