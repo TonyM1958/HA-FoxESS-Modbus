@@ -59,4 +59,4 @@ Access to your inverter data can be acheived in two ways:
 
 * See [Installing Home Assistant on a USFF PC](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-Home-Assistant-on-a-USFF-PC) for info on setting up a host computer to run Home Assistant
 * Create a full backup of your HA instance
-* See [HA Fox ESS Installation](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/HA-FoxESS-Modbus-Installation) for info on setting up the Fox ESS integration in Home Assistant
+* See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus)) for info on setting up the Fox ESS integration in Home Assistant
