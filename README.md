@@ -77,4 +77,10 @@ After you have installed and setup HA, configure it by editing template.yaml as 
 * Find the sensor 'Install Date' and update the date in quotes to your installation date. This value is used when calculating the remaining battery life.
 * Find the line containing _capacity = (6 * 2.56 * 0.9)_ in the sensor 'Battery Capacity'. This is your default battery capacity - change the numbers to refelct your configuration: set the first number to the number of batteries you have installed and the second number to the capacity of eacb battery in kWh (HV2600 = 2.56, HV2500 = 2.45, ECS4100 = 4.03, ESC2900 = 2.88).
 
-When you are finished editing, close the file and restart HA in Settings, Developer Tools.
+Optionally, you may also configure recorder to use MariaDB instead of SQLite:
+
+* Go to Settings, Add-ons and find MariaDB in the Add-On Store. Install and configure the add-on, making a note of your db password.
+* Open your secrets.yaml file and update the mariadb_url with your db password
+* Open the file recorder.yaml and uncomment the line starting _db_url_ 
+
+When you are finished editing, close the file, go to Settings, Developer Tools, check your configuration, correct any errors and restart HA.
