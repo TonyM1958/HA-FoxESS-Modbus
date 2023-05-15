@@ -80,7 +80,7 @@ After you have installed and setup HA, configure it by editing template.yaml as 
 Optionally, you may also configure recorder to use MariaDB instead of SQLite:
 
 * Go to Settings, Add-ons and find MariaDB in the Add-On Store. Install and configure the add-on, making a note of your db password.
-* Open your secrets.yaml file and update the mariadb_url with your db password
+* Open your secrets.yaml file and update the _mariadb_url_ with your db password
 * Open the file recorder.yaml and uncomment the line starting _db_url_ 
 
 When you are finished editing, close the file, go to Settings, Developer Tools, check your configuration, correct any errors and restart HA.
