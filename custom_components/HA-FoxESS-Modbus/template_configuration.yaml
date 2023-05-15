@@ -3,9 +3,6 @@
 # Add what follows into your configuration.yaml
 #
 
-# optional recorder settings to keep history for 30 days
-recorder: !include recorder.yaml
-
 #-----------------------------------------------------------------------------
 # START: HA-FoxESS-Modbus configuration
 #-----------------------------------------------------------------------------
@@ -20,6 +17,9 @@ modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1.yaml
 template: !include custom_components/HA-FoxESS-Modbus/template.yaml
 sensor: !include custom_components/HA-FoxESS-Modbus/sensor.yaml
 utility_meter: !include custom_components/HA-FoxESS-Modbus/utility_meter.yaml
+
+# optional recorder settings to keep history for 30 days
+recorder: !include custom_components/HA-FoxESS-Modbus/recorder.yaml
 #
 #-----------------------------------------------------------------------------
 # END: HA-FoxESS-Modbus configuration
