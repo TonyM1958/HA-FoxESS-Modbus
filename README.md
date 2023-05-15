@@ -59,12 +59,12 @@ Access to your inverter data can be acheived in two ways:
 
 * See [wiki](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-Home-Assistant-on-a-USFF-PC) for info on setting up a host computer to run Home Assistant
 * Create a full backup of your HA instance
-* Copy the folders / files provided under custom_components into the folder /config/custom_components on your HA host (for example, using either the File Editor or Studio Code Server add-ons)
+* Copy the github files in custom_components/HA-FoxESS-Modbus into the folder /config/custom_components/HA-FoxESS-Modbus on your HA host (for example, using either the File Editor or Studio Code Server add-ons)
 * The folder custom_components/HA-FoxESS-Modbus contains files with template text for updating configuration.yaml and secrets.yaml in your /config folder 
-* Open tempate_configuration.yaml and copy the settings into your HA configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuration.yaml. As you got this far already, you should probably know what to do!
+* Open tempate_configuration.yaml and copy the settings into your HA /config/configuration.yaml file. Note: if you have a complex HA configuration that already uses some of the integrations, you will need to modify the settings. Basic info on doing this is provided in the file template_configuration.yaml. As you got this far already, you should probably know what to do!
 * Select modbusH1.yaml for single phase inverters. If you have a 3 phase inverter, comment out the line with modbusH1.yaml and uncomment the line with modbusH3.yaml
 * Open modbusH1.yaml or modbusH3.yaml and update the settings for your connection type: use modbus rtu for a USB connection or modbus tcp for a LAN connection
-* Open template_secrets.yaml and copy the settings into your HA secrets.yaml file
+* Open template_secrets.yaml and copy the settings into your HA /config/secrets.yaml file
 * Update your secrets.yaml with your IP address details or USB adapter port if required
 * Go to Developer Tools and check your configuration is valid (if not, correct the problem) and then Restart HA
 * Go to Settings / Devices & Services / Entities and check the entities that are now available.
@@ -75,12 +75,12 @@ Access to your inverter data can be acheived in two ways:
 After you have installed and setup HA, configure it by editing template.yaml as follows:
 
 * Find the sensor 'Install Date' and update the date in quotes to your installation date. This value is used when calculating the remaining battery life.
-* Find the line containing _capacity = (6 * 2.56 * 0.9)_ in the sensor 'Battery Capacity'. This is your default battery capacity - change the numbers to refelct your configuration: set the first number to the number of batteries you have installed and the second number to the capacity of eacb battery in kWh (HV2600 = 2.56, HV2500 = 2.45, ECS4100 = 4.03, ESC2900 = 2.88).
+* Find the line containing _capacity = (6 * 2.56 * 0.9)_ in the sensor 'Battery Capacity'. This sets your default battery capacity - change the numbers to refelct your configuration: set the first number to the number of batteries you have installed and the second number to the capacity of eacb battery in kWh (HV2600 = 2.56, HV2500 = 2.45, ECS4100 = 4.03, ESC2900 = 2.88).
 
-Optionally, you may also configure recorder to use MariaDB instead of SQLite:
+Optionally, you may configure recorder to use MariaDB instead of SQLite:
 
 * Go to Settings, Add-ons and find MariaDB in the Add-On Store. Install and configure the add-on, making a note of your db password.
-* Open your secrets.yaml file and update the _mariadb_url_ with your db password
-* Open the file recorder.yaml and uncomment the line starting _db_url_ 
+* Open your secrets.yaml file and update _mariadb_url_, replacing _\<your password\>_ with your db password
+* Open recorder.yaml and uncomment the line starting _db_url_ 
 
-When you are finished editing, close the file, go to Settings, Developer Tools, check your configuration, correct any errors and restart HA.
+When you are finished, close the files, go to Settings, Developer Tools, check your configuration, correct any errors and restart HA.
