@@ -26,7 +26,7 @@
         {% set result = current if remaining < 0.0 else remaining %}
         {% set result = capacity if result < 0.0 else result %}
         {{ result }}
-    # calculate the energy in battery
+    # the energy in battery
     - name: "Battery Energy"
       unique_id: foxess_inv1_battery_energy
       unit_of_measurement: "kWh"
@@ -37,8 +37,8 @@
         {% set energy = states('sensor.bms_kwh_remaining') | float(default=-1) %}
         {% set energy = calculated if energy < 0.0 else energy %}
         {{ energy }}
-    # calculate the number of hours that the battery can power the current load for
-    # 5% loss allowance for inverter converting battery DC  to house AC power
+    # the number of hours that the battery can power the current load for with
+    # 5% loss allowance for converting battery DC to house AC power
     - name: "Battery Duration"
       unique_id: foxess_inv1_battery_duration
       icon: "mdi:timer-play"
@@ -53,7 +53,7 @@
         {% set hours = 24 if hours is number and hours > 24 else hours  %}
         {% set hours = 0 if hours is number and hours < 0 else hours  %}
         {{ hours }}
-    # calculate cell imbalance as % using the difference between min and max cell voltage
+    # cell imbalance as % using the difference between min and max cell voltage
     - name: "Battery Cell Imbalance"
       unique_id: foxess_inv1_battery_cell_imbalance
       unit_of_measurement: "%"
@@ -63,7 +63,7 @@
         {% set imbalance = ((cell_high - cell_low) | abs) / (cell_high + cell_low) * 200 %}
         {% set imbalance = 'Unavailable' if cell_high <= -1 or cell_low <= -1 else imbalance | round(2) %}
         {{ imbalance }}
-    # calculate average cell temperature using the min and max cell temperature
+    # average cell temperature using the min and max cell temperature
     - name: "Battery Cell Temperature"
       unique_id: foxess_inv1_battery_cell_temperature
       unit_of_measurement: "°C"
@@ -73,17 +73,17 @@
         {% set temp = (temp_high + temp_low) / 2 %}
         {% set temp = 'Unavailable' if temp_high <= -50 or temp_low <= -50 else temp | round(1) %}
         {{ temp }}
-    # calculate the amount of energy stored in the battery today
-    - name: "Battery Backfill"
-      unique_id: foxess_inv1_battery_backfill
+    # the amount of energy taken from the battery today
+    - name: "Battery Production"
+      unique_id: foxess_inv1_battery_production
       device_class: "energy"
       unit_of_measurement: "kWh"
       state: >
-        {% set charge = states('sensor.charge_energy_today') | float(default=-1) %}
         {% set discharge = states('sensor.discharge_energy_today') | float(default=-1) %}
-        {% set result = (charge - discharge) | round(3) if charge >= 0.0 and discharge >= 0.0 else 'Unavailable' %}
+        {% set charge = states('sensor.charge_energy_today') | float(default=-1) %}
+        {% set result = (discharge - charge) | round(3) if charge >= 0.0 and discharge >= 0.0 else 'Unavailable' %}
         {{ result }}
-    # calculate days since the sytsem was installed
+    # days since the sytsem was installed
     - name: "Installed Days"
       unique_id: foxess_inv1_installed_days
       unit_of_measurement: "days"
@@ -92,7 +92,7 @@
         {% set date_now = as_timestamp(now()) %}
         {% set installed_days = (date_now - date_install) | int // 60 // 60 // 24 %}
         {{ installed_days }}
-    # calculate years of battery life remaining
+    # years of battery life remaining, based on 6,000 cycles
     - name: "Battery Life Remaining"
       unique_id: foxess_inv1_battery_life_remaining
       unit_of_measurement: "years"
@@ -259,7 +259,7 @@
         {{ pv }}
     - name: "Work Mode"
       unique_id: foxess_inv1_work_mode
-      icon: "mdi:calendar-clock"
+      icon: "mdi:cog"
       state: >
         {% set code = states('sensor.work_mode_code') | int(default=-1) %}
         {% set result = 'Self Use' if code == 0 else 'Unavailable' %}
@@ -346,6 +346,7 @@
       unique_id: foxess_inv1_eps_frequency_setting
       device_class: frequency
       unit_of_measurement: "Hz"
+      icon: "mdi:cog"
       state: >
         {% set code = states('sensor.eps_frequency_code') | int(default=-1) %}
         {% set result = 60.0 if code == 1 else 50.0 %}
