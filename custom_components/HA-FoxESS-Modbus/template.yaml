@@ -228,22 +228,36 @@
         {% set result = states('sensor.InvBatPower') | float(default=0) %}
         {% set result = 0.0 if result > 0.0 else result * -1 %}
         {{ result }}
-    # separate grid import and export power based on sign of grid CT
+    # separate grid import and export power based on sign of grid CT and/or meter
     - name: "Feed In Power"
       device_class: "power"
       unique_id: foxess_inv1_feed_in_power
       unit_of_measurement: "kW"
       state: >
-        {% set result = states('sensor.grid_ct') | float(default=0) %}
-        {% set result = 0.0 if result < 0.0 else result %}
+        {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
+        {% set ct1 = 0.0 if ct1 < 0.0 else ct1 %}
+        {% set rpower = states('sensor.meter_rpower') | float(default=0) %}
+        {% set rpower = 0.0 if rpower < 0.0 else rpower %}
+        {% set spower = states('sensor.meter_spower') | float(default=0) %}
+        {% set spower = 0.0 if spower < 0.0 else spower %}
+        {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
+        {% set tpower = 0.0 if tpower < 0.0 else tpower %}
+        {% set result = ct1 + rpower + spower + tpower %}
         {{ result }}
     - name: "Grid Consumption"
       device_class: "power"
       unique_id: foxess_inv1_grid_consumption
       unit_of_measurement: "kW"
       state: >
-        {% set result = states('sensor.grid_ct') | float(default=0) %}
-        {% set result = 0.0 if result > 0.0 else result * -1 %}
+        {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
+        {% set ct1 = 0.0 if ct1 > 0.0 else ct1 %}
+        {% set rpower = states('sensor.meter_rpower') | float(default=0) %}
+        {% set rpower = 0.0 if rpower > 0.0 else rpower %}
+        {% set spower = states('sensor.meter_spower') | float(default=0) %}
+        {% set spower = 0.0 if spower > 0.0 else spower %}
+        {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
+        {% set tpower = 0.0 if tpower > 0.0 else tpower %}
+        {% set result = (ct1 + rpower + spower + tpower) * -1 %}
         {{ result }}
     - name: "Load Power"
       device_class: "power"
