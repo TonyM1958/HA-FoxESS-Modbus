@@ -29,6 +29,14 @@ pv2_daily:
   unique_id: foxess_inv1_pv2_daily
   source: sensor.pv2_sum
   cycle: daily
+pv3_daily:
+  unique_id: foxess_inv1_pv3_daily
+  source: sensor.pv3_sum
+  cycle: daily
+pv4_daily:
+  unique_id: foxess_inv1_pv4_daily
+  source: sensor.pv4_sum
+  cycle: daily
 pv_energy_daily:
   unique_id: foxess_inv1_pv_energy_daily
   #source: sensor.pv_total_sum

@@ -254,7 +254,9 @@
       state: >
         {% set pv1 = states('sensor.pv1_power') | float(default=0) %}
         {% set pv2 = states('sensor.pv2_power') | float(default=0) %}
-        {% set pv = pv1 + pv2 %}
+        {% set pv3 = states('sensor.pv3_power') | float(default=0) %}
+        {% set pv4 = states('sensor.pv4_power') | float(default=0) %}
+        {% set pv = pv1 + pv2 + pv3 + pv4 %}
         {% set pv = 0.0 if pv < 0.0 else pv %}
         {{ pv }}
     - name: "Work Mode"

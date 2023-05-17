@@ -49,6 +49,20 @@
   source: sensor.pv2_power
   unit_time: h
   round: 1
+- name: pv3_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_pv3_sum
+  source: sensor.pv3_power
+  unit_time: h
+  round: 1
+- name: pv4_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_pv4_sum
+  source: sensor.pv4_power
+  unit_time: h
+  round: 1
 - name: pv_total_sum
   method: left
   platform: integration

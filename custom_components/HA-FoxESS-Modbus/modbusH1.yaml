@@ -409,6 +409,16 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_high
+    - name: "Load Apparent"
+      unique_id: foxess_inv1_load_apparent
+      address: 31039
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
 
     # -------------------------------------------------------------------------
     # Inverter energy meters
