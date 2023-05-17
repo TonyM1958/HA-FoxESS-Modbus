@@ -291,7 +291,7 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_high
-    - name: "CT2 Meter"
+    - name: "CT2"
       unique_id: foxess_inv1_ct2
       address: 31015 # input 11022
       slave: !secret foxess_inv1_slave
@@ -301,8 +301,8 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_high
-    - name: "Load Power"
-      unique_id: foxess_inv1_load_power
+    - name: "Load Power CT1"
+      unique_id: foxess_inv1_load_power_ct1
       address: 31016 # input 11023
       slave: !secret foxess_inv1_slave
       device_class: power

@@ -63,6 +63,13 @@
   source: sensor.pv4_power
   unit_time: h
   round: 1
+- name: ct2_sum
+  method: left
+  platform: integration
+  unique_id: foxess_inv1_ct2_sum
+  source: sensor.ct2
+  unit_time: h
+  round: 1
 - name: pv_total_sum
   method: left
   platform: integration
