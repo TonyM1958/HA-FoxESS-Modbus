@@ -45,8 +45,8 @@
       unit_of_measurement: "hours"
       state: >
         {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
-        {% set min_soc = states('sensor.min_soc_on_grid') | float(default=-1) %}
-        {% set reserve = capacity * min_soc / 100 if capacity >= 0.0 and min_soc >= 0.0 else -1 %}
+        {% set min_soc = states('sensor.min_soc_on_grid') | float(default=10) %}
+        {% set reserve = capacity * min_soc / 100 if capacity >= 0.0 else -1 %}
         {% set energy = states('sensor.battery_energy') | float(default=-1) %}
         {% set power = states('sensor.load_power_rolling') | float(default=-1) * 1.05 %}
         {% set hours = ((energy - reserve) / power) | int if energy >= 0.0 and reserve >= 0.0 and power > 0.0 else 0  %}
