@@ -136,7 +136,7 @@
         {% set spower_in = 0.0 if spower > 0.0 else spower * -1.0 %}
         {% set tpower = states('sensor.TPower') | float(default=0) %}
         {% set tpower_in = 0.0 if tpower > 0.0 else tpower * -1.0 %}
-        {% set bat_power = states('sensor.InvBatPower') | float(default=0) %}
+        {% set bat_power = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set bat_power_in = 0.0 if bat_power < 0.0 else bat_power %}
         {% set power_in = pv_power_in + rpower_in + spower_in + tpower_in + bat_power_in %}
         {{ power_in | round(3) }}
@@ -155,7 +155,7 @@
         {% set eps_rpower_out = states('sensor.EPS_RPower') | float(default=0) %}
         {% set eps_spower_out = states('sensor.EPS_SPower') | float(default=0) %}
         {% set eps_tpower_out = states('sensor.EPS_TPower') | float(default=0) %}
-        {% set bat_power = states('sensor.InvBatPower') | float(default=0) %}
+        {% set bat_power = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set bat_power_out = 0 if bat_power > 0.0 else bat_power * -1.0 %}
         {% set power_out = rpower_out + spower_out + tpower_out + eps_rpower_out + eps_spower_out + eps_tpower_out + bat_power_out %}
         {{ power_out | round(3) }}
@@ -217,7 +217,7 @@
       unique_id: foxess_inv1_battery_discharge
       unit_of_measurement: "kW"
       state: >
-        {% set result = states('sensor.InvBatPower') | float(default=0) %}
+        {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set result = 0.0 if result < 0.0 else result %}
         {{ result }}
     - name: "Battery Charge"
@@ -225,7 +225,7 @@
       unique_id: foxess_inv1_battery_charge
       unit_of_measurement: "kW"
       state: >
-        {% set result = states('sensor.InvBatPower') | float(default=0) %}
+        {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set result = 0.0 if result > 0.0 else result * -1 %}
         {{ result }}
     # separate grid import and export power based on sign of grid CT and/or meter
@@ -264,12 +264,12 @@
       unique_id: foxess_inv1_load_power
       unit_of_measurement: "kW"
       state: >
-        {% set load_ct1 = states('sensor.load_power_ct1') | float(default=0) %}
-        {% set load_ct2 = states('sensor.ct2') | float(default=0) %}
+        {% set load = states('sensor.load_power_ct1') | float(default=0) %}
+        {% set ct2 = states('sensor.ct2') | float(default=0) %}
         {% set load_r = states('sensor.load_rpower') | float(default=0) %}
         {% set load_s = states('sensor.load_spower') | float(default=0) %}
         {% set load_t = states('sensor.load_tpower') | float(default=0) %}
-        {% set result = load_ct1 + load_ct2 + load_r + load_s + load_t %}
+        {% set result = load + ct2 + load_r + load_s + load_t %}
         {{ result }}
 
     # sum power being produced by PV strings

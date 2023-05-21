@@ -1,0 +1,1301 @@
+---
+# ---------------------------------------------------------------------------
+# START: modbus include file for HA-FoxESS-Modbus
+# ---------------------------------------------------------------------------
+# Supports RS-485 to USB, RS485 to Wifi/LAN for single phase KH series inverters
+
+- name: FoxESSInverterModbus
+
+  # ------------------------ USB connection  -------------------------------
+  # Enter the port in secrets.yaml
+  type: serial
+  port: !secret foxess_inv1_tty
+  baudrate: 9600
+  bytesize: 8
+  method: rtu
+  parity: N
+  stopbits: 1
+
+  # ----------------------- LAN connection --------------------------------
+  # Enter the IP address in secrets.yaml
+  # Comment out the previous section and uncomment this section to use this
+  #type: tcp
+  #host: !secret foxess_inv1_ip_address
+  #port: 502
+  # uncomment this line when using a direct connection to the inverter
+  #delay: 1
+  # ---------------------------------------------------------------------------
+
+  # ---------------------------------------------------------------------------
+  # Binary sensors used for on/off values - moved here so we can add things
+  # to the end of the file more easily
+  # ---------------------------------------------------------------------------
+
+  binary_sensors:
+    - name: "Time Period 1 Enabled"
+      unique_id: foxess_inv1_time_period_1_enabled
+      address: 41001
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      scan_interval: !secret scan_interval_low
+    - name: "Time Period 2 Enabled"
+      unique_id: foxess_inv1_time_period_2_enabled
+      address: 41004
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      scan_interval: !secret scan_interval_low
+
+  # ---------------------------------------------------------------------------
+  # List of modbus addresses to read holding and input registers.
+  # ---------------------------------------------------------------------------
+
+  sensors:
+    # -------------------------------------------------------------------------
+    # Inverter information
+    # -------------------------------------------------------------------------
+
+    - name: "Inverter Model"
+      unique_id: foxess_inv1_inverter_model
+      address: 30000 # input 10000
+      slave: !secret foxess_inv1_slave
+      count: 16
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Serial Number"
+      unique_id: foxess_inv1_serial_number
+      address: 10008 # 30008 is blank
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      count: 8
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Master Version"
+      unique_id: foxess_inv1_master_version
+      address: 30016 # input input 10016
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scale: 0.01
+      precision: 2
+      scan_interval: !secret scan_interval_static
+    - name: "Slave Version"
+      unique_id: foxess_inv1_slave_version
+      address: 30017 # input 10017
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scale: 0.01
+      precision: 2
+      scan_interval: !secret scan_interval_static
+    - name: "Manager Version"
+      unique_id: foxess_inv1_manager_version
+      address: 30018 # input 10018
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scale: 0.01
+      precision: 2
+      scan_interval: !secret scan_interval_static
+    - name: "BMS Version"
+      unique_id: foxess_inv1_bms_version
+      address: 30019 # input 10019
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 1 Version"
+      unique_id: foxess_inv1_battery_1_version
+      address: 30020 # input 10020
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 2 Version"
+      unique_id: foxess_inv1_battery_2_version
+      address: 30021 # input 10021
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 3 Version"
+      unique_id: foxess_inv1_battery_3_version
+      address: 30022 # input 10022
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 4 Version"
+      unique_id: foxess_inv1_battery_4_version
+      address: 30023 # input 10023
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 5 Version"
+      unique_id: foxess_inv1_battery_5_version
+      address: 30024 # input 10024
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 6 Version"
+      unique_id: foxess_inv1_battery_6_version
+      address: 30025 # input 10025
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 7 Version"
+      unique_id: foxess_inv1_battery_7_version
+      address: 30026 # input 10026
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 8 Version"
+      unique_id: foxess_inv1_battery_8_version
+      address: 30027 # input 10027
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_static
+
+    # -------------------------------------------------------------------------
+    # Inverter operating sensors
+    # -------------------------------------------------------------------------
+
+    - name: "PV1 Voltage"
+      unique_id: foxess_inv1_pv1_voltage
+      address: 31000 # input 11000
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "PV1 Current"
+      unique_id: foxess_inv1_pv1_current
+      address: 31001 # input 11001
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "PV1 Power"
+      unique_id: foxess_inv1_pv1_power
+      address: 31002 # input 11002
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "PV2 Voltage"
+      unique_id: foxess_inv1_pv2_voltage
+      address: 31003 # input 11003
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "PV2 Current"
+      unique_id: foxess_inv1_pv2_current
+      address: 31004 # input 11004
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "PV2 Power"
+      unique_id: foxess_inv1_pv2_power
+      address: 31005 # input 11005
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      scan_interval: !secret scan_interval_high
+    - name: "RVolt"
+      unique_id: foxess_inv1_grid_voltage_R
+      address: 31006 # input 11009
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "RCurrent"
+      unique_id: foxess_inv1_inv_current_R
+      address: 31007 # input 11010
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "RPower"
+      unique_id: foxess_inv1_inv_power_R
+      address: 31008 # input 11011
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "Grid Frequency"
+      unique_id: foxess_inv1_grid_frequency
+      address: 31009 # input 11014
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      unit_of_measurement: "Hz"
+      device_class: frequency
+      scale: 0.01
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "EPS RVolt"
+      unique_id: foxess_inv1_eps_voltage_R
+      address: 31010 # input 11015
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "EPS RCurrent"
+      unique_id: foxess_inv1_eps_current_R
+      address: 31011 # input 11016
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "EPS RPower"
+      unique_id: foxess_inv1_eps_power_R
+      address: 31012 # input 11017
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "EPS Frequency"
+      unique_id: foxess_inv1_eps_frequency
+      address: 31013 # input 11020
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: frequency
+      unit_of_measurement: "Hz"
+      scale: 0.01
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Grid CT"
+      unique_id: foxess_inv1_grid_ct
+      address: 31014 # input 11021
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "CT2"
+      unique_id: foxess_inv1_ct2
+      address: 31015 # input 11022
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "Load Power CT1"
+      unique_id: foxess_inv1_load_power_ct1
+      address: 31016 # input 11023
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "Inverter Temperature"
+      unique_id: foxess_inv1_inverter_temperature
+      address: 31018 # input 11024
+      slave: !secret foxess_inv1_slave
+      device_class: temperature
+      unit_of_measurement: "°C"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Inner Temperature"
+      unique_id: foxess_inv1_ambient_temperature
+      address: 31019 # input 11025
+      slave: !secret foxess_inv1_slave
+      device_class: temperature
+      unit_of_measurement: "°C"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "InvBatVolt"
+      unique_id: foxess_inv1_battery_voltage
+      address: 31020 # input 11006
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "InvBatCurrent"
+      unique_id: foxess_inv1_battery_current
+      address: 31021 # input 11007
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Battery Discharge Power"
+      unique_id: foxess_inv1_battery_power
+      address: 31022 # input 11008
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "BMS Temperature"
+      unique_id: foxess_inv1_battery_temperature
+      address: 31023 # input 11038
+      slave: !secret foxess_inv1_slave
+      device_class: temperature
+      unit_of_measurement: "°C"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Battery SoC"
+      unique_id: foxess_inv1_battery_soc
+      address: 31024 # input 11036
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Max Charge Current"
+      unique_id: foxess_inv1_bms_charge_rate
+      address: 31025 # input 11041
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "BMS Max Discharge Current"
+      unique_id: foxess_inv1_bms_discharge_rate
+      address: 31026 # input 11042
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: current
+      unit_of_measurement: "A"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: !secret scan_interval_medium
+    - name: "Inverter State Code"
+      unique_id: foxess_inv1_state_code
+      address: 31027
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "BMS Status Code"
+      unique_id: foxess_inv1_battery_status_code
+      address: 31028 # input 11057
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Connection Code"
+      unique_id: foxess_inv1_bms_connection_code
+      address: 31029 # input 11058
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Fault Code 1"
+      unique_id: foxess_inv1_fault_code_1
+      address: 31031 # input 11061
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Fault Code 2"
+      unique_id: foxess_inv1_fault_code_2
+      address: 31032 # input 11062
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Fault Code 3"
+      unique_id: foxess_inv1_fault_code_3
+      address: 31033 # input 11063
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Fault Code 4"
+      unique_id: foxess_inv1_fault_code_4
+      address: 31034 # input 11064
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Fault Code 5"
+      unique_id: foxess_inv1_fault_code_5
+      address: 31035 # input 11065
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Fault Code 6"
+      unique_id: foxess_inv1_fault_code_6
+      address: 31036 # input 11066
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Fault Code 7"
+      unique_id: foxess_inv1_fault_code_7
+      address: 31037 # input 11067
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Fault Code 8"
+      unique_id: foxess_inv1_fault_code_8
+      address: 31038 # input 11068
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Load Apparent"
+      unique_id: foxess_inv1_load_apparent
+      address: 31039 # RS485
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+
+    # -------------------------------------------------------------------------
+    # Inverter energy meters only available via RS485
+    # -------------------------------------------------------------------------
+
+    - name: "PV Energy Total"
+      unique_id: foxess_inv1_pv_energy_total
+      address: 32000 # input 11069
+      slave: !secret foxess_inv1_slave
+      data_type: uint32
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "PV Energy Today"
+      unique_id: foxess_inv1_pv_energy_today
+      address: 32002 # input 11071
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total
+      scan_interval: !secret scan_interval_low
+    - name: "Charge Energy Total"
+      unique_id: foxess_inv1_charge_energy_total
+      address: 32003 # input 11072
+      slave: !secret foxess_inv1_slave
+      data_type: uint32
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "Charge Energy Today"
+      unique_id: foxess_inv1_charge_energy_today
+      address: 32005 # input 11074
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total
+      scan_interval: !secret scan_interval_low
+    - name: "Discharge Energy Total"
+      unique_id: foxess_inv1_discharge_energy_total
+      address: 32006 # input 11075
+      slave: !secret foxess_inv1_slave
+      data_type: uint32
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "Discharge Energy Today"
+      unique_id: foxess_inv1_discharge_energy_today
+      address: 32008 # input 11077
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total
+      scan_interval: !secret scan_interval_low
+    - name: "Feed In Energy Total"
+      unique_id: foxess_inv1_feed_in_energy_total
+      address: 32009 # input 11078
+      slave: !secret foxess_inv1_slave
+      data_type: uint32
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "Feed In Energy Today"
+      unique_id: foxess_inv1_feed_in_energy_today
+      address: 32011 # input 11080
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total
+      scan_interval: !secret scan_interval_low
+    - name: "Grid Consumption Energy Total"
+      unique_id: foxess_inv1_grid_consumption_energy_total
+      address: 32012 # input 11081
+      slave: !secret foxess_inv1_slave
+      data_type: uint32
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "Grid Consumption Energy Today"
+      unique_id: foxess_inv1_grid_consumption_energy_today
+      address: 32014 # input 11083
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total
+      scan_interval: !secret scan_interval_low
+    - name: "Output Energy Total"
+      unique_id: foxess_inv1_output_energy_total
+      address: 32015 # input 11084
+      slave: !secret foxess_inv1_slave
+      data_type: uint32
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "Output Energy Today"
+      unique_id: foxess_inv1_output_energy_today
+      address: 32017 # input 11086
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total
+      scan_interval: !secret scan_interval_low
+    - name: "Input Energy Total" # battery force charge
+      unique_id: foxess_inv1_input_energy_total
+      address: 32018 # input 11087
+      slave: !secret foxess_inv1_slave
+      data_type: uint32
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "Input Energy Today" # battery force charge
+      unique_id: foxess_inv1_input_energy_today
+      address: 32020 # input 11089
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total
+      scan_interval: !secret scan_interval_low
+    - name: "Load Energy Total"
+      unique_id: foxess_inv1_load_energy_total
+      address: 32021 # input 11090
+      slave: !secret foxess_inv1_slave
+      data_type: uint32
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "Load Energy Today"
+      unique_id: foxess_inv1_load_energy_today
+      address: 32023 # input 11092
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.1
+      precision: 1
+      state_class: total
+      scan_interval: !secret scan_interval_low
+
+    # -------------------------------------------------------------------------
+    # Input Registers only available via RS485 connection
+    # these entities will be unavailable when using direct LAN connection
+    # -------------------------------------------------------------------------
+
+    - name: "RPower Reactive"
+      unique_id: foxess_inv1_reactive_R
+      address: 11012
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      unit_of_measurement: "kVAR"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "RPower Apparent"
+      unique_id: foxess_inv1_apparent_R
+      address: 11013
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      unit_of_measurement: "kVA"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "EPS RPower Reactive"
+      unique_id: foxess_inv1_eps_reactive_R
+      address: 11018
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      unit_of_measurement: "kVAR"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "EPS RPower Apparent"
+      unique_id: foxess_inv1_eps_apparent_R
+      address: 11019
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      unit_of_measurement: "kVA"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Power Feedback"
+      unique_id: foxess_inv1_power_feedback
+      address: 11026
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Reactive Feedback"
+      unique_id: foxess_inv1_reactive_feedback
+      address: 11027
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Power Out Limit"
+      unique_id: foxess_inv1_power_out_limit
+      address: 11028
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Power In Limit"
+      unique_id: foxess_inv1_power_in_limit
+      address: 11029
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Reactive Out Limit"
+      unique_id: foxess_inv1_reactive_out_limit
+      address: 11030
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Reactive In Limit"
+      unique_id: foxess_inv1_reactive_in_limit
+      address: 11031
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Power Limit Flag"
+      unique_id: foxess_inv1_power_limit _flag
+      address: 11032
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "Battery Limit Flag"
+      unique_id: foxess_inv1_battery_limit _flag
+      address: 11033
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "BatVolt"
+      unique_id: foxess_inv1_bms_battery_voltage
+      address: 11034
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "BatCurrent"
+      unique_id: foxess_inv1_bms_battery_current
+      address: 11035
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+
+    - name: "BMS kWh Remaining"
+      unique_id: foxess_inv1_bms_kwh_remaining
+      address: 11037
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.01
+      precision: 2
+      state_class: total
+      scan_interval: !secret scan_interval_low
+
+    - name: "BMS Charge Cut Voltage"
+      unique_id: foxess_inv1_charge_cut_voltage
+      address: 11039
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Discharge Cut Voltage"
+      unique_id: foxess_inv1_discharge_cut_voltage
+      address: 11040
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+
+    - name: "BMS Cell Temp High"
+      unique_id: foxess_inv1_bms_cell_temperature_high
+      address: 11043
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      unit_of_measurement: "°C"
+      device_class: temperature
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Cell Temp Low"
+      unique_id: foxess_inv1_bms_cell_temperature_low
+      address: 11044
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: temperature
+      unit_of_measurement: "°C"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Cell mV High"
+      unique_id: foxess_inv1_bms_cell_mv_high
+      address: 11045
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "mV"
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "BMS Cell mV Low"
+      unique_id: foxess_inv1_bms_cell_mv_low
+      address: 11046
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "mV"
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "BMS Battery Count"
+      unique_id: foxess_inv1_bms_subsystem_number
+      address: 11047
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Cycle Count"
+      unique_id: foxess_inv1_bms_cycle_count
+      address: 11048
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "BMS kWh Total"
+      unique_id: foxess_inv1_bms_kwh_total
+      address: 11049
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy
+      unit_of_measurement: "kWh"
+      scale: 0.001
+      precision: 3
+      state_class: total_increasing
+      scan_interval: !secret scan_interval_low
+    - name: "BMS SoC"
+      unique_id: foxess_inv1_bat_min_soc
+      address: 11050
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Charge Request"
+      unique_id: foxess_inv1_bat_charge_request
+      address: 11051
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Charge Limit"
+      unique_id: foxess_inv1_bat_charge_limit
+      address: 11052
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Discharge Limit"
+      unique_id: foxess_inv1_bat_discharge_limit
+      address: 11053
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Module Type"
+      unique_id: foxess_inv1_bat_module_type
+      address: 11054
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Connect Time Count"
+      unique_id: foxess_inv1_connect_time_count
+      address: 11055
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: duration
+      unit_of_measurement: "s"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Meter 1 Connection Code"
+      unique_id: foxess_inv1_meter1_connection_code
+      address: 11059
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Meter 2 Connection Code"
+      unique_id: foxess_inv1_meter2_connection_code
+      address: 11060
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+
+    # -------------------------------------------------------------------------
+    # Inverter Control registers
+    # these entities will be unavailable when using direct LAN connection
+    # -------------------------------------------------------------------------
+
+    - name: "RTC Years"
+      unique_id: foxess_inv1_rtc_years
+      address: 40000
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "RTC Months"
+      unique_id: foxess_inv1_rtc_months
+      address: 40001
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "RTC Days"
+      unique_id: foxess_inv1_rtc_days
+      address: 40002
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "RTC Hours"
+      unique_id: foxess_inv1_rtc_hours
+      address: 40003
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "RTC Minutes"
+      unique_id: foxess_inv1_rtc_minutes
+      address: 40004
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "RTC Seconds"
+      unique_id: foxess_inv1_rtc_seconds
+      address: 40005
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Grid Code"
+      unique_id: foxess_inv1_grid_code
+      address: 40006
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "PV Config Code"
+      unique_id: foxess_inv1_pv_config_code
+      address: 40008
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "DRM0 State"
+      unique_id: foxess_inv1_drm0_state
+      address: 40009
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Meter 1 Code"
+      unique_id: foxess_inv1_meter1_code
+      address: 40010
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Meter 2 Code"
+      unique_id: foxess_inv1_meter2_code
+      address: 40011
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Modbus Address"
+      unique_id: foxess_inv1_modbus_address
+      address: 40012
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+    - name: "Password"
+      unique_id: foxess_inv1_password
+      address: 40013
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      scan_interval: !secret scan_interval_low
+
+    - name: "Work Mode Code"
+      unique_id: foxess_inv1_work_mode_code
+      address: 41000
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      scan_interval: !secret scan_interval_low
+    - name: "Time Period 1 Start"
+      unique_id: foxess_inv1_time_period_1_start
+      address: 41002
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      scan_interval: !secret scan_interval_low
+    - name: "Time Period 1 End"
+      unique_id: foxess_inv1_time_period_1_end
+      address: 41003
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      scan_interval: !secret scan_interval_low
+    - name: "Time Period 2 Start"
+      unique_id: foxess_inv1_time_period_2_start
+      address: 41005
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      scan_interval: !secret scan_interval_low
+    - name: "Time Period 2 End"
+      unique_id: foxess_inv1_time_period_2_end
+      address: 41006
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      scan_interval: !secret scan_interval_low
+
+    - name: "Max Charge Current"
+      unique_id: foxess_inv1_max_charge_current
+      address: 41007
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Max Discharge Current"
+      unique_id: foxess_inv1_max_discharge_current
+      address: 41008
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Min SoC"
+      unique_id: foxess_inv1_min_soc
+      address: 41009
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Max SoC"
+      unique_id: foxess_inv1_max_soc
+      address: 41010
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Min SoC On Grid"
+      unique_id: foxess_inv1_min_soc_on_grid
+      address: 41011
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Export Limit"
+      unique_id: foxess_inv1_export_limit
+      address: 41012
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "System Enable"
+      unique_id: foxess_inv1_system_enable
+      address: 41013
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "EPS Frequency Code"
+      unique_id: foxess_inv1_eps_frequency_code
+      address: 41014
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "EPS Enable"
+      unique_id: foxess_inv1_eps_enable
+      address: 41015
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Ground Enable"
+      unique_id: foxess_inv1_ground_enable
+      address: 41016
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+
+    # ---------------------------------------------------------------------------
+    # Additional PV registers to read for KH series with 4 x MPPT strings
+    # ---------------------------------------------------------------------------
+
+    - name: "PV3 Voltage"
+      unique_id: foxess_inv1_pv3_voltage
+      address: 31039 # input 11096
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "PV3 Current"
+      unique_id: foxess_inv1_pv3_current
+      address: 31040 # input 11097
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "PV3 Power"
+      unique_id: foxess_inv1_pv3_power
+      address: 31041 # input 11098
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_high
+    - name: "PV4 Voltage"
+      unique_id: foxess_inv1_pv4_voltage
+      address: 31042 # input 11099
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "V"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "PV4 Current"
+      unique_id: foxess_inv1_pv4_current
+      address: 31043 # input 11100
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "PV4 Power"
+      unique_id: foxess_inv1_pv4_power
+      address: 31044 # input 11101
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 3
+      scan_interval:
+        !secret scan_interval_high
+
+  # ---------------------------------------------------------------------------
+  # END: modbus include file for HA-FoxESS-Modbus RS485 connection
+  # ---------------------------------------------------------------------------
