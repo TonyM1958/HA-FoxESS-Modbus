@@ -79,8 +79,8 @@
       device_class: "energy"
       unit_of_measurement: "kWh"
       state: >
-        {% set discharge = states('sensor.discharge_energy_today') | float(default=-1) %}
-        {% set charge = states('sensor.charge_energy_today') | float(default=-1) %}
+        {% set discharge = states('sensor.bat_discharge_daily') | float(default=-1) %}
+        {% set charge = states('sensor.bat_charge_daily') | float(default=-1) %}
         {% set result = (discharge - charge) | round(3) if charge >= 0.0 and discharge >= 0.0 else 'Unavailable' %}
         {{ result }}
     # days since the sytsem was installed
