@@ -464,7 +464,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "InvBatVolt"
-      unique_id: foxess_inv1_inverter_battery_voltage
+      unique_id: foxess_inv1_battery_voltage
       address: 31034
       slave: !secret foxess_inv1_slave
       device_class: voltage
@@ -474,7 +474,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "InvBatCurrent"
-      unique_id: foxess_inv1_inverter_battery_current
+      unique_id: foxess_inv1_battery_current
       address: 31035
       slave: !secret foxess_inv1_slave
       device_class: current
@@ -483,7 +483,7 @@
       precision: 1
       state_class: measurement
       scan_interval: !secret scan_interval_medium
-    - name: "InvBatPower"
+    - name: "Battery Discharge Power"
       unique_id: foxess_inv1_battery_power
       address: 31036
       slave: !secret foxess_inv1_slave
@@ -743,7 +743,7 @@
     # -------------------------------------------------------------------------
 
     - name: "BatVolt"
-      unique_id: foxess_inv1_battery_voltage
+      unique_id: foxess_inv1_bms_battery_voltage
       address: 11034
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -754,7 +754,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "BatCurrent"
-      unique_id: foxess_inv1_battery_current
+      unique_id: foxess_inv1_bms_battery_current
       address: 11035
       input_type: input
       slave: !secret foxess_inv1_slave
