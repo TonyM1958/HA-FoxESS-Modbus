@@ -9,11 +9,9 @@
 
   # ----------------------- LAN connection --------------------------------
   # Enter the IP address in secrets.yaml
-  # Comment out the previous section and uncomment this section to use this
   type: tcp
   host: !secret foxess_inv1_ip_address
   port: 502
-  # uncomment this line when using a direct connection to the inverter
   delay: 1
   # ---------------------------------------------------------------------------
 
