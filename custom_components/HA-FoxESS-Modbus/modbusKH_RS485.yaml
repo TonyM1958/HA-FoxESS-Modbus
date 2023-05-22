@@ -38,7 +38,7 @@
       address: 10000
       input_type: input
       slave: !secret foxess_inv1_slave
-      count: 16
+      count: 8
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "Serial Number"

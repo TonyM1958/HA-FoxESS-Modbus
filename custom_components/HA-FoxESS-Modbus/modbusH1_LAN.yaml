@@ -27,7 +27,7 @@
       unique_id: foxess_inv1_inverter_model
       address: 30000 # input 10000
       slave: !secret foxess_inv1_slave
-      count: 16
+      count: 8
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "Master Version"
