@@ -653,7 +653,7 @@
       unit_of_measurement: "mV"
       state_class: measurement
       scan_interval: !secret scan_interval_medium
-    - name: "BMS Battery Count"
+    - name: "BMS Subsystem Number"
       unique_id: foxess_inv1_bms_subsystem_number
       address: 11047
       input_type: input
