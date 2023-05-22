@@ -1,13 +1,13 @@
 ---
 # ---------------------------------------------------------------------------
-# START: modbus include file for HA-FoxESS-Modbus
+# START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for KH inverters
 
 - name: FoxESSInverterModbus
 
   # ------------------------ USB connection  -------------------------------
-  # Enter the port in secrets.yaml
+  # Enter your port in secrets.yaml
   type: serial
   port: !secret foxess_inv1_tty
   baudrate: 9600
@@ -17,15 +17,15 @@
   stopbits: 1
 
   # ----------------------- LAN connection --------------------------------
-  # Enter the IP address in secrets.yaml
-  # Comment out the previous section and uncomment this section to use this
+  # Enter your IP address in secrets.yaml
+  # Comment out the previous section and uncomment this section to use
   #type: tcp
   #host: !secret foxess_inv1_ip_address
   #port: 502
   # ---------------------------------------------------------------------------
 
   # ---------------------------------------------------------------------------
-  # List of modbus addresses to read holding and input registers.
+  # List of modbus addresses to read input registers.
   # ---------------------------------------------------------------------------
 
   sensors:
@@ -1034,6 +1034,11 @@
       precision: 1
       state_class: total
       scan_interval: !secret scan_interval_low
+
+    # ---------------------------------------------------------------------------
+    # Note: ommitted registers 11093, 11094, 11095
+    # Inverter (Year, Month), (Day, Hour), (Minute, Second)
+    # ---------------------------------------------------------------------------
 
     # ---------------------------------------------------------------------------
     # KH series has 4 x MPPT strings
