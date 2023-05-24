@@ -405,14 +405,18 @@
       unique_id: foxess_inv1_state
       icon: "mdi:play"
       state: >
-        {% set mode = states('sensor.inverter_state_code') | int(default=-1) %}
-        {% set result = 'Stopped' if mode == 0 else 'Unavailable' %}
-        {% set result = 'Checking' if mode == 1 else result %}
-        {% set result = 'On Grid' if mode == 2 else result %}
-        {% set result = 'off Grid / EPS' if mode == 3 else result %}
-        {% set result = 'Fault (recoverable)' if mode == 4 else result %}
-        {% set result = 'Fault (not recoverable)' if mode == 5 else result %}
-        {% set result = mode if mode >= 5 else result %}
+        {% set state = states('sensor.inverter_state_code') | int(default=-2) %}
+        {% set model = states('sensor.inverter_model') %}
+        {% set state = state - 1 if model[0] =='K' and state <=7 else state %}
+        {% set result = 'Self Test' if state == -1 else 'Unavailable' %}
+        {% set result = 'Waiting' if state == 0 else result %}
+        {% set result = 'Checking' if state == 1 else result %}
+        {% set result = 'On Grid' if state == 2 else result %}
+        {% set result = 'off Grid / EPS' if state == 3 else result %}
+        {% set result = 'Fault (recoverable)' if state == 4 else result %}
+        {% set result = 'Fault (not recoverable)' if state == 5 else result %}
+        {% set result = state if state in (6,7) else result %}
+        {% set result = 'Upgrading Firmware' if state == 8 else result %}
         {{ result }}
     - name: "Time Period 1"
       unique_id: foxess_inv1_time_period_1

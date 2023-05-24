@@ -25,7 +25,7 @@
   # ---------------------------------------------------------------------------
 
   # ---------------------------------------------------------------------------
-  # List of modbus addresses to read input registers.
+  # List of modbus addresses to read.
   # ---------------------------------------------------------------------------
 
   sensors:
@@ -35,14 +35,13 @@
 
     - name: "Inverter Model"
       unique_id: foxess_inv1_inverter_model
-      address: 10000
-      input_type: input
+      address: 30000
       slave: !secret foxess_inv1_slave
       count: 8
       data_type: string
       scan_interval: !secret scan_interval_static
-    - name: "Serial Number"
-      unique_id: foxess_inv1_serial_number
+    - name: "Inverter Serial No"
+      unique_id: foxess_inv1_inverter_serial
       address: 10008
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -51,8 +50,7 @@
       scan_interval: !secret scan_interval_static
     - name: "Master Version"
       unique_id: foxess_inv1_master_version
-      address: 10016
-      input_type: input
+      address: 30016
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scale: 0.01
@@ -60,8 +58,7 @@
       scan_interval: !secret scan_interval_static
     - name: "Slave Version"
       unique_id: foxess_inv1_slave_version
-      address: 10017
-      input_type: input
+      address: 30017
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scale: 0.01
@@ -69,75 +66,128 @@
       scan_interval: !secret scan_interval_static
     - name: "Manager Version"
       unique_id: foxess_inv1_manager_version
-      address: 10018
+      address: 30018
       slave: !secret foxess_inv1_slave
-      input_type: input
       data_type: uint16
       scale: 0.01
       precision: 2
       scan_interval: !secret scan_interval_static
     - name: "BMS Version"
       unique_id: foxess_inv1_bms_version
-      address: 10019
-      input_type: input
+      address: 30019
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
     - name: "Battery 1 Version"
       unique_id: foxess_inv1_battery_1_version
-      address: 10020
-      input_type: input
+      address: 30020
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
     - name: "Battery 2 Version"
       unique_id: foxess_inv1_battery_2_version
-      address: 10021
-      input_type: input
+      address: 30021
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
     - name: "Battery 3 Version"
       unique_id: foxess_inv1_battery_3_version
-      address: 10022
-      input_type: input
+      address: 30022
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
     - name: "Battery 4 Version"
       unique_id: foxess_inv1_battery_4_version
-      address: 10023
-      input_type: input
+      address: 30023
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
     - name: "Battery 5 Version"
       unique_id: foxess_inv1_battery_5_version
-      address: 10024
-      input_type: input
+      address: 30024
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
     - name: "Battery 6 Version"
       unique_id: foxess_inv1_battery_6_version
-      address: 10025
-      input_type: input
+      address: 30025
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
     - name: "Battery 7 Version"
       unique_id: foxess_inv1_battery_7_version
-      address: 10026
-      input_type: input
+      address: 30026
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
     - name: "Battery 8 Version"
       unique_id: foxess_inv1_battery_8_version
-      address: 10027
-      input_type: input
+      address: 30027
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      scan_interval: !secret scan_interval_static
+    - name: "BMS Serial No"
+      unique_id: foxess_inv1_bms_serial
+      address: 30028
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 1 Serial No"
+      unique_id: foxess_inv1_battery1_serial
+      address: 30043
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 2 Serial No"
+      unique_id: foxess_inv1_battery2_serial
+      address: 30058
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 3 Serial No"
+      unique_id: foxess_inv1_battery3_serial
+      address: 30073
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 4 Serial No"
+      unique_id: foxess_inv1_battery4_serial
+      address: 30088
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 5 Serial No"
+      unique_id: foxess_inv1_battery5_serial
+      address: 30103
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 6 Serial No"
+      unique_id: foxess_inv1_battery6_serial
+      address: 30118
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 7 Serial No"
+      unique_id: foxess_inv1_battery7_serial
+      address: 30133
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Battery 8 Serial No"
+      unique_id: foxess_inv1_battery8_serial
+      address: 30148
+      slave: !secret foxess_inv1_slave
+      count: 15
+      data_type: string
       scan_interval: !secret scan_interval_static
 
     # -------------------------------------------------------------------------
