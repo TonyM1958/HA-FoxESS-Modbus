@@ -90,17 +90,18 @@
       state: >
         {% set date_install = as_timestamp(strptime(states('sensor.install_date'), '%d-%m-%Y')) %}
         {% set date_now = as_timestamp(now()) %}
-        {% set installed_days = (date_now - date_install) | int // 60 // 60 // 24 %}
-        {{ installed_days }}
+        {% set days = (date_now - date_install) | int // 60 // 60 // 24 %}
+        {{ days }}
     # years of battery life remaining, based on 6,000 cycles
     - name: "Battery Life Remaining"
       unique_id: foxess_inv1_battery_life_remaining
       unit_of_measurement: "years"
       state: >
-        {% set installed_days = states('sensor.installed_days') | int %}
-        {% set cycles_now = states('sensor.bms_cycle_count') | int %}
-        {% set years_remaining = installed_days / cycles_now * 6000 / 365 %}
-        {{ years_remaining | round(0) }}
+        {% set days = states('sensor.installed_days') | float(default=-1) %}
+        {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
+        {% set years = (days / cycles * 6000 - days) / 365 if days > 0 and cycles > 0 else -50 %}
+        {% set result = years | round(1) if years > -50 else 'Unavailable' %}
+        {{ result }}
 
     # inverter date and time setting
     - name: "Inverter Datetime"
@@ -227,6 +228,26 @@
       state: >
         {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set result = 0.0 if result > 0.0 else result * -1 %}
+        {{ result }}
+    # running total of the charge and discharge energy through the battery
+    - name: "Battery Energy Total"
+      device_class: "energy"
+      unique_id: foxess_inv1_battery_energy_total
+      unit_of_measurement: "kWh"
+      state: >
+        {% set charge = states('sensor.charge_energy_total') | float(default=-1) %}
+        {% set discharge = states('sensor.discharge_energy_total') | float(default=-1) %}
+        {% set result = charge + discharge if charge >= 0.0 and discharge > 0.0 else 'Unavailable' %}
+        {{ result }}
+    # battery energy average per BMS cycle
+    - name: "Battery Energy per Cycle"
+      device_class: "energy"
+      unique_id: foxess_inv1_battery_energy_per_cycle
+      unit_of_measurement: "kWh"
+      state: >
+        {% set total = states('sensor.battery_energy_total') | float(default=-1) %}
+        {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
+        {% set result = (total / cycles) | round(1) if total >= 0.0 and cycles > 0.0 else 'Unavailable' %}
         {{ result }}
     # separate grid import and export power based on sign of grid CT and/or meter
     - name: "Feed In Power"
