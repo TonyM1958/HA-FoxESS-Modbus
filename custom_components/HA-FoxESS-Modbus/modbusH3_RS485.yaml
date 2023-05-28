@@ -939,7 +939,12 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       scan_interval: !secret scan_interval_low
-
+    - name: "Time Period 1 Enabled"
+      unique_id: foxess_inv1_time_period_1_enabled
+      address: 41001
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      scan_interval: !secret scan_interval_low
     - name: "Time Period 1 Start"
       unique_id: foxess_inv1_time_period_1_start
       address: 41002
@@ -951,6 +956,12 @@
       address: 41003
       input_type: input
       slave: !secret foxess_inv1_slave
+      scan_interval: !secret scan_interval_low
+    - name: "Time Period 2 Enabled"
+      unique_id: foxess_inv1_time_period_2_enabled
+      address: 41004
+      slave: !secret foxess_inv1_slave
+      input_type: input
       scan_interval: !secret scan_interval_low
     - name: "Time Period 2 Start"
       unique_id: foxess_inv1_time_period_2_start
@@ -964,7 +975,6 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       scan_interval: !secret scan_interval_low
-
     - name: "Max Charge Current"
       unique_id: foxess_inv1_max_charge_current
       address: 41007
@@ -1025,20 +1035,6 @@
       scale: 0.001
       precision: 1
       state_class: measurement
-      scan_interval: !secret scan_interval_low
-
-  binary_sensors:
-    - name: "Time Period 1 Enabled"
-      unique_id: foxess_inv1_time_period_1_enabled
-      address: 41001
-      slave: !secret foxess_inv1_slave
-      input_type: input
-      scan_interval: !secret scan_interval_low
-    - name: "Time Period 2 Enabled"
-      unique_id: foxess_inv1_time_period_2_enabled
-      address: 41004
-      slave: !secret foxess_inv1_slave
-      input_type: input
       scan_interval: !secret scan_interval_low
 
   # ---------------------------------------------------------------------------
