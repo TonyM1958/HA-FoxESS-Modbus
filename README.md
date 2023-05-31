@@ -1,15 +1,14 @@
 <h2 align="center">
-   <a href="https://www.fox-ess.com">FoxESS</a> and<a href="https://www.home-assistant.io"> Home Assistant</a> integration
+   <a href="https://www.fox-ess.com">Fox ESS</a> and<a href="https://www.home-assistant.io"> Home Assistant</a> integration
    </br></br>
    <img src="https://github.com/home-assistant/brands/raw/master/custom_integrations/foxess/logo.png" >
    </br>
 </h2>
 
-** Please note: April 2023, @nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus - you may wish to look at that as well!
 
----
+This site contains code and information for integrating Fox ESS inverters with Home Assistant. It is a refactored and evolved version, derrived from https://github.com/StealthChesnut/HA-FoxESS-Modbus.
 
-This is a refactored version of https://github.com/StealthChesnut/HA-FoxESS-Modbus. The changes from the main branch include:
+The changes from the main branch include:
 
 * Simplified configuration: only 4 lines required in your HA configuration.yaml with modbus, sensors, templates and utility_meter integrations split into separate include files
 * Support for single phase inverters (including H1, AC1 AIO and KH series) and three phase inverter (H3 and AC3 series)
@@ -31,6 +30,8 @@ Access to your inverter data can be acheived in two ways:
 * Connecting the inverters LAN port, where available, to your router/switch (no additional hardware but Manager firmware 1.57 or later required for H1/AC1). This connection provides a limited set of real time data, sufficient for general management of your equipment.
 * Connecting the inverter's RS485 modbus to an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect 2 wires to the inverters CT / COM connector. This connection is recommended as it provides more comprehensive real time data, including BMS cycle count and cell range info and inverter running totals.
 
+---
+** Please note: April 2023, @nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus - you may wish to look at that as well!
 
 ---
 
@@ -58,3 +59,6 @@ Access to your inverter data can be acheived in two ways:
 * See [Installing Home Assistant on a USFF PC](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-Home-Assistant-on-a-USFF-PC) for info on setting up a host computer to run Home Assistant
 * Create a full backup of your HA instance
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
+
+---
+This web site, code and contents are not supported by or endorsed by Fox ESS. Anyone using the information provided here, does so of their own volition and risk.
