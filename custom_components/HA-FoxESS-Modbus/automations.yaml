@@ -1,0 +1,212 @@
+- id: '1684746714869'
+  alias: Set Feed In First
+  description: change inverter work mode to Feed In First
+  trigger:
+  - platform: time
+    at: '11:00:00'
+  - platform: time
+    at: '16:00:00'
+  condition:
+  - condition: state
+    entity_id: sensor.work_mode
+    state: Self Use
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41000
+      slave: 247
+      value: 1
+  mode: single
+- id: '1684746814312'
+  alias: Set Self Use
+  description: change inverter work mode to Self Use at 7pm
+  trigger:
+  - platform: time
+    at: '19:00:00'
+  condition:
+  - condition: state
+    entity_id: sensor.work_mode
+    state: Feed In First
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41000
+      slave: 247
+      value: 0
+  mode: single
+- id: '1685023611778'
+  alias: Set G98 Export Limit
+  description: change inverter export limit to 3.68kW
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41012
+      slave: 247
+      value: 3680
+  mode: single
+- id: '1685023679841'
+  alias: Set G99 Export Limit
+  description: change inverter export limit to 6kW
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41012
+      slave: 247
+      value: 6000
+  mode: single
+- id: '1685023771341'
+  alias: Set Max Charge Current 26A
+  description: change max charge current to 26A
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41007
+      slave: 247
+      value: 260
+  mode: single
+- id: '1685023877031'
+  alias: Set Max SoC 100%
+  description: change max SoC to 100%
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      address: 41010
+      slave: 247
+      value: 100
+      hub: FoxESSInverterModbus
+  mode: single
+- id: '1685024207064'
+  alias: Set Max Charge Current 13A
+  description: change max charge current to 13A
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41007
+      slave: 247
+      value: 130
+  mode: single
+- id: '1685024237616'
+  alias: Set Max SoC 50%
+  description: change max SoC to 50%
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      address: 41010
+      slave: 247
+      value: 50
+      hub: FoxESSInverterModbus
+  mode: single
+- id: '1685032746831'
+  alias: Reset Password
+  description: change inverter password to 0000
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 40013
+      slave: 247
+      value: 0
+  mode: single
+- id: '1685265384959'
+  alias: Set Force Charge 2am to 5am
+  description: change time period 1 to force charge between 2am and 5am
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41001
+      slave: 247
+      value:
+      - 0
+      - 512
+      - 1280
+      - 0
+      - 0
+      - 0
+  mode: single
+- id: '1685266721662'
+  alias: Set Force Charge from Grid 2am to 5am
+  description: change time period 1 to force charge from grid between 2am and 5am
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41001
+      slave: 247
+      value:
+      - 1
+      - 512
+      - 1280
+      - 0
+      - 0
+      - 0
+  mode: single
+- id: '1685266798577'
+  alias: Disable Force Charge
+  description: change time period 1 to 00:00 - 00:00
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41001
+      slave: 247
+      value:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+  mode: single
+- id: '1685267956539'
+  alias: Set Min SoC to 10%
+  description: change min SoC to 10%
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41009
+      slave: 247
+      value: 10
+  mode: single
+- id: '1685268004260'
+  alias: Set Min SoC (On Grid) to 12%
+  description: change Min SoC (On Grid) to 12%
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41011
+      slave: 247
+      value: 12
+  mode: single
