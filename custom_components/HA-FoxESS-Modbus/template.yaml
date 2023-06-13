@@ -12,19 +12,41 @@
       unique_id: foxess_inv1_install_date
       state: >
         {{ '17-01-2023' }}
-    # battery capacity
     # ---------- enter your specified battery capacity below ----------
+    - name: "Battery Specification"
+      unique_id: foxess_inv1_battery_specification
+      unit_of_measurement: "kWh"
+      state: >
+        {{ (6 * 2.56) | round(2) }}
+    # battery capacity
     - name: "Battery Capacity"
       unique_id: foxess_inv1_battery_capacity
       unit_of_measurement: "kWh"
       state: >
-        {% set capacity = (6 * 2.56 * 0.9) | round(2) %}
+        {% set capacity = states('sensor.battery_specification') | float(default=-1) %}
         {% set remaining = states('sensor.bms_kwh_remaining') | float(default=-1) %}
         {% set soc = states('sensor.battery_soc') | float(default=-1) %}
         {% set remaining = -1 if soc < 100.0 else remaining %}
         {% set current = states('sensor.battery_capacity') | float(default=-1) %}
-        {% set result = current if remaining < 0.0 else remaining %}
-        {% set result = capacity if result < 0.0 else result %}
+        {% set result = remaining if remaining > 0.0 else current %}
+        {% set result = (capacity * 0.9) | round(2) if result < 0.0 else result %}
+        {{ result }}
+    # battery state of discharge
+    - name: "Battery SoD"
+      unique_id: foxess_inv1_battery_sod
+      unit_of_measurement: "%"
+      state: >
+        {% set soc = states('sensor.battery_soc') | int(default=-1) %}
+        {% set result = 100 - soc if soc >= 0.0 else 'Unavailable' %}
+        {{ result }}
+    # battery state of health
+    - name: "Battery SoH"
+      unique_id: foxess_inv1_battery_soh
+      unit_of_measurement: "%"
+      state: >
+        {% set capacity = states('sensor.battery_specification') | float(default=-1) * 0.9 %}
+        {% set current = states('sensor.battery_capacity') | float(default=-1) %}
+        {% set result = (current / capacity * 100) | round(0) if current >= 0.0 and capacity >= 0.0 else 'Unavailable' %}
         {{ result }}
     # the energy in battery
     - name: "Battery Energy"
@@ -73,6 +95,16 @@
         {% set temp = (temp_high + temp_low) / 2 %}
         {% set temp = 'Unavailable' if temp_high <= -50 or temp_low <= -50 else temp | round(1) %}
         {{ temp }}
+    # cell imbalance as % using the difference between min and max cell temperature
+    - name: "Battery Temperature Imbalance"
+      unique_id: foxess_inv1_battery_temperature_imbalance
+      unit_of_measurement: "%"
+      state: >
+        {% set cell_high = states('sensor.bms_cell_temp_high') | float(default=-1) %}
+        {% set cell_low = states('sensor.bms_cell_temp_low') | float(default=-1) %}
+        {% set imbalance = ((cell_high - cell_low) | abs) / (cell_high + cell_low) * 200 %}
+        {% set imbalance = 'Unavailable' if cell_high <= -1 or cell_low <= -1 else imbalance | round(0) %}
+        {{ imbalance }}
     # the amount of energy taken from the battery today
     - name: "Battery Production"
       unique_id: foxess_inv1_battery_production
@@ -315,6 +347,8 @@
         {% set result = 'Self Use' if code == 0 else 'Unavailable' %}
         {% set result = 'Feed In First' if code == 1 else result %}
         {% set result = 'Backup' if code == 2 else result %}
+        {% set result = 'Power Station' if code == 3 else result %}
+        {% set result = 'Peak Shaving' if code == 4 else result %}
         {{ result }}
     - name: "Grid Safety Setting"
       unique_id: foxess_inv1_grid_safety_setting

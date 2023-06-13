@@ -3,7 +3,7 @@
   description: change inverter work mode to Feed In First
   trigger:
   - platform: time
-    at: '11:00:00'
+    at: '12:00:00'
   - platform: time
     at: '16:00:00'
   condition:
@@ -20,10 +20,10 @@
   mode: single
 - id: '1684746814312'
   alias: Set Self Use
-  description: change inverter work mode to Self Use at 7pm
+  description: change inverter work mode to Self Use
   trigger:
   - platform: time
-    at: '19:00:00'
+    at: 07:00:00
   condition:
   - condition: state
     entity_id: sensor.work_mode
@@ -209,4 +209,41 @@
       address: 41011
       slave: 247
       value: 12
+  mode: single
+- id: '1686476265795'
+  alias: Set Export Limit to 100w
+  description: change inverter export limit to 100w
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41012
+      slave: 247
+      value: 100
+  mode: single
+- id: '1686652252779'
+  alias: Renew Certificate
+  description: Daily check if SSL certificate needs to be renewed
+  trigger:
+  - platform: time
+    at: '20:00:00'
+  condition: []
+  action:
+  - service: hassio.addon_start
+    data:
+      addon: core_letsencrypt
+  mode: single
+- id: '1686653226368'
+  alias: Restart NGINX
+  description: Restart NGINX to pick up any renewed certificates
+  trigger:
+  - platform: time
+    at: 03:00:00
+  condition: []
+  action:
+  - service: hassio.addon_restart
+    data:
+      addon: core_nginx_proxy
   mode: single
