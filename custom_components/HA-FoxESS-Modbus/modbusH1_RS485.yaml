@@ -373,7 +373,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "CT2"
-      unique_id: foxess_inv1_ct2
+      unique_id: foxess_inv1_ct2_meter
       address: 11022
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -499,7 +499,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "BatVolt"
-      unique_id: foxess_inv1_bms_battery_voltage
+      unique_id: foxess_inv1_batvolt
       address: 11034
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -510,7 +510,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "BatCurrent"
-      unique_id: foxess_inv1_bms_battery_current
+      unique_id: foxess_inv1_bat_current
       address: 11035
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -601,7 +601,7 @@
       precision: 1
       scan_interval: !secret scan_interval_medium
     - name: "BMS Cell Temp High"
-      unique_id: foxess_inv1_bms_cell_temperature_high
+      unique_id: foxess_inv1_bms_cell_temp_high
       address: 11043
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -612,7 +612,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Cell Temp Low"
-      unique_id: foxess_inv1_bms_cell_temperature_low
+      unique_id: foxess_inv1_bms_cell_temp_low
       address: 11044
       input_type: input
       slave: !secret foxess_inv1_slave

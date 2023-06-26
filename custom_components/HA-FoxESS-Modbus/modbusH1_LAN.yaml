@@ -267,7 +267,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "CT2"
-      unique_id: foxess_inv1_ct2
+      unique_id: foxess_inv1_ct2_meter
       address: 31015
       slave: !secret foxess_inv1_slave
       device_class: power
