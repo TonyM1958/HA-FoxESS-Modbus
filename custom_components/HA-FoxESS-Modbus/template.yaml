@@ -44,7 +44,7 @@
       unique_id: foxess_inv1_battery_soh
       unit_of_measurement: "%"
       state: >
-        {% set capacity = states('sensor.battery_specification') | float(default=-1) * 0.9 %}
+        {% set capacity = states('sensor.battery_specification') | float(default=-1) * 1.0 %}
         {% set current = states('sensor.battery_capacity') | float(default=-1) %}
         {% set result = (current / capacity * 100) | round(0) if current >= 0.0 and capacity >= 0.0 else 'Unavailable' %}
         {{ result }}
