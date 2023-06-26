@@ -13,11 +13,15 @@
       state: >
         {{ '17-01-2023' }}
     # ---------- enter your specified battery capacity below ----------
+    # c is the size of one battery in kwh. n is the number of batteries
     - name: "Battery Specification"
       unique_id: foxess_inv1_battery_specification
       unit_of_measurement: "kWh"
       state: >
-        {{ (6 * 2.56) | round(2) }}
+        {% set c = 2.56 %}
+        {% set n = (states('sensor.bms_subsystem_number') | float(default=4)) % 256 %}
+        {% set result = n * c | round(2) %}
+        {{ result }}
     # battery capacity
     - name: "Battery Capacity"
       unique_id: foxess_inv1_battery_capacity
