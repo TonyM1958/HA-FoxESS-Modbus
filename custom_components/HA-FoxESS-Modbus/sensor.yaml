@@ -130,21 +130,21 @@
   platform: statistics
   unique_id: foxess_inv1_battery_cell_imbalance_rolling
   entity_id: sensor.battery_cell_imbalance
-  state_characteristic: mean
-  sampling_size: 10
+  state_characteristic: average_linear
+  sampling_size: 500
   precision: 2
 - name: inverter_efficiency_rolling
   platform: statistics
   unique_id: foxess_inv1_inverter_efficiency_rolling
   entity_id: sensor.inverter_efficiency
-  state_characteristic: mean
+  state_characteristic: average_linear
   sampling_size: 24
   precision: 1
 - name: load_power_rolling
   platform: statistics
   unique_id: foxess_inv1_load_power_rolling
   entity_id: sensor.load_power
-  state_characteristic: mean
+  state_characteristic: average_linear
   sampling_size: 10
   precision: 3
   #--------------------------------------------------------------------------
