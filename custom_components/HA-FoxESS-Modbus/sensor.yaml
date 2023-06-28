@@ -132,7 +132,7 @@
   entity_id: sensor.battery_cell_imbalance
   state_characteristic: average_linear
   max_age:
-    hours: 6
+    minutes: 60
   precision: 2
 - name: inverter_efficiency_rolling
   platform: statistics
@@ -140,7 +140,7 @@
   entity_id: sensor.inverter_efficiency
   state_characteristic: average_linear
   max_age:
-    hours: 3
+    minutes: 10
   precision: 1
 - name: load_power_rolling
   platform: statistics
@@ -148,7 +148,7 @@
   entity_id: sensor.load_power
   state_characteristic: average_linear
   max_age:
-    hours: 3
+    minutes: 10
   precision: 3
   
   #--------------------------------------------------------------------------
