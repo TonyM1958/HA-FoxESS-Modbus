@@ -138,6 +138,15 @@
         {% set years = (days / cycles * 6000 - days) / 365 if days > 0 and cycles > 0 else -50 %}
         {% set result = years | round(1) if years > -50 else 'Unavailable' %}
         {{ result }}
+    # battery efficiency, lifetime discharge / charge %
+    - name: "Battery Efficiency"
+      unique_id: foxess_inv1_battery_efficiency
+      unit_of_measurement: "%"
+      state: >
+        {% set input = states('sensor.charge_energy_total') | float(default=-1) %}
+        {% set output = states('sensor.discharge_energy_total') | float(default=-1) %}
+        {% set result = (output / input * 100) | round(1) if input > 0 and output > 0 else 'Unavailable' %}
+        {{ result }}
 
     # inverter date and time setting
     - name: "Inverter Datetime"
