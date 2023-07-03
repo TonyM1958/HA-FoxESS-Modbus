@@ -717,7 +717,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "BMS kWh Total"
       unique_id: foxess_inv1_bms_kwh_total
@@ -729,7 +729,7 @@
       unit_of_measurement: "kWh"
       scale: 0.001
       precision: 3
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "BMS SoC"
       unique_id: foxess_inv1_bat_min_soc
@@ -902,7 +902,7 @@
       unit_of_measurement: "kWh"
       scale: 0.1
       precision: 1
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "PV Energy Today"
       unique_id: foxess_inv1_pv_energy_today
@@ -926,7 +926,7 @@
       unit_of_measurement: "kWh"
       scale: 0.1
       precision: 1
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "Charge Energy Today"
       unique_id: foxess_inv1_charge_energy_today
@@ -950,7 +950,7 @@
       unit_of_measurement: "kWh"
       scale: 0.1
       precision: 1
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "Discharge Energy Today"
       unique_id: foxess_inv1_discharge_energy_today
@@ -974,7 +974,7 @@
       unit_of_measurement: "kWh"
       scale: 0.1
       precision: 1
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "Feed In Energy Today"
       unique_id: foxess_inv1_feed_in_energy_today
@@ -998,7 +998,7 @@
       unit_of_measurement: "kWh"
       scale: 0.1
       precision: 1
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "Grid Consumption Energy Today"
       unique_id: foxess_inv1_grid_consumption_energy_today
@@ -1022,7 +1022,7 @@
       unit_of_measurement: "kWh"
       scale: 0.1
       precision: 1
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "Output Energy Today"
       unique_id: foxess_inv1_output_energy_today
@@ -1046,7 +1046,7 @@
       unit_of_measurement: "kWh"
       scale: 0.1
       precision: 1
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "Input Energy Today" # battery force charge
       unique_id: foxess_inv1_input_energy_today
@@ -1070,7 +1070,7 @@
       unit_of_measurement: "kWh"
       scale: 0.1
       precision: 1
-      state_class: total_increasing
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "Load Energy Today"
       unique_id: foxess_inv1_load_energy_today
