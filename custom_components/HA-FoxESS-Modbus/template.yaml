@@ -138,8 +138,8 @@
         {% set years = (days / cycles * 6000 - days) / 365 if days > 0 and cycles > 0 else -50 %}
         {% set result = years | round(1) if years > -50 else 'Unavailable' %}
         {{ result }}
-    # battery efficiency, lifetime discharge / charge %
-    - name: "Battery Efficiency"
+    # battery efficiency, total discharge / charge %
+    - name: "Battery Efficiency Total"
       unique_id: foxess_inv1_battery_efficiency
       unit_of_measurement: "%"
       state: >
@@ -256,6 +256,26 @@
         {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
         {% set balance = (grid - feedin) | round(2) if grid >= 0.0 and feedin >= 0.0 else 'Unavailable' %}
         {{ balance }}
+
+    # calculate self sufficiency today - ratio of grid usage to house load
+    - name: "Self Sufficiency Today"
+      unique_id: foxess_inv1_self_sufficiency_today
+      unit_of_measurement: "%"
+      state: >
+        {% set grid = states('sensor.grid_daily') | float(default=-1) %}
+        {% set load = states('sensor.load_daily') | float(default=-1) %}
+        {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else 'Unavailable' %}
+        {{ result }}
+
+    # calculate self sufficiency total - ratio of grid usage to house load
+    - name: "Self Sufficiency Total"
+      unique_id: foxess_inv1_self_sufficiency_total
+      unit_of_measurement: "%"
+      state: >
+        {% set grid = states('sensor.grid_consumption_energy_total') | float(default=-1) %}
+        {% set load = states('sensor.load_energy_total') | float(default=-1) %}
+        {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else 'Unavailable' %}
+        {{ result }}
 
     # separate battery power into charge and discharge based on sign
     - name: "Battery Discharge"
