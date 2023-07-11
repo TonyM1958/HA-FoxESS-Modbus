@@ -524,6 +524,15 @@
         {% set result = 'Unavailable' if s <= -1 or e <= -1 or enabled <= -1 else result %}
         {{ result }}
 
+    # BMS Module Type decode
+    - name: "BMS Model"
+      unique_id: foxess_inv1_bms_model
+      state: >
+        {% set t = states('sensor.bms_module_type') | int(default=0) %}
+        {% set result = 'HV BMS v1' if t == 82 else 'Unavailable' %}
+        {% set result = 'ECS4100 v1' if t == 83 else result %}
+        {% set result = 'HV BMS v2' if t == 84 else result %}
+        {{ result }}
     # BMS firmware version decode
     - name: "BMS Version"
       unique_id: foxess_inv1_bms_version
