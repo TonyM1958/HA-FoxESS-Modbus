@@ -54,56 +54,56 @@
       scale: 0.01
       precision: 2
       scan_interval: !secret scan_interval_static
-    - name: "BMS Version"
-      unique_id: foxess_inv1_bms_version
+    - name: "BMS Version code"
+      unique_id: foxess_inv1_bms_version_code
       address: 30019
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
-    - name: "Battery 1 Version"
-      unique_id: foxess_inv1_battery_1_version
+    - name: "Battery 1 Version code"
+      unique_id: foxess_inv1_battery_1_version_code
       address: 30020
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
-    - name: "Battery 2 Version"
-      unique_id: foxess_inv1_battery_2_version
+    - name: "Battery 2 Version code"
+      unique_id: foxess_inv1_battery_2_version_code
       address: 30021
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
-    - name: "Battery 3 Version"
-      unique_id: foxess_inv1_battery_3_version
+    - name: "Battery 3 Version code"
+      unique_id: foxess_inv1_battery_3_version_code
       address: 30022
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
-    - name: "Battery 4 Version"
-      unique_id: foxess_inv1_battery_4_version
+    - name: "Battery 4 Version code"
+      unique_id: foxess_inv1_battery_4_version_code
       address: 30023
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
-    - name: "Battery 5 Version"
-      unique_id: foxess_inv1_battery_5_version
+    - name: "Battery 5 Version code"
+      unique_id: foxess_inv1_battery_5_version_code
       address: 30024
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
-    - name: "Battery 6 Version"
-      unique_id: foxess_inv1_battery_6_version
+    - name: "Battery 6 Version code"
+      unique_id: foxess_inv1_battery_6_version_code
       address: 30025
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
-    - name: "Battery 7 Version"
-      unique_id: foxess_inv1_battery_7_version
+    - name: "Battery 7 Version code"
+      unique_id: foxess_inv1_battery_7_version_code
       address: 30026
       slave: !secret foxess_inv1_slave
       data_type: uint16
       scan_interval: !secret scan_interval_static
-    - name: "Battery 8 Version"
-      unique_id: foxess_inv1_battery_8_version
+    - name: "Battery 8 Version code"
+      unique_id: foxess_inv1_battery_8_version_code
       address: 30027
       slave: !secret foxess_inv1_slave
       data_type: uint16
