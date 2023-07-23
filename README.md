@@ -19,7 +19,8 @@ The changes from the main branch include:
 * Added BMS Cycle Count and rename / rescale of BMS Watthours Total to BMS kWh Total for consistency when working with energy values
 * Added inverter energy meter total / today register values for PV Energy, Charge Energy, Discharge Energy, Grid Consumption Energy, Feed In Energy, Output Energy and Input Energy. These replace the Riemann sum values for RS485, giving greater accuracy and alignment with Fox cloud data. There is a code variant for these values to be used for the utility meters that feed the energy dashboard.
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
-* Added HA templates for battery capacity, min soc and battery remaining. These are dynamic if BMS data is available.
+* Added HA templates for Battery Specification, Capacity, Cell Imbalance, Temperature Imbalance, Duration and Production, State of Discharge (SoD), State of Health (SoH), Energy, Energy per Cycle and Life Remaining. These are dynamic if BMS data is available.
+* Added template for PV Voltage (sum of PV1 - PV4 voltage) for monitoring max DC input voltage
 * Added entities for inverter model and firmware versions and BMS / battery firmware versions
 * Corrected InvBatCurrent and InvBatPower sensors for LAN and RS-485 connections
 * Corrected Temp to BatCurrent sensor for RS485
@@ -37,7 +38,7 @@ Access to your inverter data can be acheived in two ways:
 
 
 ## RS485 connection to H1, AC, AIO and KH series inverters (recommended)
-* Hardware configuration instructions can be found on the [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
+* Hardware configuration instructions can be found on the Nathan's [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 4 and RS485B to pin 3 of the Meter/CT/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
 * Use modbusH1_RS485.yaml for H1, AC and AIO series in your configuration and select the USB Connection type for RS485 to USB adapter or the LAN Connection type for RS485 to Wifi/LAN adapter
