@@ -3,13 +3,8 @@
   description: change inverter work mode to Feed In First
   trigger:
   - platform: time
-    at: '12:00:00'
-  - platform: time
     at: '16:00:00'
-  condition:
-  - condition: state
-    entity_id: sensor.work_mode
-    state: Self Use
+  condition: []
   action:
   - service: modbus.write_register
     data:
@@ -24,10 +19,7 @@
   trigger:
   - platform: time
     at: 07:00:00
-  condition:
-  - condition: state
-    entity_id: sensor.work_mode
-    state: Feed In First
+  condition: []
   action:
   - service: modbus.write_register
     data:
@@ -246,4 +238,17 @@
   - service: hassio.addon_restart
     data:
       addon: core_nginx_proxy
+  mode: single
+- id: '1686752049218'
+  alias: Set Max Charge Current to 5A
+  description: change max charge current to 5A
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41007
+      slave: 247
+      value: 50
   mode: single
