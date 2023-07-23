@@ -19,7 +19,8 @@ The changes from the main branch include:
 * Added BMS Cycle Count and rename / rescale of BMS Watthours Total to BMS kWh Total for consistency when working with energy values
 * Added inverter energy meter total / today register values for PV Energy, Charge Energy, Discharge Energy, Grid Consumption Energy, Feed In Energy, Output Energy and Input Energy. These replace the Riemann sum values for RS485, giving greater accuracy and alignment with Fox cloud data. There is a code variant for these values to be used for the utility meters that feed the energy dashboard.
 * Added unique_id for all entities to allow management in the HA UI and aid migration to other integrations
-* Added HA templates for battery capacity, min soc and battery remaining. These are dynamic if BMS data is available.
+* Added HA templates for Battery Specification, Capacity, Cell Imbalance, Temperature Imbalance, Duration and Production, State of Discharge (SoD), State of Health (SoH), Energy, Energy per Cycle and Life Remaining. These are dynamic if BMS data is available.
+* Added template for PV Voltage (sum of PV1 - PV4 voltage) for monitoring max DC input voltage
 * Added entities for inverter model and firmware versions and BMS / battery firmware versions
 * Corrected InvBatCurrent and InvBatPower sensors for LAN and RS-485 connections
 * Corrected Temp to BatCurrent sensor for RS485
