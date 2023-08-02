@@ -16,6 +16,7 @@
     # c is the size of one battery in kwh. n is the number of batteries
     - name: "Battery Specification"
       unique_id: foxess_inv1_battery_specification
+      device_class: energy_storage
       unit_of_measurement: "kWh"
       state: >
         {% set c = 2.56 %}
@@ -25,7 +26,9 @@
     # battery capacity
     - name: "Battery Capacity"
       unique_id: foxess_inv1_battery_capacity
+      device_class: energy_storage
       unit_of_measurement: "kWh"
+      state_class: measurement
       state: >
         {% set capacity = states('sensor.battery_specification') | float(default=-1) %}
         {% set remaining = states('sensor.bms_kwh_remaining') | float(default=-1) %}
@@ -39,6 +42,7 @@
     - name: "Battery SoD"
       unique_id: foxess_inv1_battery_sod
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set soc = states('sensor.battery_soc') | int(default=-1) %}
         {% set result = 100 - soc if soc >= 0.0 else 'Unavailable' %}
@@ -47,6 +51,7 @@
     - name: "Battery SoH"
       unique_id: foxess_inv1_battery_soh
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set capacity = states('sensor.battery_specification') | float(default=-1) * 1.0 %}
         {% set current = states('sensor.battery_capacity') | float(default=-1) %}
@@ -55,6 +60,7 @@
     # the energy in battery
     - name: "Battery Energy"
       unique_id: foxess_inv1_battery_energy
+      device_class: energy_storage
       unit_of_measurement: "kWh"
       state: >
         {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
@@ -69,6 +75,7 @@
       unique_id: foxess_inv1_battery_duration
       icon: "mdi:timer-play"
       unit_of_measurement: "hours"
+      state_class: measurement
       state: >
         {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
         {% set min_soc = states('sensor.min_soc_on_grid') | float(default=10) %}
@@ -83,6 +90,7 @@
     - name: "Battery Cell Imbalance"
       unique_id: foxess_inv1_battery_cell_imbalance
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set cell_high = states('sensor.bms_cell_mv_high') | float(default=-1) %}
         {% set cell_low = states('sensor.bms_cell_mv_low') | float(default=-1) %}
@@ -92,7 +100,9 @@
     # average cell temperature using the min and max cell temperature
     - name: "Battery Cell Temperature"
       unique_id: foxess_inv1_battery_cell_temperature
+      device_class: temperature
       unit_of_measurement: "°C"
+      state_class: measurement
       state: >
         {% set temp_high = states('sensor.bms_cell_temp_high') | float(default=-50) %}
         {% set temp_low = states('sensor.bms_cell_temp_low') | float(default=-50) %}
@@ -103,6 +113,7 @@
     - name: "Battery Temperature Imbalance"
       unique_id: foxess_inv1_battery_temperature_imbalance
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set cell_high = states('sensor.bms_cell_temp_high') | float(default=-1) %}
         {% set cell_low = states('sensor.bms_cell_temp_low') | float(default=-1) %}
@@ -112,8 +123,8 @@
     # the amount of energy taken from the battery today
     - name: "Battery Production"
       unique_id: foxess_inv1_battery_production
-      device_class: "energy"
       unit_of_measurement: "kWh"
+      state_class: measurement
       state: >
         {% set discharge = states('sensor.bat_discharge_daily') | float(default=-1) %}
         {% set charge = states('sensor.bat_charge_daily') | float(default=-1) %}
@@ -132,6 +143,7 @@
     - name: "Battery Life Remaining"
       unique_id: foxess_inv1_battery_life_remaining
       unit_of_measurement: "years"
+      state_class: measurement
       state: >
         {% set days = states('sensor.installed_days') | float(default=-1) %}
         {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
@@ -142,6 +154,7 @@
     - name: "Battery Efficiency Total"
       unique_id: foxess_inv1_battery_efficiency
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set input = states('sensor.charge_energy_total') | float(default=-1) %}
         {% set output = states('sensor.discharge_energy_total') | float(default=-1) %}
@@ -174,6 +187,7 @@
       device_class: "power"
       unique_id: foxess_inv1_inverter_power_in
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set pv_power_in = states('sensor.pv_power_now') | float(default=0) %}
         {% set rpower = states('sensor.rpower') | float(default=0) %}
@@ -191,6 +205,7 @@
       device_class: "power"
       unique_id: foxess_inv1_inverter_power_out
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set rpower = states('sensor.rpower') | float(default=0) %}
         {% set rpower_out = 0 if rpower < 0.0 else rpower %}
@@ -210,6 +225,7 @@
       device_class: "power"
       unique_id: foxess_inv1_system_losses
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set power_in = states('sensor.inverter_power_in') | float(default=0) %}
         {% set power_out = states('sensor.inverter_power_out') | float(default=0) %}
@@ -219,6 +235,7 @@
     - name: "Inverter Efficiency"
       unique_id: foxess_inv1_inverter_efficiency
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set power_out = states('sensor.inverter_power_out') | float(default=0) %}
         {% set power_in = states('sensor.inverter_power_in') | float(default=0) %}
@@ -229,6 +246,7 @@
     - name: "Inverter Efficiency Daily"
       unique_id: foxess_inv1_inverter_efficiency_daily
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set energy_out = states('sensor.inverter_energy_out_daily') | float(default=0) %}
         {% set energy_in = states('sensor.inverter_energy_in_daily') | float(default=0) %}
@@ -261,6 +279,7 @@
     - name: "Self Sufficiency Today"
       unique_id: foxess_inv1_self_sufficiency_today
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set grid = states('sensor.grid_daily') | float(default=-1) %}
         {% set load = states('sensor.load_daily') | float(default=-1) %}
@@ -271,6 +290,7 @@
     - name: "Self Sufficiency Total"
       unique_id: foxess_inv1_self_sufficiency_total
       unit_of_measurement: "%"
+      state_class: measurement
       state: >
         {% set grid = states('sensor.grid_consumption_energy_total') | float(default=-1) %}
         {% set load = states('sensor.load_energy_total') | float(default=-1) %}
@@ -282,6 +302,7 @@
       device_class: "power"
       unique_id: foxess_inv1_battery_discharge
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set result = 0.0 if result < 0.0 else result %}
@@ -290,6 +311,7 @@
       device_class: "power"
       unique_id: foxess_inv1_battery_charge
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set result = 0.0 if result > 0.0 else result * -1 %}
@@ -319,6 +341,7 @@
       device_class: "power"
       unique_id: foxess_inv1_feed_in_power
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
         {% set ct1 = 0.0 if ct1 < 0.0 else ct1 %}
@@ -328,12 +351,13 @@
         {% set spower = 0.0 if spower < 0.0 else spower %}
         {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
         {% set tpower = 0.0 if tpower < 0.0 else tpower %}
-        {% set result = ct1 + rpower + spower + tpower %}
+        {% set result = (ct1 + rpower + spower + tpower) | round(3) %}
         {{ result }}
     - name: "Grid Consumption"
       device_class: "power"
       unique_id: foxess_inv1_grid_consumption
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
         {% set ct1 = 0.0 if ct1 > 0.0 else ct1 %}
@@ -343,12 +367,13 @@
         {% set spower = 0.0 if spower > 0.0 else spower %}
         {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
         {% set tpower = 0.0 if tpower > 0.0 else tpower %}
-        {% set result = (ct1 + rpower + spower + tpower) * -1 %}
+        {% set result = ((ct1 + rpower + spower + tpower) * -1) | round(3) %}
         {{ result }}
     - name: "Load Power"
       device_class: "power"
       unique_id: foxess_inv1_load_power
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set rpower = states('sensor.rpower') | float(default=0) %}
         {% set spower = states('sensor.spower') | float(default=0) %}
@@ -359,16 +384,17 @@
         {% set sgrid = states('sensor.meter_spower') | float(default=0) %}
         {% set tgrid = states('sensor.meter_tpower') | float(default=0) %}
         {% set result = rpower + spower + tpower - grid - rgrid - sgrid - tgrid + ct2 %}
-        {% set result = 0.3 if result < 0 else result %}
+        {% set result = 0.3 if result < 0 else result | round(3) %}
         {{ result }}
     - name: "Load Power X"
       device_class: "power"
       unique_id: foxess_inv1_load_power_x
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set load = states('sensor.load_power_ct1') | float(default=0) %}
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
-        {% set result = load + ct2 %}
+        {% set result = (load + ct2) | round(3) %}
         {{ result }}
 
     # sum of pv voltages
@@ -376,6 +402,7 @@
       device_class: "voltage"
       unique_id: foxess_inv1_pv_voltage
       unit_of_measurement: "V"
+      state_class: measurement
       state: >
         {% set v1 = states('sensor.pv1_voltage') | float(default=0) %}
         {% set v2 = states('sensor.pv2_voltage') | float(default=0) %}
@@ -388,6 +415,7 @@
       device_class: "power"
       unique_id: foxess_inv1_pv_power_now
       unit_of_measurement: "kW"
+      state_class: measurement
       state: >
         {% set pv1 = states('sensor.pv1_power') | float(default=0) %}
         {% set pv2 = states('sensor.pv2_power') | float(default=0) %}
