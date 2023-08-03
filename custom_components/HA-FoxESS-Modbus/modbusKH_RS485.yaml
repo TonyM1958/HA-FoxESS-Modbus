@@ -599,7 +599,6 @@
       address: 11037
       slave: !secret foxess_inv1_slave
       input_type: input
-      device_class: energy
       unit_of_measurement: "kWh"
       scale: 0.01
       precision: 2
