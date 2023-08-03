@@ -18,6 +18,7 @@
       unique_id: foxess_inv1_battery_specification
       device_class: energy_storage
       unit_of_measurement: "kWh"
+      state_class: measurement
       state: >
         {% set c = 2.56 %}
         {% set n = (states('sensor.bms_subsystem_number') | float(default=4)) % 256 %}
@@ -62,6 +63,7 @@
       unique_id: foxess_inv1_battery_energy
       device_class: energy_storage
       unit_of_measurement: "kWh"
+      state_class: measurement
       state: >
         {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
         {% set soc = states('sensor.battery_soc') | float(default=-1) %}
@@ -130,7 +132,7 @@
         {% set charge = states('sensor.bat_charge_daily') | float(default=-1) %}
         {% set result = (discharge - charge) | round(3) if charge >= 0.0 and discharge >= 0.0 else 'Unavailable' %}
         {{ result }}
-    # days since the sytsem was installed
+    # days since the system was installed
     - name: "Installed Days"
       unique_id: foxess_inv1_installed_days
       unit_of_measurement: "days"
@@ -256,9 +258,9 @@
 
     # calculate grid dependency - difference between load power consumed and solar power generated
     - name: "Grid Dependency Today"
-      device_class: "energy"
       unique_id: foxess_inv1_grid_dependency_today
       unit_of_measurement: "kWh"
+      state_class: measurement
       state: >
         {% set load = states('sensor.load_daily') | float(default=-1) %}
         {% set pv = states('sensor.pv_energy_daily') | float(default=-1) %}
@@ -266,9 +268,9 @@
         {{ dependency }}
     # calculate grid balance - difference between grid power imported and exported
     - name: "Grid Balance Today"
-      device_class: "energy"
       unique_id: foxess_inv1_grid_balance_today
       unit_of_measurement: "kWh"
+      state_class: measurement
       state: >
         {% set grid = states('sensor.grid_daily') | float(default=-1) %}
         {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
@@ -321,6 +323,7 @@
       device_class: "energy"
       unique_id: foxess_inv1_battery_energy_total
       unit_of_measurement: "kWh"
+      state_class: total
       state: >
         {% set charge = states('sensor.charge_energy_total') | float(default=-1) %}
         {% set discharge = states('sensor.discharge_energy_total') | float(default=-1) %}
@@ -328,9 +331,9 @@
         {{ result }}
     # battery energy average per BMS cycle
     - name: "Battery Energy per Cycle"
-      device_class: "energy"
       unique_id: foxess_inv1_battery_energy_per_cycle
       unit_of_measurement: "kWh"
+      state_class: measurement
       state: >
         {% set total = states('sensor.battery_energy_total') | float(default=-1) %}
         {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
