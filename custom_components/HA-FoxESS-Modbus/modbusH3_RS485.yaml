@@ -781,7 +781,7 @@
       address: 11037
       slave: !secret foxess_inv1_slave
       input_type: input
-      device_class: energy
+      device_class: energy_storage
       unit_of_measurement: "kWh"
       scale: 0.01
       precision: 2
@@ -842,10 +842,11 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
-      device_class: energy
+      device_class: energy_storage
       unit_of_measurement: "kWh"
       scale: 0.001
       precision: 3
+      state_class: total
       scan_interval: !secret scan_interval_low
 
     # -------------------------------------------------------------------------

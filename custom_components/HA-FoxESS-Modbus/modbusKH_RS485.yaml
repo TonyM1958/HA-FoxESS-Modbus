@@ -598,6 +598,8 @@
       unique_id: foxess_inv1_bms_kwh_remaining
       address: 11037
       slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy_storage
       input_type: input
       unit_of_measurement: "kWh"
       scale: 0.01
@@ -729,6 +731,7 @@
       unit_of_measurement: "kWh"
       scale: 0.001
       precision: 3
+      state_class: total
       scan_interval: !secret scan_interval_low
     - name: "BMS SoC"
       unique_id: foxess_inv1_bat_min_soc
@@ -746,6 +749,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Charge Limit"
       unique_id: foxess_inv1_bat_charge_limit
@@ -753,6 +757,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Discharge Limit"
       unique_id: foxess_inv1_bat_discharge_limit
@@ -760,6 +765,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Module Type"
       unique_id: foxess_inv1_bat_module_type
@@ -767,6 +773,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Connect Time Count"
       unique_id: foxess_inv1_connect_time_count
@@ -776,6 +783,7 @@
       data_type: uint16
       device_class: duration
       unit_of_measurement: "s"
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Inverter State Code"
       unique_id: foxess_inv1_state_code
@@ -799,6 +807,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Meter 1 Connection Code"
       unique_id: foxess_inv1_meter1_connection_code
@@ -806,6 +815,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Meter 2 Connection Code"
       unique_id: foxess_inv1_meter2_connection_code
@@ -813,6 +823,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Fault Code 1"
       unique_id: foxess_inv1_fault_code_1
