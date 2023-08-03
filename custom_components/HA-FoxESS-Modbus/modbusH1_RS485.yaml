@@ -55,6 +55,7 @@
       data_type: uint16
       scale: 0.01
       precision: 2
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Slave Version"
       unique_id: foxess_inv1_slave_version
@@ -63,6 +64,7 @@
       data_type: uint16
       scale: 0.01
       precision: 2
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Manager Version"
       unique_id: foxess_inv1_manager_version
@@ -71,60 +73,70 @@
       data_type: uint16
       scale: 0.01
       precision: 2
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "BMS Version code"
       unique_id: foxess_inv1_bms_version_code
       address: 30019
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Battery 1 Version code"
       unique_id: foxess_inv1_battery_1_version_code
       address: 30020
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Battery 2 Version code"
       unique_id: foxess_inv1_battery_2_version_code
       address: 30021
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Battery 3 Version code"
       unique_id: foxess_inv1_battery_3_version_code
       address: 30022
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Battery 4 Version code"
       unique_id: foxess_inv1_battery_4_version_code
       address: 30023
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Battery 5 Version code"
       unique_id: foxess_inv1_battery_5_version_code
       address: 30024
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Battery 6 Version code"
       unique_id: foxess_inv1_battery_6_version_code
       address: 30025
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Battery 7 Version code"
       unique_id: foxess_inv1_battery_7_version_code
       address: 30026
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Battery 8 Version code"
       unique_id: foxess_inv1_battery_8_version_code
       address: 30027
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_static
 
     # -------------------------------------------------------------------------
@@ -140,6 +152,7 @@
       unit_of_measurement: "V"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "PV1 Current"
       unique_id: foxess_inv1_pv1_current
@@ -150,6 +163,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "PV1 Power"
       unique_id: foxess_inv1_pv1_power
@@ -160,6 +174,7 @@
       unit_of_measurement: "kW"
       scale: 0.001
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "PV2 Voltage"
       unique_id: foxess_inv1_pv2_voltage
@@ -170,6 +185,7 @@
       unit_of_measurement: "V"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "PV2 Current"
       unique_id: foxess_inv1_pv2_current
@@ -180,6 +196,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "PV2 Power"
       unique_id: foxess_inv1_pv2_power
@@ -190,6 +207,7 @@
       unit_of_measurement: "kW"
       scale: 0.001
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "InvBatVolt"
       unique_id: foxess_inv1_battery_voltage
@@ -211,6 +229,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Battery Discharge Power"
       unique_id: foxess_inv1_battery_power
@@ -221,6 +240,7 @@
       unit_of_measurement: "kW"
       scale: 0.001
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "RVolt"
       unique_id: foxess_inv1_grid_voltage_R
@@ -243,6 +263,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "RPower"
       unique_id: foxess_inv1_inv_power_R
@@ -253,6 +274,7 @@
       unit_of_measurement: "kW"
       scale: 0.001
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "RPower Reactive"
       unique_id: foxess_inv1_reactive_R
@@ -282,6 +304,7 @@
       device_class: frequency
       scale: 0.01
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "EPS RVolt"
       unique_id: foxess_inv1_eps_voltage_R
@@ -304,6 +327,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS RPower"
       unique_id: foxess_inv1_eps_power_R
@@ -314,6 +338,7 @@
       unit_of_measurement: "kW"
       scale: 0.001
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "EPS RPower Reactive"
       unique_id: foxess_inv1_eps_reactive_R
@@ -343,6 +368,7 @@
       unit_of_measurement: "Hz"
       scale: 0.01
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Grid CT"
       unique_id: foxess_inv1_grid_ct
@@ -353,6 +379,7 @@
       unit_of_measurement: "kW"
       scale: 0.001
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "CT2"
       unique_id: foxess_inv1_ct2_meter
@@ -363,6 +390,7 @@
       unit_of_measurement: "kW"
       scale: 0.001
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Load Power CT1"
       unique_id: foxess_inv1_load_power_ct1
@@ -373,6 +401,7 @@
       unit_of_measurement: "kW"
       scale: 0.001
       precision: 3
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Inverter Temperature"
       unique_id: foxess_inv1_inverter_temperature
@@ -490,6 +519,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Battery SoC"
       unique_id: foxess_inv1_battery_soc
@@ -533,6 +563,7 @@
       unit_of_measurement: "V"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Discharge Cut Voltage"
       unique_id: foxess_inv1_discharge_cut_voltage
@@ -544,6 +575,7 @@
       unit_of_measurement: "V"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Max Charge Current"
       unique_id: foxess_inv1_bms_charge_rate
@@ -553,9 +585,9 @@
       data_type: uint16
       device_class: current
       unit_of_measurement: "A"
-      state_class: measurement
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Max Discharge Current"
       unique_id: foxess_inv1_bms_discharge_rate
@@ -567,6 +599,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Cell Temp High"
       unique_id: foxess_inv1_bms_cell_temp_high
@@ -614,6 +647,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Cycle Count"
       unique_id: foxess_inv1_bms_cycle_count
@@ -642,6 +676,7 @@
       data_type: uint16
       device_class: battery
       unit_of_measurement: "%"
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS Charge Request"
       unique_id: foxess_inv1_bat_charge_request
@@ -687,6 +722,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "BMS Status Code"
       unique_id: foxess_inv1_battery_status_code
@@ -722,6 +758,7 @@
       address: 11061
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Fault Code 2"
       unique_id: foxess_inv1_fault_code_2
@@ -729,6 +766,7 @@
       address: 11062
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Fault Code 3"
       unique_id: foxess_inv1_fault_code_3
@@ -736,6 +774,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Fault Code 4"
       unique_id: foxess_inv1_fault_code_4
@@ -743,6 +782,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Fault Code 5"
       unique_id: foxess_inv1_fault_code_5
@@ -750,6 +790,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Fault Code 6"
       unique_id: foxess_inv1_fault_code_6
@@ -757,6 +798,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Fault Code 7"
       unique_id: foxess_inv1_fault_code_7
@@ -764,6 +806,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Fault Code 8"
       unique_id: foxess_inv1_fault_code_8
@@ -771,6 +814,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
 
     # -------------------------------------------------------------------------
@@ -1027,6 +1071,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "PV Config Code"
       unique_id: foxess_inv1_pv_config_code
@@ -1034,6 +1079,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "DRM0 State"
       unique_id: foxess_inv1_drm0_state
@@ -1041,6 +1087,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Meter 1 Code"
       unique_id: foxess_inv1_meter1_code
@@ -1048,6 +1095,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Meter 2 Code"
       unique_id: foxess_inv1_meter2_code
@@ -1055,6 +1103,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Modbus Address"
       unique_id: foxess_inv1_modbus_address
@@ -1062,6 +1111,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Password"
       unique_id: foxess_inv1_password
@@ -1069,6 +1119,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
 
     - name: "Work Mode Code"
@@ -1076,42 +1127,49 @@
       address: 41000
       input_type: input
       slave: !secret foxess_inv1_slave
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Time Period 1 Enabled"
       unique_id: foxess_inv1_time_period_1_enabled
       address: 41001
       slave: !secret foxess_inv1_slave
       input_type: input
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Time Period 1 Start"
       unique_id: foxess_inv1_time_period_1_start
       address: 41002
       input_type: input
       slave: !secret foxess_inv1_slave
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Time Period 1 End"
       unique_id: foxess_inv1_time_period_1_end
       address: 41003
       input_type: input
       slave: !secret foxess_inv1_slave
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Time Period 2 Enabled"
       unique_id: foxess_inv1_time_period_2_enabled
       address: 41004
       slave: !secret foxess_inv1_slave
       input_type: input
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Time Period 2 Start"
       unique_id: foxess_inv1_time_period_2_start
       address: 41005
       input_type: input
       slave: !secret foxess_inv1_slave
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Time Period 2 End"
       unique_id: foxess_inv1_time_period_2_end
       address: 41006
       input_type: input
       slave: !secret foxess_inv1_slave
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Max Charge Current"
       unique_id: foxess_inv1_max_charge_current
@@ -1122,6 +1180,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Max Discharge Current"
       unique_id: foxess_inv1_max_discharge_current
@@ -1132,6 +1191,7 @@
       unit_of_measurement: "A"
       scale: 0.1
       precision: 1
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Min SoC"
       unique_id: foxess_inv1_min_soc
@@ -1178,6 +1238,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "EPS Frequency Code"
       unique_id: foxess_inv1_eps_frequency_code
@@ -1185,6 +1246,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "EPS Enable"
       unique_id: foxess_inv1_eps_enable
@@ -1192,6 +1254,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Ground Enable"
       unique_id: foxess_inv1_ground_enable
@@ -1199,6 +1262,7 @@
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
       scan_interval: !secret scan_interval_low
 
   # ---------------------------------------------------------------------------
