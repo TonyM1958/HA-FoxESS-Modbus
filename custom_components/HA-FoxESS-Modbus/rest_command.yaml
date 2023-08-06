@@ -1,0 +1,8 @@
+pvoutput_upload:
+  url: "https://pvoutput.org/service/r2/addoutput.jsp"
+  method: post
+  headers:
+    X-Pvoutput-Apikey: !secret pvoutput_apikey
+    X-Pvoutput-SystemId: !secret pvoutput_systemid
+  content_type: application/x-www-form-urlencoded
+  payload: data={{states('sensor.pvoutput_data')}}

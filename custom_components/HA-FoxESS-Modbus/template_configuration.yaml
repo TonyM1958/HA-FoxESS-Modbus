@@ -22,6 +22,8 @@ utility_meter: !include custom_components/HA-FoxESS-Modbus/utility_meter.yaml
 
 # optional recorder settings to keep history for 30 days
 recorder: !include custom_components/HA-FoxESS-Modbus/recorder.yaml
+# optional upload generation and consumption data to pvoutput
+rest_command: !include custom_components/HA-FoxESS-Modbus/rest_command.yaml
 #
 #-----------------------------------------------------------------------------
 # END: HA-FoxESS-Modbus configuration

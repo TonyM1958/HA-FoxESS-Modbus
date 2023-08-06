@@ -103,8 +103,8 @@
     data:
       address: 41010
       slave: 247
-      value: 50
       hub: FoxESSInverterModbus
+      value: 50
   mode: single
 - id: '1685032746831'
   alias: Reset Password
@@ -251,4 +251,16 @@
       address: 41007
       slave: 247
       value: 50
+  mode: single
+- id: '1691342611707'
+  alias: Upload pvoutput data every hour
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '00'
+    seconds: '10'
+  condition: []
+  action:
+  - service: rest_command.pvoutput_upload
+    data: {}
   mode: single

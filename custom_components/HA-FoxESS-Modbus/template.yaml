@@ -694,6 +694,23 @@
         {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
         {{ result }}
 
+    # pvoutput.org upload using CSV format, refer to api documentation for field definitions
+    # %1 = date YYYYMMDD, %2 = generated Wh, %3 = exported Wh, %11 = imported Wh, %14 = consumption Wh
+    - name: "PVOutput Data"
+      unique_id: foxess_inv1_pvoutput_data
+      state: >
+        {% set dat = now().year|string + ('0' + (now().month|string))[-2:] + ('0' + (now().day|string))[-2:] %}
+        {% set gen = states('sensor.pv_energy_today') | float(default=-1) * 1000 %}
+        {% set gen = '' if gen < 0 else gen | int | string %}
+        {% set exp = states('sensor.feed_in_energy_today') | float(default=-1) * 1000 %}
+        {% set exp = '' if exp < 0 else exp | int | string %}
+        {% set con = states('sensor.load_energy_today') | float(default=-1) * 1000 %}
+        {% set con = '' if con < 0 else con | int | string %}
+        {% set imp = states('sensor.grid_consumption_energy_today') | float(default=-1) * 1000 %}
+        {% set imp = '' if imp < 0 else imp | int | string %}
+        {% set result = dat + ',' + gen + ',' + exp + ',,,,,,,0,' + imp + ',0,0,' + con + ',,,,' %}
+        {{ result }}
+
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus
   #-----------------------------------------------------------------------------
