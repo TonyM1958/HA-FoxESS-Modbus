@@ -694,7 +694,7 @@
         {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
         {{ result }}
 
-    # pvoutput.org upload using CSV format, refer to api documentation for field definitions
+    # pvoutput.org upload using CSV format
     # %1 = date YYYYMMDD, %2 = generated Wh, %3 = exported Wh, %11 = imported Wh, %14 = consumption Wh
     - name: "PVOutput Data"
       unique_id: foxess_inv1_pvoutput_data
