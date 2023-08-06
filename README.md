@@ -25,6 +25,7 @@ The changes from the main branch include:
 * Corrected InvBatCurrent and InvBatPower sensors for LAN and RS-485 connections
 * Corrected Temp to BatCurrent sensor for RS485
 * Corrected unique_id for BMS Cell mV low
+* Added automation to upload generation and consumption data to pvoutput.org
 
 Access to your inverter data can be acheived in two ways:
 
