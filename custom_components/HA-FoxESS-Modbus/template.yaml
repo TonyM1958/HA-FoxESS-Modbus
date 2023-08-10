@@ -163,27 +163,6 @@
         {% set result = (output / input * 100) | round(1) if input > 0 and output > 0 else 'Unavailable' %}
         {{ result }}
 
-    # inverter date and time setting
-    - name: "Inverter Datetime"
-      unique_id: foxess_inv1_inverter_datetime
-      icon: mdi:clock
-      state: >
-        {% set t = states('sensor.rtc_years') %}
-        {% set t = t + '-' + ('0' + states('sensor.rtc_months'))[-2:] %}
-        {% set t = t + '-' + ('0' + states('sensor.rtc_days'))[-2:] %}
-        {% set t = t + ' ' + ('0' + states('sensor.rtc_hours'))[-2:] %}
-        {% set t = t + ':' + ('0' + states('sensor.rtc_minutes'))[-2:] %}
-        {% set t = t + ':' + ('0' + states('sensor.rtc_seconds'))[-2:] %}
-        {% set dt = strptime(t, '%Y-%m-%d %H:%M:%S') %}
-        {{ dt }}
-    # inverter time setting
-    - name: "Inverter Time"
-      unique_id: foxess_inv1_inverter_time
-      icon: mdi:clock
-      state: >
-        {% set t = ('0' + states('sensor.rtc_hours'))[-2:] %}
-        {% set t = t + ':' + ('0' + states('sensor.rtc_minutes'))[-2:] %}
-        {{ t }}
     # calculate power flowing into inverter from solar, battery and grid
     - name: "Inverter Power In"
       device_class: "power"
