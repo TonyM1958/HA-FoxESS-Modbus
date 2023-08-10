@@ -285,6 +285,7 @@
       state: >
         {% set grid = states('sensor.grid_daily') | float(default=-1) %}
         {% set load = states('sensor.load_daily') | float(default=-1) %}
+        {% set load = 0.01 if load == 0.0 else load %}
         {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else 'Unavailable' %}
         {{ result }}
 
@@ -296,6 +297,7 @@
       state: >
         {% set grid = states('sensor.grid_consumption_energy_total') | float(default=-1) %}
         {% set load = states('sensor.load_energy_total') | float(default=-1) %}
+        {% set load = 0.01 if load == 0.0 else load %}
         {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else 'Unavailable' %}
         {{ result }}
 
@@ -347,14 +349,11 @@
       state_class: measurement
       state: >
         {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
-        {% set ct1 = 0.0 if ct1 < 0.0 else ct1 %}
         {% set rpower = states('sensor.meter_rpower') | float(default=0) %}
-        {% set rpower = 0.0 if rpower < 0.0 else rpower %}
         {% set spower = states('sensor.meter_spower') | float(default=0) %}
-        {% set spower = 0.0 if spower < 0.0 else spower %}
         {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
-        {% set tpower = 0.0 if tpower < 0.0 else tpower %}
-        {% set result = (ct1 + rpower + spower + tpower) | round(3) %}
+        {% set power = ct1 + rpower + spower + tpower %}
+        {% set result = 0 if power < 0.0 else power | round(3) %}
         {{ result }}
     - name: "Grid Consumption"
       device_class: "power"
@@ -363,14 +362,11 @@
       state_class: measurement
       state: >
         {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
-        {% set ct1 = 0.0 if ct1 > 0.0 else ct1 %}
         {% set rpower = states('sensor.meter_rpower') | float(default=0) %}
-        {% set rpower = 0.0 if rpower > 0.0 else rpower %}
         {% set spower = states('sensor.meter_spower') | float(default=0) %}
-        {% set spower = 0.0 if spower > 0.0 else spower %}
         {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
-        {% set tpower = 0.0 if tpower > 0.0 else tpower %}
-        {% set result = ((ct1 + rpower + spower + tpower) * -1) | round(3) %}
+        {% set power = ct1 + rpower + spower + tpower %}
+        {% set result = 0 if power > 0.0 else power | round(3) %}
         {{ result }}
     - name: "Load Power"
       device_class: "power"
@@ -389,30 +385,7 @@
         {% set result = rpower + spower + tpower - grid - rgrid - sgrid - tgrid + ct2 %}
         {% set result = 0.3 if result < 0 else result | round(3) %}
         {{ result }}
-    - name: "Load Power X"
-      device_class: "power"
-      unique_id: foxess_inv1_load_power_x
-      unit_of_measurement: "kW"
-      state_class: measurement
-      state: >
-        {% set load = states('sensor.load_power_ct1') | float(default=0) %}
-        {% set ct2 = states('sensor.ct2') | float(default=0) %}
-        {% set result = (load + ct2) | round(3) %}
-        {{ result }}
 
-    # sum of pv voltages
-    - name: "PV Voltage"
-      device_class: "voltage"
-      unique_id: foxess_inv1_pv_voltage
-      unit_of_measurement: "V"
-      state_class: measurement
-      state: >
-        {% set v1 = states('sensor.pv1_voltage') | float(default=0) %}
-        {% set v2 = states('sensor.pv2_voltage') | float(default=0) %}
-        {% set v3 = states('sensor.pv3_voltage') | float(default=0) %}
-        {% set v4 = states('sensor.pv4_voltage') | float(default=0) %}
-        {% set pv = v1 + v2 + v3 + v4 %}
-        {{ pv }}
     # sum power being produced by PV strings
     - name: "PV Power Now"
       device_class: "power"
@@ -710,7 +683,6 @@
         {% set imp = '' if imp < 0 else imp | int | string %}
         {% set result = dat + ',' + gen + ',' + exp + ',,,,,,,0,' + imp + ',0,0,' + con + ',,,,' %}
         {{ result }}
-
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus
   #-----------------------------------------------------------------------------

@@ -750,6 +750,145 @@
       state_class: total
       scan_interval: !secret scan_interval_low
 
+
+    # -------------------------------------------------------------------------
+    # Inverter Control registers
+    # these entities will be unavailable when using direct LAN connection
+    # -------------------------------------------------------------------------
+    - name: "Grid Code"
+      unique_id: foxess_inv1_grid_code
+      address: 40006
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "PV Config Code"
+      unique_id: foxess_inv1_pv_config_code
+      address: 40008
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "DRM0 State"
+      unique_id: foxess_inv1_drm0_state
+      address: 40009
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Meter 1 Code"
+      unique_id: foxess_inv1_meter1_code
+      address: 40010
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Meter 2 Code"
+      unique_id: foxess_inv1_meter2_code
+      address: 40011
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Modbus Address"
+      unique_id: foxess_inv1_modbus_address
+      address: 40012
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Password"
+      unique_id: foxess_inv1_password
+      address: 40013
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+
+    - name: "Work Mode Code"
+      unique_id: foxess_inv1_work_mode_code
+      address: 41000
+      slave: !secret foxess_inv1_slave
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Max Charge Current"
+      unique_id: foxess_inv1_max_charge_current
+      address: 41007
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Max Discharge Current"
+      unique_id: foxess_inv1_max_discharge_current
+      address: 41008
+      slave: !secret foxess_inv1_slave
+      device_class: current
+      unit_of_measurement: "A"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Min SoC"
+      unique_id: foxess_inv1_min_soc
+      address: 41009
+      slave: !secret foxess_inv1_slave
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Max SoC"
+      unique_id: foxess_inv1_max_soc
+      address: 41010
+      slave: !secret foxess_inv1_slave
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Min SoC On Grid"
+      unique_id: foxess_inv1_min_soc_on_grid
+      address: 41011
+      slave: !secret foxess_inv1_slave
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Export Limit"
+      unique_id: foxess_inv1_export_limit
+      address: 41012
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: power
+      unit_of_measurement: "kW"
+      scale: 0.001
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "System Enable"
+      unique_id: foxess_inv1_system_enable
+      address: 41013
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "EPS Frequency Code"
+      unique_id: foxess_inv1_eps_frequency_code
+      address: 41014
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "EPS Enable"
+      unique_id: foxess_inv1_eps_enable
+      address: 41015
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+
+
     # -------------------------------------------------------------------------
     # BMS Input Registers only available via RS485 connection
     # -------------------------------------------------------------------------
@@ -847,252 +986,6 @@
       scale: 0.001
       precision: 3
       state_class: total
-      scan_interval: !secret scan_interval_low
-
-    # -------------------------------------------------------------------------
-    # Inverter Control registers
-    # these entities will be unavailable when using direct LAN connection
-    # -------------------------------------------------------------------------
-    - name: "RTC Years"
-      unique_id: foxess_inv1_rtc_years
-      address: 40000
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Months"
-      unique_id: foxess_inv1_rtc_months
-      address: 40001
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Days"
-      unique_id: foxess_inv1_rtc_days
-      address: 40002
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Hours"
-      unique_id: foxess_inv1_rtc_hours
-      address: 40003
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Minutes"
-      unique_id: foxess_inv1_rtc_minutes
-      address: 40004
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Seconds"
-      unique_id: foxess_inv1_rtc_seconds
-      address: 40005
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "Grid Code"
-      unique_id: foxess_inv1_grid_code
-      address: 40006
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "PV Config Code"
-      unique_id: foxess_inv1_pv_config_code
-      address: 40008
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "DRM0 State"
-      unique_id: foxess_inv1_drm0_state
-      address: 40009
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Meter 1 Code"
-      unique_id: foxess_inv1_meter1_code
-      address: 40010
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Meter 2 Code"
-      unique_id: foxess_inv1_meter2_code
-      address: 40011
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Modbus Address"
-      unique_id: foxess_inv1_modbus_address
-      address: 40012
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Password"
-      unique_id: foxess_inv1_password
-      address: 40013
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-
-    - name: "Work Mode Code"
-      unique_id: foxess_inv1_work_mode_code
-      address: 41000
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Time Period 1 Enabled"
-      unique_id: foxess_inv1_time_period_1_enabled
-      address: 41001
-      slave: !secret foxess_inv1_slave
-      input_type: input
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Time Period 1 Start"
-      unique_id: foxess_inv1_time_period_1_start
-      address: 41002
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Time Period 1 End"
-      unique_id: foxess_inv1_time_period_1_end
-      address: 41003
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Time Period 2 Enabled"
-      unique_id: foxess_inv1_time_period_2_enabled
-      address: 41004
-      slave: !secret foxess_inv1_slave
-      input_type: input
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Time Period 2 Start"
-      unique_id: foxess_inv1_time_period_2_start
-      address: 41005
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Time Period 2 End"
-      unique_id: foxess_inv1_time_period_2_end
-      address: 41006
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Max Charge Current"
-      unique_id: foxess_inv1_max_charge_current
-      address: 41007
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      device_class: current
-      unit_of_measurement: "A"
-      scale: 0.1
-      precision: 1
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Max Discharge Current"
-      unique_id: foxess_inv1_max_discharge_current
-      address: 41008
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      device_class: current
-      unit_of_measurement: "A"
-      scale: 0.1
-      precision: 1
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Min SoC"
-      unique_id: foxess_inv1_min_soc
-      address: 41009
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      device_class: battery
-      unit_of_measurement: "%"
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Max SoC"
-      unique_id: foxess_inv1_max_soc
-      address: 41010
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      device_class: battery
-      unit_of_measurement: "%"
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Min SoC On Grid"
-      unique_id: foxess_inv1_min_soc_on_grid
-      address: 41011
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      device_class: battery
-      unit_of_measurement: "%"
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Export Limit"
-      unique_id: foxess_inv1_export_limit
-      address: 41012
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      device_class: power
-      unit_of_measurement: "kW"
-      scale: 0.001
-      precision: 1
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "System Enable"
-      unique_id: foxess_inv1_system_enable
-      address: 41013
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "EPS Frequency Code"
-      unique_id: foxess_inv1_eps_frequency_code
-      address: 41014
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "EPS Enable"
-      unique_id: foxess_inv1_eps_enable
-      address: 41015
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "Ground Enable"
-      unique_id: foxess_inv1_ground_enable
-      address: 41016
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
       scan_interval: !secret scan_interval_low
 
   # ---------------------------------------------------------------------------

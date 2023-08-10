@@ -825,64 +825,64 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Fault Code 1"
-      unique_id: foxess_inv1_fault_code_1
+    - name: "Fault 1 Code"
+      unique_id: foxess_inv1_fault_1_code
       input_type: input
       address: 11061
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Fault Code 2"
-      unique_id: foxess_inv1_fault_code_2
+    - name: "Fault 2 Code"
+      unique_id: foxess_inv1_fault_2_code
       input_type: input
       address: 11062
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Fault Code 3"
-      unique_id: foxess_inv1_fault_code_3
+    - name: "Fault 3 Code"
+      unique_id: foxess_inv1_fault_3_code
       address: 11063
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Fault Code 4"
-      unique_id: foxess_inv1_fault_code_4
+    - name: "Fault 4 Code"
+      unique_id: foxess_inv1_fault_4_code
       address: 11064
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Fault Code 5"
-      unique_id: foxess_inv1_fault_code_5
+    - name: "Fault 5 Code"
+      unique_id: foxess_inv1_fault_5_code
       address: 11065
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Fault Code 6"
-      unique_id: foxess_inv1_fault_code_6
+    - name: "Fault 6 Code"
+      unique_id: foxess_inv1_fault_6_code
       address: 11066
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Fault Code 7"
-      unique_id: foxess_inv1_fault_code_7
+    - name: "Fault 7 Code"
+      unique_id: foxess_inv1_fault_7_code
       address: 11067
       input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Fault Code 8"
-      unique_id: foxess_inv1_fault_code_8
+    - name: "Fault 8 Code"
+      unique_id: foxess_inv1_fault_8_code
       address: 11068
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -1166,48 +1166,6 @@
     # Inverter Control registers
     # -------------------------------------------------------------------------
 
-    - name: "RTC Years"
-      unique_id: foxess_inv1_rtc_years
-      address: 40000
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Months"
-      unique_id: foxess_inv1_rtc_months
-      address: 40001
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Days"
-      unique_id: foxess_inv1_rtc_days
-      address: 40002
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Hours"
-      unique_id: foxess_inv1_rtc_hours
-      address: 40003
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Minutes"
-      unique_id: foxess_inv1_rtc_minutes
-      address: 40004
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
-    - name: "RTC Seconds"
-      unique_id: foxess_inv1_rtc_seconds
-      address: 40005
-      input_type: input
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      scan_interval: !secret scan_interval_low
     - name: "Grid Code"
       unique_id: foxess_inv1_grid_code
       address: 40006
