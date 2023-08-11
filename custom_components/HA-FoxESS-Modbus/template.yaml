@@ -345,7 +345,7 @@
         {% set spower = states('sensor.meter_spower') | float(default=0) %}
         {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
         {% set power = ct1 + rpower + spower + tpower %}
-        {% set result = 0 if power > 0.0 else power | round(3) %}
+        {% set result = 0 if power > 0.0 else (power * -1.0) | round(3) %}
         {{ result }}
     - name: "Load Power"
       device_class: "power"
