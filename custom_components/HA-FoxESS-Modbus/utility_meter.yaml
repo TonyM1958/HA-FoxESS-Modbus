@@ -5,8 +5,6 @@
 
 # Utility Meters take the integral of power over time (sum) and produce daily or
 # monthly totals that reset. Used by the energy dashboard amongst other things
-# You can switch the daily source from the Riemann sums to inverter energy
-# meters (where available) by changing the comments to get greater accuracy.
 
 inverter_energy_in_daily:
   unique_id: foxess_inv1_inverter_energy_in_daily
@@ -19,7 +17,6 @@ inverter_energy_out_daily:
 load_daily:
   unique_id: foxess_inv1_load_daily
   source: sensor.load_sum
-  #source: sensor.load_energy_today
   cycle: daily
 pv1_daily:
   unique_id: foxess_inv1_pv1_daily
@@ -37,34 +34,25 @@ pv4_daily:
   unique_id: foxess_inv1_pv4_daily
   source: sensor.pv4_sum
   cycle: daily
-ct2_daily:
-  unique_id: foxess_inv1_ct2_daily
-  source: sensor.ct2_sum
-  cycle: daily
 pv_energy_daily:
   unique_id: foxess_inv1_pv_energy_daily
   source: sensor.pv_total_sum
-  #source: sensor.pv_energy_today
   cycle: daily
 bat_charge_daily:
   unique_id: foxess_inv1_bat_charge_daily
   source: sensor.bat_charge_sum
-  #source: sensor.charge_energy_today
   cycle: daily
 bat_discharge_daily:
   unique_id: foxess_inv1_bat_discharge_daily
   source: sensor.bat_discharge_sum
-  #source: sensor.discharge_energy_today
   cycle: daily
 feedin_daily:
   unique_id: foxess_inv1_feedin_daily
   source: sensor.feedin_sum
-  #source: sensor.feed_in_energy_today
   cycle: daily
 grid_daily:
   unique_id: foxess_inv1_grid_daily
   source: sensor.grid_consumption_sum
-  #source: sensor.grid_consumption_energy_today
   cycle: daily
 losses_daily:
   unique_id: foxess_inv1_losses_daily

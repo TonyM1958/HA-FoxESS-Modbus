@@ -3,7 +3,4 @@
 
 # recorder settings
 purge_keep_days: 30
-exclude:
-  entities:
-    - sensor.inverter_datetime
-    - sensor.inverter_time
+
