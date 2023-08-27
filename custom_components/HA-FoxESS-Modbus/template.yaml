@@ -12,17 +12,37 @@
       unique_id: foxess_inv1_install_date
       state: >
         {{ '17-01-2023' }}
-    # ---------- enter your specified battery capacity below ----------
-    # c is the size of one battery in kwh. n is the number of batteries
+    # HV2600: 2.56, MIRA HV25: 2.45
+    # ECS2800: 2.76, ECS2900: 2.88, ECS4100: 4.03, ECS4300H: 4.14, ECS4800: 4.74 
+    # ---------- enter the size of your battery here --------------
+    - name: "Battery Size"
+      unique_id: foxess_inv1_battery_size
+      state: >
+        {{ 2.56 }}
+    # total battery size
     - name: "Battery Specification"
       unique_id: foxess_inv1_battery_specification
       device_class: energy_storage
       unit_of_measurement: "kWh"
       state_class: measurement
       state: >
-        {% set c = 2.56 %}
-        {% set n = (states('sensor.bms_subsystem_number') | float(default=4)) % 256 %}
-        {% set result = n * c | round(2) %}
+        {% set c = states('sensor.battery_size') | float(default=0) %}
+        {% set n = states('sensor.battery_count') | float(default=0) %}
+        {% set result = c * n | round(2) if n > 0 and c > 0 else 'Unavailable' %}
+        {{ result }}
+    # work out the number of batteries
+    - name: "Battery Count"
+      unique_id: foxess_inv1_battery_count
+      state_class: measurement
+      state: >
+        {% set result = 1 if states('sensor.battery_1_version_code') | int(default=0) > 0 else 0 %}
+        {% set result = 2 if states('sensor.battery_2_version_code') | int(default=0) > 0 else result %}
+        {% set result = 3 if states('sensor.battery_3_version_code') | int(default=0) > 0 else result %}
+        {% set result = 4 if states('sensor.battery_4_version_code') | int(default=0) > 0 else result %}
+        {% set result = 5 if states('sensor.battery_5_version_code') | int(default=0) > 0 else result %}
+        {% set result = 6 if states('sensor.battery_6_version_code') | int(default=0) > 0 else result %}
+        {% set result = 7 if states('sensor.battery_7_version_code') | int(default=0) > 0 else result %}
+        {% set result = 8 if states('sensor.battery_8_version_code') | int(default=0) > 0 else result %}
         {{ result }}
     # battery capacity
     - name: "Battery Capacity"
