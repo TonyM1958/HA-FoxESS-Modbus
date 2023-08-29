@@ -7,18 +7,24 @@
 
 - sensor:
     # system installation date for calculating ageing
-    # ---------- enter your installation date here ------------------
+    # ----------- enter your installation date here ------------------
     - name: "Install Date"
       unique_id: foxess_inv1_install_date
       state: >
         {{ '17-01-2023' }}
     # HV2600: 2.56, MIRA HV25: 2.45
-    # ECS2800: 2.76, ECS2900: 2.88, ECS4100: 4.03, ECS4300H: 4.14, ECS4800: 4.74 
-    # ---------- enter the size of your battery here --------------
+    # ECS2800: 2.76, ECS2900: 2.88, ECS4100: 4.03, ECS4300H: 4.14, ECS4800: 4.74
+    # ----------- enter the size of your battery here ----------------
     - name: "Battery Size"
       unique_id: foxess_inv1_battery_size
       state: >
         {{ 2.56 }}
+    # ----- use this setting to configure how CT2 is handled ---------
+    # 0 = disable CT2, 1 = flip CT2, 2 = add CT2 to load, 3 = flip CT2 and add to load
+    - name: "CT2 handling"
+      unique_id: foxess_inv1_ct2_handling
+      state: >
+        {{ 2 }}
     # total battery size
     - name: "Battery Specification"
       unique_id: foxess_inv1_battery_specification
@@ -377,6 +383,8 @@
         {% set spower = states('sensor.spower') | float(default=0) %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
+        {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
+        {% set ct2 = 0.0 if ct2_handling < 2 else ct2 | abs %}
         {% set grid = states('sensor.grid_ct') | float(default=0) %}
         {% set rgrid = states('sensor.meter_rpower') | float(default=0) %}
         {% set sgrid = states('sensor.meter_spower') | float(default=0) %}
@@ -397,6 +405,10 @@
         {% set pv3 = states('sensor.pv3_power') | float(default=0) %}
         {% set pv4 = states('sensor.pv4_power') | float(default=0) %}
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
+        {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
+        {% set ct2 = 0.0 if ct2_handling == 0 else ct2 %}
+        {% set ct2 = -ct2 if ct2_handling == 1 or ct_handling == 3 else ct2 %}
+        {% set ct2 = 0.0 if ct2 < 0.0 else ct2 %}
         {% set pv = pv1 + pv2 + pv3 + pv4 + ct2 %}
         {% set pv = 0.0 if pv < 0.0 else pv %}
         {{ pv }}
