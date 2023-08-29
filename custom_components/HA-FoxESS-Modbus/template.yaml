@@ -20,7 +20,7 @@
       state: >
         {{ 2.56 }}
     # ----- use this setting to configure how CT2 is handled ---------
-    # 0 = ignore CT2, 1 = add to load, 2 = add to load and PV, 3 = flip CT2 and add to load and PV
+    # 0 = normal, 1 = flip, 2 = add to load, 3 = flip and add to load
     - name: "CT2 handling"
       unique_id: foxess_inv1_ct2_handling
       state: >
@@ -404,14 +404,20 @@
         {% set pv2 = states('sensor.pv2_power') | float(default=0) %}
         {% set pv3 = states('sensor.pv3_power') | float(default=0) %}
         {% set pv4 = states('sensor.pv4_power') | float(default=0) %}
-        {% set ct2 = states('sensor.ct2') | float(default=0) %}
-        {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
-        {% set ct2 = 0.0 if ct2_handling < 2 else ct2 %}
-        {% set ct2 = -ct2 if ct2_handling == 3 else ct2 %}
-        {% set ct2 = 0.0 if ct2 < 0.0 else ct2 %}
-        {% set pv = pv1 + pv2 + pv3 + pv4 + ct2 %}
+        {% set pv = pv1 + pv2 + pv3 + pv4 %}
         {% set pv = 0.0 if pv < 0.0 else pv %}
         {{ pv }}
+    - name: "CT2 Power Now"
+      device_class: "power"
+      unique_id: foxess_inv1_ct2_power_now
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set ct2 = states('sensor.ct2') | float(default=0) %}
+        {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
+        {% set ct2 = -ct2 if ct2_handling == 1 or ct2_handling == 3 else ct2 %}
+        {% set ct2 = 0.0 if ct2 < 0.0 else ct2 %}
+        {{ ct2 }}
     - name: "Work Mode"
       unique_id: foxess_inv1_work_mode
       icon: "mdi:cog"

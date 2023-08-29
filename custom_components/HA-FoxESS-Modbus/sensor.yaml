@@ -67,7 +67,7 @@
   method: left
   platform: integration
   unique_id: foxess_inv1_ct2_sum
-  source: sensor.ct2
+  source: sensor.ct2_power_now
   unit_time: h
   round: 1
 - name: pv_total_sum
@@ -122,8 +122,8 @@
 
 #--------------------------------------------------------------------------
 # these statistics smooth noisy values by creating a rolling average to
-# give better trending when displayed as graphs. Increasing the sample
-# size will produce smoother values but increase the lag
+# give better trending when displayed as graphs. Increasing the max_age
+# will produce smoother values but increase the lag
 #--------------------------------------------------------------------------
 
 - name: battery_cell_imbalance_rolling
@@ -150,7 +150,7 @@
   max_age:
     minutes: 15
   precision: 3
-  
+
   #--------------------------------------------------------------------------
   # END: sensor.yaml include file for HA-FoxESS-Modbus
   #--------------------------------------------------------------------------
