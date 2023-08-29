@@ -24,7 +24,7 @@
     - name: "CT2 handling"
       unique_id: foxess_inv1_ct2_handling
       state: >
-        {{ 1 }}
+        {{ 2 }}
     # total battery size
     - name: "Battery Specification"
       unique_id: foxess_inv1_battery_specification
