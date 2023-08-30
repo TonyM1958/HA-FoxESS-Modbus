@@ -185,8 +185,10 @@
       state_class: measurement
       state: >
         {% set input = states('sensor.charge_energy_total') | float(default=-1) %}
+        {% set holding = states('sensor.battery_energy') | float(default=0) %}
         {% set output = states('sensor.discharge_energy_total') | float(default=-1) %}
-        {% set result = (output / input * 100) | round(1) if input > 0 and output > 0 else 'Unavailable' %}
+        {% set used = input - holding %}
+        {% set result = (output / used * 100) | round(1) if used > 0 and output > 0 else 'Unavailable' %}
         {{ result }}
 
     # calculate power flowing into inverter from solar, battery and grid
