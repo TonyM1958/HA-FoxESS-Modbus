@@ -417,7 +417,7 @@
       state: >
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
         {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
-        {% set ct2 = -ct2 if ct2_handling == 0 or ct2_handling == 2 else ct2 %}
+        {% set ct2 = -ct2 if ct2_handling == 1 or ct2_handling == 3 else ct2 %}
         {% set ct2 = 0.0 if ct2 < 0.0 else ct2 %}
         {{ ct2 }}
     - name: "Work Mode"
