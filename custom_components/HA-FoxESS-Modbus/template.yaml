@@ -418,7 +418,7 @@
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
         {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
         {% set ct2 = -ct2 if ct2_handling == 1 or ct2_handling == 3 else ct2 %}
-        {% set ct2 = 0.0 if ct2 < 0.0 else ct2 %}
+        {% set ct2 = 0.0 if ct2 < 0.0 else (ct2 / 0.92) | round(3) %}
         {{ ct2 }}
     - name: "Work Mode"
       unique_id: foxess_inv1_work_mode
