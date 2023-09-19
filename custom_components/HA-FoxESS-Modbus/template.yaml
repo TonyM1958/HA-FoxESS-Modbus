@@ -205,8 +205,7 @@
         {% set spower_in = 0.0 if spower > 0.0 else spower * -1.0 %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
         {% set tpower_in = 0.0 if tpower > 0.0 else tpower * -1.0 %}
-        {% set bat_power = states('sensor.battery_discharge_power') | float(default=0) %}
-        {% set bat_power_in = 0.0 if bat_power < 0.0 else bat_power %}
+        {% set bat_power_in = states('sensor.bat_discharge') | float(default=0) %}
         {% set power_in = pv_power_in + rpower_in + spower_in + tpower_in + bat_power_in %}
         {{ power_in | round(3) }}
     # calculate power flowing out of inverter
@@ -225,8 +224,7 @@
         {% set eps_rpower_out = states('sensor.eps_rpower') | float(default=0) %}
         {% set eps_spower_out = states('sensor.eps_spower') | float(default=0) %}
         {% set eps_tpower_out = states('sensor.eps_tpower') | float(default=0) %}
-        {% set bat_power = states('sensor.battery_discharge_power') | float(default=0) %}
-        {% set bat_power_out = 0 if bat_power > 0.0 else bat_power * -1.0 %}
+        {% set bat_power_out = states('sensor.bat_charge') | float(default=0) %}
         {% set power_out = rpower_out + spower_out + tpower_out + eps_rpower_out + eps_spower_out + eps_tpower_out + bat_power_out %}
         {{ power_out | round(3) }}
     # calculate sytem losses. Clip range between -1kw and +1kw to remove sampling errors and spikes
@@ -303,19 +301,19 @@
       state_class: measurement
       state: >
         {% set grid = states('sensor.grid_consumption_energy_total') | float(default=-1) %}
-        {% set load = states('sensor.load_energy_total') | float(default=-1) %}
+        {% set load = states('sensor.load_energy_correction') | float(default=-1) %}
         {% set load = 0.01 if load == 0.0 else load %}
         {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else 'Unavailable' %}
         {{ result }}
 
-    # separate battery power into charge and discharge based on sign
+    # battery charge and discharge
     - name: "Battery Discharge"
       device_class: "power"
       unique_id: foxess_inv1_battery_discharge
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
+        {% set result = states('sensor.batpower') | float(default=0) %}
         {% set result = 0.0 if result < 0.0 else result %}
         {{ result }}
     - name: "Battery Charge"
@@ -324,7 +322,7 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
+        {% set result = states('sensor.batpower') | float(default=0) %}
         {% set result = 0.0 if result > 0.0 else result * -1 %}
         {{ result }}
     # running total of the charge and discharge energy through the battery
@@ -394,7 +392,27 @@
         {% set result = rpower + spower + tpower - grid - rgrid - sgrid - tgrid + ct2 %}
         {% set result = 0.3 if result < 0 else result | round(3) %}
         {{ result }}
-
+    - name: "Load Energy Correction"
+      device_class: "energy"
+      unique_id: foxess_inv1_load_energy_corrected
+      unit_of_measurement: "kWh"
+      state_class: total
+      state: >
+        {% set value = states('sensor.load_energy_total') | float(default=0) %}
+        {% set value = (value - 201536307.2) | round(1) if value >= 201536307.2 else value %}
+        {{ value }}
+    - name: "BatPower"
+      device_class: "power"
+      unique_id: foxess_inv1_batpower
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set volt = states('sensor.batvolt') | float(default=-100) %}
+        {% set current = states('sensor.batcurrent') | float(default=0) %}
+        {% set power = states('sensor.battery_discharge_power') | float(default=0) %}
+        {% set batpower = (volt * current / 1000 * -1.0) | round(3) %}
+        {% set result = batpower if volt > -100 else power %}
+        {{ result }}
     # sum power being produced by PV strings
     - name: "PV Power Now"
       device_class: "power"

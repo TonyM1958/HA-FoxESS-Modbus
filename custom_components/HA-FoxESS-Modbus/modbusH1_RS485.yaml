@@ -391,7 +391,7 @@
       scale: 0.001
       precision: 3
       state_class: measurement
-      scan_interval: !secret scan_interval_high
+      scan_interval: !secret scan_interval_medium
     - name: "Load Power CT1"
       unique_id: foxess_inv1_load_power_ct1
       address: 11023
@@ -509,7 +509,7 @@
       scale: 0.1
       precision: 1
       state_class: measurement
-      scan_interval: !secret scan_interval_medium
+      scan_interval: !secret scan_interval_high
     - name: "BatCurrent"
       unique_id: foxess_inv1_bat_current
       address: 11035
@@ -520,7 +520,7 @@
       scale: 0.1
       precision: 1
       state_class: measurement
-      scan_interval: !secret scan_interval_medium
+      scan_interval: !secret scan_interval_high
     - name: "Battery SoC"
       unique_id: foxess_inv1_battery_soc
       address: 11036
@@ -729,7 +729,7 @@
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
-      scan_interval: !secret scan_interval_high
+      scan_interval: !secret scan_interval_medium
     - name: "BMS Status Code"
       unique_id: foxess_inv1_battery_status_code
       address: 11057
