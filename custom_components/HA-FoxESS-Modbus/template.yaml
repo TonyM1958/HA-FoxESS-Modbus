@@ -205,7 +205,7 @@
         {% set spower_in = 0.0 if spower > 0.0 else spower * -1.0 %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
         {% set tpower_in = 0.0 if tpower > 0.0 else tpower * -1.0 %}
-        {% set bat_power_in = states('sensor.bat_discharge') | float(default=0) %}
+        {% set bat_power_in = states('sensor.battery_discharge') | float(default=0) %}
         {% set power_in = pv_power_in + rpower_in + spower_in + tpower_in + bat_power_in %}
         {{ power_in | round(3) }}
     # calculate power flowing out of inverter
@@ -224,7 +224,7 @@
         {% set eps_rpower_out = states('sensor.eps_rpower') | float(default=0) %}
         {% set eps_spower_out = states('sensor.eps_spower') | float(default=0) %}
         {% set eps_tpower_out = states('sensor.eps_tpower') | float(default=0) %}
-        {% set bat_power_out = states('sensor.bat_charge') | float(default=0) %}
+        {% set bat_power_out = states('sensor.battery_charge') | float(default=0) %}
         {% set power_out = rpower_out + spower_out + tpower_out + eps_rpower_out + eps_spower_out + eps_tpower_out + bat_power_out %}
         {{ power_out | round(3) }}
     # calculate sytem losses. Clip range between -1kw and +1kw to remove sampling errors and spikes
