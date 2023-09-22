@@ -560,7 +560,7 @@
         {% set e = states('sensor.time_period_1_end') | int(default=-1) %}
         {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
         {% set enabled = states('sensor.time_period_1_enabled') | int(default=-1) %}
-        {% set action = 'Force charge from grid: ' if enabled == 1 else 'Force charge: ' %}
+        {% set action = 'Charge from grid: ' if enabled == 1 else 'Force charge: ' %}
         {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
         {% set result = 'Unavailable' if s <= -1 or e <= -1 or enabled <= -1 else result %}
         {{ result }}
@@ -573,7 +573,7 @@
         {% set e = states('sensor.time_period_2_end') | int(default=-1) %}
         {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
         {% set enabled = states('sensor.time_period_2_enabled') | int(default=-1) %}
-        {% set action = 'Force charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
+        {% set action = 'Charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
         {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
         {% set result = 'Unavailable' if s <= -1 or e <= -1 or enabled <= -1 else result %}
         {{ result }}
