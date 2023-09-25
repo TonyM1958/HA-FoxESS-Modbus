@@ -200,13 +200,12 @@
       state: >
         {% set pv_power_in = states('sensor.pv_power_now') | float(default=0) %}
         {% set rpower = states('sensor.rpower') | float(default=0) %}
-        {% set rpower_in = 0.0 if rpower > 0.0 else rpower * -1.0 %}
         {% set spower = states('sensor.spower') | float(default=0) %}
-        {% set spower_in = 0.0 if spower > 0.0 else spower * -1.0 %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
-        {% set tpower_in = 0.0 if tpower > 0.0 else tpower * -1.0 %}
+        {% set power = rpower + spower + tpower %}
+        {% set power = 0.0 if power > 0.0 else power * -1.0 %}
         {% set bat_power_in = states('sensor.battery_discharge') | float(default=0) %}
-        {% set power_in = pv_power_in + rpower_in + spower_in + tpower_in + bat_power_in %}
+        {% set power_in = pv_power_in + power + bat_power_in %}
         {{ power_in | round(3) }}
     # calculate power flowing out of inverter
     - name: "Inverter Power Out"
@@ -216,16 +215,16 @@
       state_class: measurement
       state: >
         {% set rpower = states('sensor.rpower') | float(default=0) %}
-        {% set rpower_out = 0 if rpower < 0.0 else rpower %}
         {% set spower = states('sensor.spower') | float(default=0) %}
-        {% set spower_out = 0 if spower < 0.0 else spower %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
-        {% set tpower_out = 0 if tpower < 0.0 else tpower %}
-        {% set eps_rpower_out = states('sensor.eps_rpower') | float(default=0) %}
-        {% set eps_spower_out = states('sensor.eps_spower') | float(default=0) %}
-        {% set eps_tpower_out = states('sensor.eps_tpower') | float(default=0) %}
+        {% set power = rpower + spower + tpower %}
+        {% set power = 0 if power < 0.0 else power %}
+        {% set eps_rpower = states('sensor.eps_rpower') | float(default=0) %}
+        {% set eps_spower = states('sensor.eps_spower') | float(default=0) %}
+        {% set eps_tpower = states('sensor.eps_tpower') | float(default=0) %}
+        {% set eps_power = eps_rpower + eps_spower + eps_tpower %}
         {% set bat_power_out = states('sensor.battery_charge') | float(default=0) %}
-        {% set power_out = rpower_out + spower_out + tpower_out + eps_rpower_out + eps_spower_out + eps_tpower_out + bat_power_out %}
+        {% set power_out = power + eps_power + bat_power_out %}
         {{ power_out | round(3) }}
     # calculate sytem losses. Clip range between -1kw and +1kw to remove sampling errors and spikes
     - name: "System Losses"
@@ -354,10 +353,10 @@
       state_class: measurement
       state: >
         {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
-        {% set rpower = states('sensor.meter_rpower') | float(default=0) %}
-        {% set spower = states('sensor.meter_spower') | float(default=0) %}
-        {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
-        {% set power = ct1 + rpower + spower + tpower %}
+        {% set rgrid = states('sensor.meter_rpower') | float(default=0) %}
+        {% set sgrid = states('sensor.meter_spower') | float(default=0) %}
+        {% set tgrid = states('sensor.meter_tpower') | float(default=0) %}
+        {% set power = ct1 + rgrid + sgrid + tgrid %}
         {% set result = 0 if power < 0.0 else power | round(3) %}
         {{ result }}
     - name: "Grid Consumption"
@@ -367,10 +366,10 @@
       state_class: measurement
       state: >
         {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
-        {% set rpower = states('sensor.meter_rpower') | float(default=0) %}
-        {% set spower = states('sensor.meter_spower') | float(default=0) %}
-        {% set tpower = states('sensor.meter_tpower') | float(default=0) %}
-        {% set power = ct1 + rpower + spower + tpower %}
+        {% set rgrid = states('sensor.meter_rpower') | float(default=0) %}
+        {% set sgrid = states('sensor.meter_spower') | float(default=0) %}
+        {% set tgrid = states('sensor.meter_tpower') | float(default=0) %}
+        {% set power = ct1 + rgrid + sgrid + tgrid %}
         {% set result = 0 if power > 0.0 else (power * -1.0) | round(3) %}
         {{ result }}
     - name: "Load Power"
@@ -379,19 +378,26 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set rpower = states('sensor.rpower') | float(default=0) %}
-        {% set spower = states('sensor.spower') | float(default=0) %}
-        {% set tpower = states('sensor.tpower') | float(default=0) %}
-        {% set ct2 = states('sensor.ct2') | float(default=0) %}
-        {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
-        {% set ct2 = 0.0 if ct2_handling == 0 else ct2 | abs %}
-        {% set grid = states('sensor.grid_ct') | float(default=0) %}
+        {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
         {% set rgrid = states('sensor.meter_rpower') | float(default=0) %}
         {% set sgrid = states('sensor.meter_spower') | float(default=0) %}
         {% set tgrid = states('sensor.meter_tpower') | float(default=0) %}
-        {% set result = rpower + spower + tpower - grid - rgrid - sgrid - tgrid + ct2 %}
+        {% set grid = ct1 + rgrid + sgrid + tgrid %}
+        {% set ct2 = states('sensor.ct2') | float(default=0) %}
+        {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
+        {% set ct2 = 0.0 if ct2_handling == 0 else ct2 | abs %}
+        {% set rpower = states('sensor.rpower') | float(default=0) %}
+        {% set spower = states('sensor.spower') | float(default=0) %}
+        {% set tpower = states('sensor.tpower') | float(default=0) %}
+        {% set power = rpower + spower + tpower %}
+        {% set eps_rpower = states('sensor.eps_rpower') | float(default=0) %}
+        {% set eps_spower = states('sensor.eps_spower') | float(default=0) %}
+        {% set eps_tpower = states('sensor.eps_tpower') | float(default=0) %}
+        {% set eps_power = eps_rpower + eps_spower + eps_tpower %}
+        {% set result = power + eps_power - grid + ct2 %}
         {% set result = 0.3 if result < 0 else result | round(3) %}
         {{ result }}
+    # correct Load Energy Total sensor value
     - name: "Load Energy Correction"
       device_class: "energy"
       unique_id: foxess_inv1_load_energy_corrected
@@ -399,7 +405,7 @@
       state_class: total
       state: >
         {% set value = states('sensor.load_energy_total') | float(default=0) %}
-        {% set value = (value - 201536307.2) | round(1) if value >= 201536307.2 else value %}
+        {% set value = (value - 201_536_307.2) | round(1) if value >= 201_536_307.2 else value %}
         {{ value }}
     - name: "BatPower"
       device_class: "power"
