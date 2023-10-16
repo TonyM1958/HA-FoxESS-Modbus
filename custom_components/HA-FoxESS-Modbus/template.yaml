@@ -60,10 +60,8 @@
         {% set capacity = states('sensor.battery_specification') | float(default=-1) %}
         {% set remaining = states('sensor.bms_kwh_remaining') | float(default=-1) %}
         {% set soc = states('sensor.battery_soc') | float(default=-1) %}
-        {% set remaining = -1 if soc < 100.0 else remaining %}
-        {% set current = states('sensor.battery_capacity') | float(default=-1) %}
-        {% set result = remaining if remaining > 0.0 else current %}
-        {% set result = (capacity * 0.9) | round(2) if result < 0.0 else result %}
+        {% set result = remaining * 100 / soc if remaining > 0.0 and soc > 0.0 else -1 %}
+        {% set result = (capacity * 0.92) | round(2) if result < 0.0 else result | round(2) %}
         {{ result }}
     # battery state of discharge
     - name: "Battery SoD"
