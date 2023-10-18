@@ -303,6 +303,32 @@
         {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else 'Unavailable' %}
         {{ result }}
 
+    # calculate net self sufficiency today - ratio of net grid usage to house load
+    - name: "Net Self Sufficiency Today"
+      unique_id: foxess_inv1_net_self_sufficiency_today
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set grid = states('sensor.grid_daily') | float(default=-1) %}
+        {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
+        {% set load = states('sensor.load_daily') | float(default=-1) %}
+        {% set load = 0.01 if load == 0.0 else load %}
+        {% set result = (100 - (grid - feedin) / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 and feedin >= 0.0 else 'Unavailable' %}
+        {{ result }}
+
+    # calculate net self sufficiency total - ratio of net grid usage to house load
+    - name: "Net Self Sufficiency Total"
+      unique_id: foxess_inv1_net_self_sufficiency_total
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set grid = states('sensor.grid_consumption_energy_total') | float(default=-1) %}
+        {% set feedin = states('sensor.feed_in_energy_total') | float(default=-1) %}
+        {% set load = states('sensor.load_energy_correction') | float(default=-1) %}
+        {% set load = 0.01 if load == 0.0 else load %}
+        {% set result = (100 - (grid - feedin) / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 and feedin >= 0.0 else 'Unavailable' %}
+        {{ result }}
+
     # battery charge and discharge
     - name: "Battery Discharge"
       device_class: "power"
