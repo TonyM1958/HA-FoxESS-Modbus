@@ -198,12 +198,13 @@
       state: >
         {% set pv_power_in = states('sensor.pv_power_now') | float(default=0) %}
         {% set rpower = states('sensor.rpower') | float(default=0) %}
+        {% set rpower = 0.0 if rpower > 0.0 else rpower * -1.0 %}
         {% set spower = states('sensor.spower') | float(default=0) %}
+        {% set spower = 0.0 if spower > 0.0 else spower * -1.0 %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
-        {% set power = rpower + spower + tpower %}
-        {% set power = 0.0 if power > 0.0 else power * -1.0 %}
+        {% set tpower = 0.0 if tpower > 0.0 else tpower * -1.0 %}
         {% set bat_power_in = states('sensor.battery_discharge') | float(default=0) %}
-        {% set power_in = pv_power_in + power + bat_power_in %}
+        {% set power_in = pv_power_in + rpower + spower + tpower + bat_power_in %}
         {{ power_in | round(3) }}
     # calculate power flowing out of inverter
     - name: "Inverter Power Out"
@@ -213,16 +214,17 @@
       state_class: measurement
       state: >
         {% set rpower = states('sensor.rpower') | float(default=0) %}
+        {% set rpower = 0 if rpower < 0.0 else rpower %}
         {% set spower = states('sensor.spower') | float(default=0) %}
+        {% set spower = 0 if spower < 0.0 else spower %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
-        {% set power = rpower + spower + tpower %}
-        {% set power = 0 if power < 0.0 else power %}
+        {% set tpower = 0 if tpower < 0.0 else tpower %}
         {% set eps_rpower = states('sensor.eps_rpower') | float(default=0) %}
         {% set eps_spower = states('sensor.eps_spower') | float(default=0) %}
         {% set eps_tpower = states('sensor.eps_tpower') | float(default=0) %}
         {% set eps_power = eps_rpower + eps_spower + eps_tpower %}
         {% set bat_power_out = states('sensor.battery_charge') | float(default=0) %}
-        {% set power_out = power + eps_power + bat_power_out %}
+        {% set power_out = rpower + spower + tpower + eps_power + bat_power_out %}
         {{ power_out | round(3) }}
     # calculate sytem losses. Clip range between -1kw and +1kw to remove sampling errors and spikes
     - name: "System Losses"
@@ -476,8 +478,11 @@
         {% set result = 'Self Use' if code == 0 else 'Unavailable' %}
         {% set result = 'Feed In First' if code == 1 else result %}
         {% set result = 'Backup' if code == 2 else result %}
-        {% set result = 'Power Station' if code == 3 else result %}
-        {% set result = 'Peak Shaving' if code == 4 else result %}
+        {% set result = 'WeakGridAdj' if code == 3 else result %}
+        {% set result = 'Power Station' if code == 4 else result %}
+        {% set result = 'Peak Shaving' if code == 5 else result %}
+        {% set result = 'ForceCharge' if code == 6 else result %}
+        {% set result = 'ForceDischarge' if code == 7 else result %}
         {{ result }}
     - name: "Grid Safety Setting"
       unique_id: foxess_inv1_grid_safety_setting
@@ -575,11 +580,11 @@
         {% set result = 'Waiting' if state == 0 else result %}
         {% set result = 'Checking' if state == 1 else result %}
         {% set result = 'On Grid' if state == 2 else result %}
-        {% set result = 'off Grid / EPS' if state == 3 else result %}
+        {% set result = 'Off Grid / EPS' if state == 3 else result %}
         {% set result = 'Fault (recoverable)' if state == 4 else result %}
         {% set result = 'Fault (not recoverable)' if state == 5 else result %}
         {% set result = state if state in (6,7) else result %}
-        {% set result = 'Upgrading Firmware' if state == 8 else result %}
+        {% set result = 'Idle / Upgrading' if state == 8 else result %}
         {{ result }}
     - name: "Time Period 1"
       unique_id: foxess_inv1_time_period_1
