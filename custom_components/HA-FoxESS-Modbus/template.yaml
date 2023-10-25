@@ -338,7 +338,7 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set result = states('sensor.batpower') | float(default=0) %}
+        {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set result = 0.0 if result < 0.0 else result %}
         {{ result }}
     - name: "Battery Charge"
@@ -347,7 +347,7 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set result = states('sensor.batpower') | float(default=0) %}
+        {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set result = 0.0 if result > 0.0 else result * -1 %}
         {{ result }}
     # running total of the charge and discharge energy through the battery
@@ -433,18 +433,6 @@
         {% set value = states('sensor.load_energy_total') | float(default=0) %}
         {% set value = (value - 201_536_307.2) | round(1) if value >= 201_536_307.2 else value %}
         {{ value }}
-    - name: "BatPower"
-      device_class: "power"
-      unique_id: foxess_inv1_batpower
-      unit_of_measurement: "kW"
-      state_class: measurement
-      state: >
-        {% set volt = states('sensor.batvolt') | float(default=-1) %}
-        {% set current = states('sensor.batcurrent') | float(default=0) %}
-        {% set power = states('sensor.battery_discharge_power') | float(default=0) %}
-        {% set batpower = (volt * current / 1000 * -1.0) | round(3) %}
-        {% set result = batpower if volt >= 0 else power %}
-        {{ result }}
     # sum power being produced by PV strings
     - name: "PV Power Now"
       device_class: "power"
