@@ -34,7 +34,7 @@
       state: >
         {% set c = states('sensor.battery_size') | float(default=0) %}
         {% set n = states('sensor.battery_count') | float(default=0) %}
-        {% set result = c * n | round(2) if n > 0 and c > 0 else 'Unavailable' %}
+        {% set result = c * n | round(2) if n > 0 and c > 0 else -1 %}
         {{ result }}
     # work out the number of batteries
     - name: "Battery Count"
@@ -61,7 +61,7 @@
         {% set remaining = states('sensor.bms_kwh_remaining') | float(default=-1) %}
         {% set soc = states('sensor.battery_soc') | float(default=-1) %}
         {% set result = remaining * 100 / soc if remaining > 0.0 and soc > 0.0 else -1 %}
-        {% set result = (capacity * 0.92) | round(2) if result < 0.0 else result | round(2) %}
+        {% set result = (capacity * 0.93 if result < 0.0 else result) | round(2) %}
         {{ result }}
     # battery state of discharge
     - name: "Battery SoD"
@@ -70,7 +70,7 @@
       state_class: measurement
       state: >
         {% set soc = states('sensor.battery_soc') | int(default=-1) %}
-        {% set result = 100 - soc if soc >= 0.0 else 'Unavailable' %}
+        {% set result = 100 - soc if soc >= 0.0 else -1 %}
         {{ result }}
     # battery state of health
     - name: "Battery SoH"
@@ -80,7 +80,15 @@
       state: >
         {% set capacity = states('sensor.battery_specification') | float(default=-1) * 1.0 %}
         {% set current = states('sensor.battery_capacity') | float(default=-1) %}
-        {% set result = (current / capacity * 100) | round(0) if current >= 0.0 and capacity >= 0.0 else 'Unavailable' %}
+        {% set result = (current / capacity * 100) | round(0) if current >= 0.0 and capacity >= 0.0 else -1 %}
+        {{ result }}
+    # battery state
+    - name: "Battery State"
+      unique_id: foxess_inv1_battery_state
+      state: >
+        {% set current = states('sensor.invbatcurrent') | float(default=0) %}
+        {% set result = 'Charging' if current < 0.0 else 'Idle' %}
+        {% set result = 'Discharging' if current > 0.0 else result %}
         {{ result }}
     # the energy in battery
     - name: "Battery Energy"
@@ -91,7 +99,7 @@
       state: >
         {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
         {% set soc = states('sensor.battery_soc') | float(default=-1) %}
-        {% set calculated = (capacity * soc / 100) | round(2) if capacity >= 0.0 and soc >= 0.0 else 'Unavailable' %}
+        {% set calculated = (capacity * soc / 100) | round(2) if capacity >= 0.0 and soc >= 0.0 else -1 %}
         {% set energy = states('sensor.bms_kwh_remaining') | float(default=-1) %}
         {% set energy = calculated if energy < 0.0 else energy %}
         {{ energy }}
@@ -121,7 +129,7 @@
         {% set cell_high = states('sensor.bms_cell_mv_high') | float(default=-1) %}
         {% set cell_low = states('sensor.bms_cell_mv_low') | float(default=-1) %}
         {% set imbalance = ((cell_high - cell_low) | abs) / (cell_high + cell_low) * 200 %}
-        {% set imbalance = 'Unavailable' if cell_high <= -1 or cell_low <= -1 else imbalance | round(2) %}
+        {% set imbalance = -1 if cell_high <= -1 or cell_low <= -1 else imbalance | round(2) %}
         {{ imbalance }}
     # average cell temperature using the min and max cell temperature
     - name: "Battery Cell Temperature"
@@ -133,7 +141,7 @@
         {% set temp_high = states('sensor.bms_cell_temp_high') | float(default=-50) %}
         {% set temp_low = states('sensor.bms_cell_temp_low') | float(default=-50) %}
         {% set temp = (temp_high + temp_low) / 2 %}
-        {% set temp = 'Unavailable' if temp_high <= -50 or temp_low <= -50 else temp | round(1) %}
+        {% set temp = -50 if temp_high <= -50 or temp_low <= -50 else temp | round(1) %}
         {{ temp }}
     # cell imbalance as % using the difference between min and max cell temperature
     - name: "Battery Temperature Imbalance"
@@ -144,7 +152,7 @@
         {% set cell_high = states('sensor.bms_cell_temp_high') | float(default=-1) %}
         {% set cell_low = states('sensor.bms_cell_temp_low') | float(default=-1) %}
         {% set imbalance = ((cell_high - cell_low) | abs) / (cell_high + cell_low) * 200 %}
-        {% set imbalance = 'Unavailable' if cell_high <= -1 or cell_low <= -1 else imbalance | round(0) %}
+        {% set imbalance = -1 if cell_high <= -1 or cell_low <= -1 else imbalance | round(0) %}
         {{ imbalance }}
     # the amount of energy taken from the battery today
     - name: "Battery Production"
@@ -154,7 +162,7 @@
       state: >
         {% set discharge = states('sensor.bat_discharge_daily') | float(default=-1) %}
         {% set charge = states('sensor.bat_charge_daily') | float(default=-1) %}
-        {% set result = (discharge - charge) | round(3) if charge >= 0.0 and discharge >= 0.0 else 'Unavailable' %}
+        {% set result = (discharge - charge) | round(3) if charge >= 0.0 and discharge >= 0.0 else 0 %}
         {{ result }}
     # days since the system was installed
     - name: "Installed Days"
@@ -174,7 +182,7 @@
         {% set days = states('sensor.installed_days') | float(default=-1) %}
         {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
         {% set years = (days / cycles * 6000 - days) / 365 if days > 0 and cycles > 0 else -50 %}
-        {% set result = years | round(1) if years > -50 else 'Unavailable' %}
+        {% set result = years | round(1) if years > -50 else -1 %}
         {{ result }}
     # battery efficiency, total discharge / charge %
     - name: "Battery Efficiency Total"
@@ -186,7 +194,7 @@
         {% set holding = states('sensor.battery_energy') | float(default=0) %}
         {% set output = states('sensor.discharge_energy_total') | float(default=-1) %}
         {% set used = input - holding %}
-        {% set result = (output / used * 100) | round(1) if used > 0 and output > 0 else 'Unavailable' %}
+        {% set result = (output / used * 100) | round(1) if used > 0 and output > 0 else -1 %}
         {{ result }}
 
     # calculate power flowing into inverter from solar, battery and grid
@@ -268,7 +276,7 @@
       state: >
         {% set load = states('sensor.load_daily') | float(default=-1) %}
         {% set pv = states('sensor.pv_energy_daily') | float(default=-1) %}
-        {% set dependency = (load - pv) | round(2) if load >= 0.0 or pv >= 0.0 else 'Unavailable' %}
+        {% set dependency = (load - pv) | round(2) if load >= 0.0 or pv >= 0.0 else 0 %}
         {{ dependency }}
     # calculate grid balance - difference between grid power imported and exported
     - name: "Grid Balance Today"
@@ -278,7 +286,7 @@
       state: >
         {% set grid = states('sensor.grid_daily') | float(default=-1) %}
         {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
-        {% set balance = (grid - feedin) | round(2) if grid >= 0.0 and feedin >= 0.0 else 'Unavailable' %}
+        {% set balance = (grid - feedin) | round(2) if grid >= 0.0 and feedin >= 0.0 else 0 %}
         {{ balance }}
 
     # calculate self sufficiency today - ratio of grid usage to house load
@@ -290,7 +298,7 @@
         {% set grid = states('sensor.grid_daily') | float(default=-1) %}
         {% set load = states('sensor.load_daily') | float(default=-1) %}
         {% set load = 0.01 if load == 0.0 else load %}
-        {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else 'Unavailable' %}
+        {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else -1 %}
         {{ result }}
 
     # calculate self sufficiency total - ratio of grid usage to house load
@@ -302,7 +310,7 @@
         {% set grid = states('sensor.grid_consumption_energy_total') | float(default=-1) %}
         {% set load = states('sensor.load_energy_correction') | float(default=-1) %}
         {% set load = 0.01 if load == 0.0 else load %}
-        {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else 'Unavailable' %}
+        {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else -1 %}
         {{ result }}
 
     # calculate net self sufficiency today - ratio of net grid usage to house load
@@ -315,7 +323,7 @@
         {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
         {% set load = states('sensor.load_daily') | float(default=-1) %}
         {% set load = 0.01 if load == 0.0 else load %}
-        {% set result = (100 - (grid - feedin) / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 and feedin >= 0.0 else 'Unavailable' %}
+        {% set result = (100 - (grid - feedin) / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 and feedin >= 0.0 else -1 %}
         {{ result }}
 
     # calculate net self sufficiency total - ratio of net grid usage to house load
@@ -328,7 +336,7 @@
         {% set feedin = states('sensor.feed_in_energy_total') | float(default=-1) %}
         {% set load = states('sensor.load_energy_correction') | float(default=-1) %}
         {% set load = 0.01 if load == 0.0 else load %}
-        {% set result = (100 - (grid - feedin) / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 and feedin >= 0.0 else 'Unavailable' %}
+        {% set result = (100 - (grid - feedin) / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 and feedin >= 0.0 else -1 %}
         {{ result }}
 
     # battery charge and discharge
@@ -338,7 +346,7 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
+        {% set result = states('sensor.batpower') | float(default=0) %}
         {% set result = 0.0 if result < 0.0 else result %}
         {{ result }}
     - name: "Battery Charge"
@@ -347,7 +355,7 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set result = states('sensor.battery_discharge_power') | float(default=0) %}
+        {% set result = states('sensor.batpower') | float(default=0) %}
         {% set result = 0.0 if result > 0.0 else result * -1 %}
         {{ result }}
     # running total of the charge and discharge energy through the battery
@@ -359,7 +367,7 @@
       state: >
         {% set charge = states('sensor.charge_energy_total') | float(default=-1) %}
         {% set discharge = states('sensor.discharge_energy_total') | float(default=-1) %}
-        {% set result = charge + discharge if charge >= 0.0 and discharge > 0.0 else 'Unavailable' %}
+        {% set result = charge + discharge if charge >= 0.0 and discharge > 0.0 else -1 %}
         {{ result }}
     # battery energy average per BMS cycle
     - name: "Battery Energy per Cycle"
@@ -369,7 +377,7 @@
       state: >
         {% set total = states('sensor.battery_energy_total') | float(default=-1) %}
         {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
-        {% set result = (total / cycles) | round(1) if total >= 0.0 and cycles > 0.0 else 'Unavailable' %}
+        {% set result = (total / cycles) | round(1) if total >= 0.0 and cycles > 0.0 else -1 %}
         {{ result }}
     # separate grid import and export power based on sign of grid CT and/or meter
     - name: "Feed In Power"
@@ -433,6 +441,18 @@
         {% set value = states('sensor.load_energy_total') | float(default=0) %}
         {% set value = (value - 201_536_307.2) | round(1) if value >= 201_536_307.2 else value %}
         {{ value }}
+    - name: "BatPower"
+      device_class: "power"
+      unique_id: foxess_inv1_batpower
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set volt = states('sensor.batvolt') | float(default=-1) %}
+        {% set current = states('sensor.batcurrent') | float(default=0) %}
+        {% set power = states('sensor.battery_discharge_power') | float(default=0) %}
+        {% set batpower = (volt * current / 1000 * -1.0) | round(3) %}
+        {% set result = batpower if volt >= 0 else power %}
+        {{ result }}
     # sum power being produced by PV strings
     - name: "PV Power Now"
       device_class: "power"
