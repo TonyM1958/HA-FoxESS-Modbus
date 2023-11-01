@@ -205,7 +205,7 @@
       state_class: measurement
       state: >
         {% set days = states('sensor.installed_days') | float(default=-1) %}
-        {% set used = states('sensor.battery_energy_total') | float(default=-1) %}
+        {% set used = states('sensor.discharge_energy_total') | float(default=-1) %}
         {% set available = states('sensor.battery_throughput') | float(default=-1) %}
         {% set years = (days / used * available - days) / 365 if days > 0 and used > 0 else -50 %}
         {% set result = years | round(1) if years > -50 else -1 %}
@@ -401,7 +401,7 @@
       unit_of_measurement: "kWh"
       state_class: measurement
       state: >
-        {% set total = states('sensor.battery_energy_total') | float(default=-1) %}
+        {% set total = states('sensor.discharge_energy_total') | float(default=-1) %}
         {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
         {% set result = (total / cycles) | round(1) if total >= 0.0 and cycles > 0.0 else -1 %}
         {{ result }}
