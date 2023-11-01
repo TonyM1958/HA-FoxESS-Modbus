@@ -50,6 +50,20 @@
         {% set result = 7 if states('sensor.battery_7_version_code') | int(default=0) > 0 else result %}
         {% set result = 8 if states('sensor.battery_8_version_code') | int(default=0) > 0 else result %}
         {{ result }}
+    # battery energy throughput for 10 year period
+    - name: "Battery Throughput"
+      unique_id: foxess_inv1_battery_throughput
+      state_class: measurement
+      state: >
+        {% set size = states('sensor.battery_size') | float(default=0) %}
+        {% set count = states('sensor.battery_count') | float(default=0) %}
+        {% set result =  6500 if size >= 2.76 else 6000 %}
+        {% set result =  6800 if size >= 2.88 else result %}
+        {% set result =  9500 if size >= 4.03 else result %}
+        {% set result = 10000 if size >= 4.14 else result %}
+        {% set result = 11000 if size >= 4.74 else result %}
+        {% set result = result * count %}
+        {{ result }}
     # battery capacity
     - name: "Battery Capacity"
       unique_id: foxess_inv1_battery_capacity
@@ -182,6 +196,18 @@
         {% set days = states('sensor.installed_days') | float(default=-1) %}
         {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
         {% set years = (days / cycles * 6000 - days) / 365 if days > 0 and cycles > 0 else -50 %}
+        {% set result = years | round(1) if years > -50 else -1 %}
+        {{ result }}
+    # years of battery life remaining, based on energy throughput
+    - name: "Battery Warranty Remaining"
+      unique_id: foxess_inv1_battery_warranty_remaining
+      unit_of_measurement: "years"
+      state_class: measurement
+      state: >
+        {% set days = states('sensor.installed_days') | float(default=-1) %}
+        {% set used = states('sensor.charge_energy_total') | float(default=-1) %}
+        {% set available = states('sensor.battery_throughput') | float(default=-1) %}
+        {% set years = (days / used * available - days) / 365 if days > 0 and used > 0 else -50 %}
         {% set result = years | round(1) if years > -50 else -1 %}
         {{ result }}
     # battery efficiency, total discharge / charge %
@@ -473,6 +499,7 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
+        {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
         {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
         {% set ct2 = -ct2 if ct2_handling == 1 or ct2_handling == 3 else ct2 %}
