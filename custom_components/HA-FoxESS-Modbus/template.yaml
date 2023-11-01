@@ -130,7 +130,7 @@
         {% set reserve = capacity * min_soc / 100 if capacity >= 0.0 else -1 %}
         {% set energy = states('sensor.battery_energy') | float(default=-1) %}
         {% set power = states('sensor.load_power_rolling') | float(default=-1) * 1.05 %}
-        {% set hours = ((energy - reserve) / power) | int if energy >= 0.0 and reserve >= 0.0 and power > 0.0 else 0  %}
+        {% set hours = ((energy - reserve) / power) | round(1) if energy >= 0.0 and reserve >= 0.0 and power > 0.0 else 0  %}
         {% set hours = 24 if hours is number and hours > 24 else hours  %}
         {% set hours = 0 if hours is number and hours < 0 else hours  %}
         {{ hours }}
