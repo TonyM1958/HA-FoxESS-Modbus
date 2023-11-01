@@ -205,7 +205,7 @@
       state_class: measurement
       state: >
         {% set days = states('sensor.installed_days') | float(default=-1) %}
-        {% set used = states('sensor.charge_energy_total') | float(default=-1) %}
+        {% set used = states('sensor.battery_energy_total') | float(default=-1) %}
         {% set available = states('sensor.battery_throughput') | float(default=-1) %}
         {% set years = (days / used * available - days) / 365 if days > 0 and used > 0 else -50 %}
         {% set result = years | round(1) if years > -50 else -1 %}
