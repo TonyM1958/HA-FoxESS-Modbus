@@ -499,7 +499,6 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
         {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
         {% set ct2 = -ct2 if ct2_handling == 1 or ct2_handling == 3 else ct2 %}
