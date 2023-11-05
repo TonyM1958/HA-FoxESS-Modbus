@@ -23,8 +23,6 @@
   #type: tcp
   #host: !secret foxess_inv1_ip_address
   #port: 502
-  # uncomment this line when using a direct connection to the inverter
-  #delay: 1
   # ---------------------------------------------------------------------------
 
   # list of modbus addresses to read
@@ -40,12 +38,6 @@
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
-#    - name: "Inverter Serial No"
-#      unique_id: foxess_inv1_inverter_serial
-#      address: 30008
-#      slave: !secret foxess_inv1_slave
-#      count: 8
-#      data_type: string
     - name: "Master Version"
       unique_id: foxess_inv1_master_version
       address: 30016
@@ -798,7 +790,6 @@
       state_class: total
       scan_interval: !secret scan_interval_low
 
-
     # -------------------------------------------------------------------------
     # Inverter Control registers
     # these entities will be unavailable when using direct LAN connection
@@ -809,7 +800,7 @@
       address: 41000
       slave: !secret foxess_inv1_slave
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Max Charge Current"
       unique_id: foxess_inv1_max_charge_current
       address: 41007
@@ -854,7 +845,6 @@
       unit_of_measurement: "%"
       state_class: measurement
       scan_interval: !secret scan_interval_low
-
 
   # ---------------------------------------------------------------------------
   # END: modbus include file for HA-FoxESS-Modbus RS485 connection

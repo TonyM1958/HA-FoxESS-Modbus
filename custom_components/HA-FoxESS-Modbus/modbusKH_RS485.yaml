@@ -1228,7 +1228,7 @@
       address: 41000
       input_type: input
       slave: !secret foxess_inv1_slave
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
       state_class: measurement
     - name: "Time Period 1 Enabled"
       unique_id: foxess_inv1_time_period_1_enabled
