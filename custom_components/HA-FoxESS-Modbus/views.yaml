@@ -1,0 +1,198 @@
+views:
+  - title: Home
+    cards:
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: markdown
+            content: Power Now
+          - type: custom:power-flow-card-plus
+            entities:
+              battery:
+                entity:
+                  consumption: sensor.battery_discharge
+                  production: sensor.battery_charge
+                state_of_charge: sensor.battery_soc
+                state_of_charge_unit_white_space: false
+                state_of_charge_decimals: 1
+                color_circle: true
+              grid:
+                entity:
+                  consumption: sensor.grid_consumption
+                  production: sensor.feed_in_power
+              solar:
+                entity: sensor.pv_power_now
+                display_zero_state: true
+                color_icon: false
+                color_value: false
+                secondary_info:
+                  unit_of_measurement: kWh
+                  decimals: 1
+              home:
+                entity: sensor.load_power
+                override_state: true
+                name: House
+                subtract_individual: false
+              fossil_fuel_percentage: {}
+            clickable_entities: true
+            display_zero_lines:
+              mode: show
+              transparency: 50
+              grey_color:
+                - 189
+                - 189
+                - 189
+            use_new_flow_rate_model: true
+            w_decimals: 0
+            kw_decimals: 3
+            min_flow_rate: 0.75
+            max_flow_rate: 6
+            max_expected_power: 6000
+            watt_threshold: 1000
+            transparency_zero_lines: 0
+            min_expected_power: 0.1
+          - type: entities
+            entities:
+              - entity: sensor.pv_power_now
+                name: From Solar
+                icon: mdi:solar-power
+              - entity: sensor.batpower
+                name: From Battery
+                icon: mdi:battery
+              - entity: sensor.grid_consumption
+                name: From Grid
+                icon: mdi:grid
+              - entity: sensor.feed_in_power
+                name: To Export
+                icon: mdi:home-export-outline
+              - entity: sensor.load_power
+                name: To House
+                icon: mdi:home
+              - entity: sensor.rpower
+                name: Output Power
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: markdown
+            content: System
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                entity: sensor.battery_soc
+                needle: true
+                severity:
+                  green: 25
+                  yellow: 10
+                  red: 0
+                min: 0
+                max: 100
+              - type: entity
+                entity: sensor.battery_energy
+                icon: mdi:battery
+                name: Energy
+          - type: entities
+            entities:
+              - entity: sensor.battery_state
+                icon: mdi:battery-unknown
+              - entity: sensor.inverter_state
+                secondary_info: none
+              - entity: sensor.work_mode
+              - entity: sensor.rvolt
+                name: Grid Voltage
+              - entity: sensor.invbatvolt
+                name: Battery Voltage
+                icon: mdi:speedometer
+              - entity: sensor.invbatcurrent
+                icon: mdi:current-dc
+                name: Battery Current
+              - entity: sensor.max_charge_current
+              - entity: sensor.max_soc
+                icon: mdi:cog
+              - entity: sensor.time_period_1
+              - entity: sensor.time_period_2
+              - entity: sensor.battery_cell_imbalance
+                name: Cell Imbalance
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: markdown
+            content: Energy Today
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                entity: sensor.grid_balance_today
+                name: Grid Balance
+                needle: true
+                severity:
+                  green: -30
+                  yellow: 0
+                  red: 15
+                min: -30
+                max: 30
+              - type: entity
+                entity: sensor.net_self_sufficiency_today
+                name: Net Self Sufficiency
+          - type: entities
+            entities:
+              - entity: sensor.pv_energy_today
+                name: From Solar
+                icon: mdi:solar-power
+              - entity: sensor.battery_production
+                name: From Battery
+                icon: mdi:battery
+              - entity: sensor.grid_consumption_energy_today
+                name: From Grid
+                icon: mdi:grid
+              - entity: sensor.feed_in_energy_today
+                name: To Export
+                icon: mdi:home-export-outline
+              - entity: sensor.load_energy_today
+                name: To House
+                icon: mdi:home
+              - entity: sensor.losses_daily
+                name: System Losses
+                icon: mdi:lightning-bolt
+          - type: entities
+            entities:
+              - entity: sensor.battery_duration
+              - entity: sensor.output_energy_today
+              - entity: sensor.inverter_efficiency_daily
+                name: Inverter Efficiency Today
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: markdown
+            content: Energy Totals
+          - type: entities
+            entities:
+              - entity: sensor.pv_energy_total
+                name: From Solar
+                icon: mdi:solar-power
+              - entity: sensor.battery_energy_total
+                icon: mdi:battery-sync
+              - entity: sensor.grid_consumption_energy_total
+                name: From Grid
+                icon: mdi:grid
+              - entity: sensor.feed_in_energy_total
+                name: To Export
+                icon: mdi:home-export-outline
+              - entity: sensor.load_energy_correction
+                name: To House
+                icon: mdi:home
+              - entity: sensor.net_self_sufficiency_total
+              - entity: sensor.output_energy_total
+              - entity: sensor.input_energy_total
+          - type: entities
+            entities:
+              - entity: sensor.battery_efficiency
+              - entity: sensor.battery_capacity
+              - entity: sensor.battery_soh
+                icon: mdi:battery-heart-variant
+              - entity: sensor.battery_energy_per_cycle
+              - entity: sensor.battery_warranty_remaining
+              - entity: sensor.battery_life_remaining
+title: Solar PV
