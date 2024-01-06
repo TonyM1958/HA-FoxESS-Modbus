@@ -4,19 +4,6 @@
 #--------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------
-# optional: system load monitoring. Comment out if not required
-#--------------------------------------------------------------------------
-
-- platform: systemmonitor
-  resources:
-    - type: processor_use
-    - type: memory_use
-    - type: disk_free
-      arg: /
-    - type: disk_use
-      arg: /config
-
-#--------------------------------------------------------------------------
 # these integrations turn power (kW) into energy (kWh) for the energy
 # dashboard and other uses
 #--------------------------------------------------------------------------
