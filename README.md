@@ -27,10 +27,7 @@ The changes from the main branch include:
 * Corrected unique_id for BMS Cell mV low
 * Added automation to upload generation and consumption data to pvoutput.org
 
-Access to your inverter data can be acheived in two ways:
-
-* Connecting the inverters LAN port, where available, to your router/switch (no additional hardware but Manager firmware 1.57 or later required for H1/AC1). This connection provides a limited set of real time data, sufficient for general management of your equipment.
-* Connecting the inverter's RS485 modbus to an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect 2 wires to the inverters CT / COM connector. This connection is recommended as it provides more comprehensive real time data, including BMS cycle count and cell range info and inverter running totals.
+Access to your inverter data can be acheived by connecting the inverter's RS485 modbus to an RS485 to USB adapter or RS485 to WIFI/LAN adapter. Note: this requires basic electronics competencies to connect 2 wires to the inverters CT / COM connector.
 
 ---
 ** Please note: April 2023, @nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus - you may wish to look at that as well!
@@ -50,11 +47,6 @@ Access to your inverter data can be acheived in two ways:
 * Connect RS485A to pin 1 and RS485B to pin 2 of the Meter/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to inverter front panel, Settings, Communication, RS485, Device ID and set the slave ID for the inverter to 247 (the default is 000)
 * Use modbusH3_RS485.yaml in your configuration and select the USB Connection type for RS485 to USB adapter or the LAN Connection type for RS485 to Wifi/LAN adapter
-
-## Ethernet connection to H1, AC and AIO series inverters
-* Plug the inverter ethernet port into your network and assign a static IP address. Make a note of the IP address. Note: a restricted data set of is provided via this port and many sensors will not be available, including your inverter energy meters and battery management information.
-* Go the inverter front panel, Settings, Communications, Ethernet and check the IP address is set correctly. 
-* Use modbusH1_LAN.yaml in your configuration
 
 ## Home Assistant Installation Steps
 
