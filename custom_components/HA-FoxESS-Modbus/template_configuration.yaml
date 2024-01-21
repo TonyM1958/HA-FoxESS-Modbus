@@ -13,7 +13,6 @@
 
 # Integrations used by HA-FoxESS-Modbus:
 modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1_RS485.yaml
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1_LAN.yaml
 #modbus: !include custom_components/HA-FoxESS-Modbus/modbusKH_RS485.yaml
 #modbus: !include custom_components/HA-FoxESS-Modbus/modbusH3_RS485.yaml
 template: !include custom_components/HA-FoxESS-Modbus/template.yaml
