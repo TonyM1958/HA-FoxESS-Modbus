@@ -810,7 +810,7 @@
       scale: 0.1
       precision: 1
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Max Discharge Current"
       unique_id: foxess_inv1_max_discharge_current
       address: 41008

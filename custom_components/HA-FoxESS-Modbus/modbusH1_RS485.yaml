@@ -1103,42 +1103,42 @@
       slave: !secret foxess_inv1_slave
       input_type: input
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 Start"
       unique_id: foxess_inv1_time_period_1_start
       address: 41002
       input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 End"
       unique_id: foxess_inv1_time_period_1_end
       address: 41003
       input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 Enabled"
       unique_id: foxess_inv1_time_period_2_enabled
       address: 41004
       slave: !secret foxess_inv1_slave
       input_type: input
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 Start"
       unique_id: foxess_inv1_time_period_2_start
       address: 41005
       input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 End"
       unique_id: foxess_inv1_time_period_2_end
       address: 41006
       input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Max Charge Current"
       unique_id: foxess_inv1_max_charge_current
       address: 41007
@@ -1149,7 +1149,7 @@
       scale: 0.1
       precision: 1
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Max Discharge Current"
       unique_id: foxess_inv1_max_discharge_current
       address: 41008
@@ -1178,7 +1178,7 @@
       device_class: battery
       unit_of_measurement: "%"
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Min SoC On Grid"
       unique_id: foxess_inv1_min_soc_on_grid
       address: 41011
