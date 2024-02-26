@@ -134,6 +134,16 @@
         {% set hours = 24 if hours is number and hours > 24 else hours  %}
         {% set hours = 0 if hours is number and hours < 0 else hours  %}
         {{ hours }}
+    # the number of hours that the battery can power the current load for with
+    # 5% loss allowance for converting battery DC to house AC power
+    - name: "Battery End Time"
+      unique_id: foxess_inv1_battery_end_time
+      icon: "mdi:timer-play"
+      state: >
+        {% set duration = states('sensor.battery_duration') | float(default=0) %}
+        {% set date_now = as_timestamp(now()) %}
+        {% set result = (date_now + duration * 60 * 60) | timestamp_custom('%Y-%m-%d %H:%M') %}
+        {{ result }}
     # cell imbalance as % using the difference between min and max cell voltage
     - name: "Battery Cell Imbalance"
       unique_id: foxess_inv1_battery_cell_imbalance
