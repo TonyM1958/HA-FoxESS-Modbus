@@ -20,11 +20,11 @@
       state: >
         {{ 2.56 }}
     # ----- use this setting to configure how CT2 is handled ---------
-    # 0 = normal, 1 = flip, 2 = add to load, 3 = flip and add to load
+    # 0 = normal, 1 = invert, 2 = add to load, 3 = invert and add to load
     - name: "CT2 handling"
       unique_id: foxess_inv1_ct2_handling
       state: >
-        {{ 2 }}
+        {{ 3 }}
     # total battery size
     - name: "Battery Specification"
       unique_id: foxess_inv1_battery_specification
