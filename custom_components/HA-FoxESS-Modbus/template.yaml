@@ -131,7 +131,6 @@
         {% set energy = states('sensor.battery_energy') | float(default=-1) %}
         {% set power = states('sensor.load_power_rolling') | float(default=-1) * 1.05 %}
         {% set hours = ((energy - reserve) / power) | round(1) if energy >= 0.0 and reserve >= 0.0 and power > 0.0 else 0  %}
-        {% set hours = 24 if hours is number and hours > 24 else hours  %}
         {% set hours = 0 if hours is number and hours < 0 else hours  %}
         {{ hours }}
     # the number of hours that the battery can power the current load for with
@@ -141,8 +140,10 @@
       icon: "mdi:timer-play"
       state: >
         {% set duration = states('sensor.battery_duration') | float(default=0) %}
+        {% set days = (duration // 24) | int | string %}
         {% set date_now = as_timestamp(now()) %}
-        {% set result = (date_now + duration * 60 * 60) | timestamp_custom('%Y-%m-%d %H:%M') %}
+        {% set tod = (date_now + duration * 60 * 60) | timestamp_custom('%H:%M') %}
+        {% set result = days + ' days, ' + tod %}
         {{ result }}
     # cell imbalance as % using the difference between min and max cell voltage
     - name: "Battery Cell Imbalance"
@@ -322,7 +323,7 @@
       state: >
         {% set grid = states('sensor.grid_daily') | float(default=-1) %}
         {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
-        {% set balance = (grid - feedin) | round(2) if grid >= 0.0 and feedin >= 0.0 else 0 %}
+        {% set balance = (feedin - grid) | round(2) if grid >= 0.0 and feedin >= 0.0 else 0 %}
         {{ balance }}
 
     # calculate self sufficiency today - ratio of grid usage to house load
