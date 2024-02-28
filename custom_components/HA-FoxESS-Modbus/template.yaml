@@ -140,9 +140,9 @@
       icon: "mdi:timer-play"
       state: >
         {% set duration = states('sensor.battery_duration') | float(default=0) %}
-        {% set days = (duration // 24) | int | string %}
         {% set date_now = as_timestamp(now()) %}
         {% set tod = (date_now + duration * 60 * 60) | timestamp_custom('%H:%M') %}
+        {% set days = (duration / 24) | int | string %}
         {% set result = 'At ' + tod + ' / ' + days + 'd' %}
         {{ result }}
     # cell imbalance as % using the difference between min and max cell voltage
