@@ -39,14 +39,17 @@ Access to your inverter data can be acheived by connecting the inverter's RS485 
 * Hardware configuration instructions can be found on the Nathan's [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 4 and RS485B to pin 3 of the Meter/CT/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
-* Use modbusH1_RS485.yaml for H1, AC and AIO series in your configuration and select the USB Connection type for RS485 to USB adapter or the LAN Connection type for RS485 to Wifi/LAN adapter
-* Use modbusKH_RS485.yaml for KH series in your configuration and select the USB Connection type for RS485 to USB adapter or the LAN Connection type for RS485 to Wifi/LAN adapter
+* Use modbusH1_RS485.yaml for H1, AC and AIO series in your configuration and select the USB Connection type for RS485 to USB adapter
+* Use modbusH1_RS485_LAN.yaml for H1 when using an RS485 to Wifi/LAN adapter
+* Use modbusKH_RS485.yaml for KH series in your configuration and select the USB Connection type for RS485 to USB adapter
+* Use modbusKH_RS485_LAN.yaml for KH when using an RS485 to Wifi/LAN adapter
 
 ## RS485 connection to H3 or AC3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 1 and RS485B to pin 2 of the Meter/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to inverter front panel, Settings, Communication, RS485, Device ID and set the slave ID for the inverter to 247 (the default is 000)
-* Use modbusH3_RS485.yaml in your configuration and select the USB Connection type for RS485 to USB adapter or the LAN Connection type for RS485 to Wifi/LAN adapter
+* Use modbusH3_RS485.yaml in your configuration and select the USB Connection type for RS485 to USB adapter
+* Use modbusH3_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
 
 ## Home Assistant Installation Steps
 
