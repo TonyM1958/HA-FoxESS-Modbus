@@ -25,6 +25,11 @@
       unique_id: foxess_inv1_ct2_handling
       state: >
         {{ 3 }}
+    # number of battery cycles available
+    - name: "Battery Cycles Available"
+      unique_id: foxess_inv1_battery_cycles_available
+      state: >
+        {{ 6000 }}
     # total battery size
     - name: "Battery Specification"
       unique_id: foxess_inv1_battery_specification
@@ -143,7 +148,7 @@
         {% set date_now = as_timestamp(now()) %}
         {% set tod = (date_now + duration * 60 * 60) | timestamp_custom('%H:%M') %}
         {% set days = (duration / 24) | int | string %}
-        {% set result = 'At ' + tod + ' / ' + days + 'd' %}
+        {% set result = tod + ' / ' + days + 'd' %}
         {{ result }}
     # cell imbalance as % using the difference between min and max cell voltage
     - name: "Battery Cell Imbalance"
@@ -198,7 +203,7 @@
         {% set date_now = as_timestamp(now()) %}
         {% set days = (date_now - date_install) | int // 60 // 60 // 24 %}
         {{ days }}
-    # years of battery life remaining, based on 6,000 cycles
+    # years of battery life remaining, based on available cycles
     - name: "Battery Life Remaining"
       unique_id: foxess_inv1_battery_life_remaining
       unit_of_measurement: "years"
@@ -206,7 +211,8 @@
       state: >
         {% set days = states('sensor.installed_days') | float(default=-1) %}
         {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
-        {% set years = (days / cycles * 6000 - days) / 365 if days > 0 and cycles > 0 else -50 %}
+        {% set available = states('sensor.battery_cycles_available') | float(default=6000) %}
+        {% set years = (days / cycles * available - days) / 365 if days > 0 and cycles > 0 else -50 %}
         {% set result = years | round(1) if years > -50 else -1 %}
         {{ result }}
     # years of battery life remaining, based on energy throughput
