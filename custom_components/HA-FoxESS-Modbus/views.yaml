@@ -190,7 +190,7 @@ views:
             entities:
               - entity: sensor.battery_capacity
               - entity: sensor.battery_cell_imbalance
-              - entity: sensor.battery_efficiency
+              - entity: sensor.battery_efficiency_total
               - entity: sensor.battery_warranty_remaining
               - entity: sensor.battery_life_remaining
 title: Solar PV
