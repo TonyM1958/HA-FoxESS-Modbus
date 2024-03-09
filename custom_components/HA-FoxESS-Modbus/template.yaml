@@ -558,10 +558,11 @@
       icon: "mdi:meter-electric"
       state: >
         {% set code = states('sensor.meter_1_code') | int(default=-1) %}
-        {% set result = 'Meter' if code == 0 else 'Unavailable' %}
+        {% set result = 'Meter_1ph' if code == 0 else 'Unavailable' %}
         {% set result = 'CT' if code == 1 else result %}
         {% set result = 'Disabled' if code == 2 else result %}
-        {% set result = code if code > 2 else result %}
+        {% set result = 'Meter_3ph' if code == 3 else result %}
+        {% set result = code if code > 3 else result %}
         {{ result }}
     - name: "Meter 1 Connection"
       unique_id: foxess_inv1_meter1_connection
@@ -577,10 +578,11 @@
       icon: "mdi:meter-electric"
       state: >
         {% set code = states('sensor.meter_2_code') | int(default=-1) %}
-        {% set result = 'Meter' if code == 0 else 'Unavailable' %}
+        {% set result = 'Meter_1ph' if code == 0 else 'Unavailable' %}
         {% set result = 'CT' if code == 1 else result %}
         {% set result = 'Disabled' if code == 2 else result %}
-        {% set result = code if code > 2 else result %}
+        {% set result = 'Meter_3ph' if code == 3 else result %}
+        {% set result = code if code > 3 else result %}
         {{ result }}
     - name: "Meter 2 Connection"
       unique_id: foxess_inv1_meter2_connection
