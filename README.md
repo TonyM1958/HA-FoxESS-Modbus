@@ -5,7 +5,6 @@
    </br>
 </h2>
 
-
 This site contains code and information for integrating Fox ESS inverters with Home Assistant. It is a refactored and evolved version, derrived from https://github.com/StealthChesnut/HA-FoxESS-Modbus.
 
 The changes from the main branch include:
@@ -58,4 +57,6 @@ Access to your inverter data can be acheived by connecting the inverter's RS485 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ---
+<a href="https://www.buymeacoffee.com/tonym1958" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 This web site, code and contents are not supported by or endorsed by Fox ESS. Anyone using the information provided here, does so of their own volition and risk.
