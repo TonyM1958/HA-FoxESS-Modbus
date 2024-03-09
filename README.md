@@ -36,7 +36,7 @@ Access to your inverter data can be acheived by connecting the inverter's RS485 
 
 
 ## RS485 connection to H1, AC, AIO and KH series inverters (recommended)
-* Hardware configuration instructions can be found on the Nathan's [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
+* Hardware configuration instructions can be found on Nathan's [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 4 and RS485B to pin 3 of the Meter/CT/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
 * Use modbusH1_RS485.yaml for H1, AC and AIO series in your configuration and select the USB Connection type for RS485 to USB adapter
