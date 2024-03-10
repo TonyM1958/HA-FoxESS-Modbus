@@ -40,7 +40,7 @@
       data_type: string # ASCII byte string
       scan_interval: !secret scan_interval_static
     - name: "Inverter Serial No"
-      unique_id: foxess_inv1_inverter_serial
+      unique_id: foxess_inv1_inverter_serial_no
       address: 30016 # also 39018
       slave: !secret foxess_inv1_slave
       count: 16
@@ -128,7 +128,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 8 Version code"
-      unique_id: foxess_inv1_bms_slave_8_version_code
+      unique_id: foxess_inv1_bms_1_slave_8_version_code
       address: 37040
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -276,7 +276,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Meter 1 Voltage R"
-      unique_id: foxess_inv1_meter_1_volt_R
+      unique_id: foxess_inv1_meter_1_voltage_r
       address: 38802
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -287,7 +287,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Voltage S"
-      unique_id: foxess_inv1_meter_1_volt_S
+      unique_id: foxess_inv1_meter_1_voltage_s
       address: 38804
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -298,7 +298,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Voltage T"
-      unique_id: foxess_inv1_meter_1_volt_T
+      unique_id: foxess_inv1_meter_1_voltage_t
       address: 38806
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -309,7 +309,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Current R"
-      unique_id: foxess_inv1_meter_1_current_R
+      unique_id: foxess_inv1_meter_1_current_r
       address: 38808
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -320,7 +320,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Current S"
-      unique_id: foxess_inv1_meter_1_current_S
+      unique_id: foxess_inv1_meter_1_current_s
       address: 38810
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -331,7 +331,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Current T"
-      unique_id: foxess_inv1_meter_1_current_T
+      unique_id: foxess_inv1_meter_1_current_t
       address: 38812
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -343,7 +343,7 @@
       scan_interval: !secret scan_interval_medium
       # Reserved: 38814, Meter 1 Power - see 39168 (Grid Power)
     - name: "Meter 1 Power R"
-      unique_id: foxess_inv1_meter_1_power_R
+      unique_id: foxess_inv1_meter_1_power_r
       address: 38816
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -354,7 +354,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Power S"
-      unique_id: foxess_inv1_meter_1_power_S
+      unique_id: foxess_inv1_meter_1_power_s
       address: 38818
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -365,7 +365,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Power T"
-      unique_id: foxess_inv1_meter_1_power_T
+      unique_id: foxess_inv1_meter_1_power_t
       address: 38820
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -387,7 +387,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Reactive Power R"
-      unique_id: foxess_inv1_meter_1_reactive_R
+      unique_id: foxess_inv1_meter_1_reactive_power_r
       address: 38824
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -398,7 +398,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Reactive Power S"
-      unique_id: foxess_inv1_meter_1_reactive_S
+      unique_id: foxess_inv1_meter_1_reactive_power_s
       address: 38826
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -409,7 +409,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Reactive Power T"
-      unique_id: foxess_inv1_meter_1_reactive_T
+      unique_id: foxess_inv1_meter_1_reactive_power_t
       address: 38828
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -431,7 +431,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Apparent Power R"
-      unique_id: foxess_inv1_meter_1_apparent_R
+      unique_id: foxess_inv1_meter_1_apparent_power_r
       address: 38832
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -442,7 +442,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Apparent Power S"
-      unique_id: foxess_inv1_meter_1_apparent_S
+      unique_id: foxess_inv1_meter_1_apparent_power_s
       address: 38834
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -453,7 +453,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Apparent Power T"
-      unique_id: foxess_inv1_meter_1_apparent_T
+      unique_id: foxess_inv1_meter_1_apparent_power_t
       address: 38836
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -473,7 +473,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Power Factor R"
-      unique_id: foxess_inv1_meter_1_power_factor_R
+      unique_id: foxess_inv1_meter_1_power_factor_r
       address: 38840
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -482,7 +482,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Power Factor S"
-      unique_id: foxess_inv1_meter_1_power_factor_S
+      unique_id: foxess_inv1_meter_1_power_factor_s
       address: 38842
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -491,7 +491,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 1 Power Factor T"
-      unique_id: foxess_inv1_meter_1_power_factor_T
+      unique_id: foxess_inv1_meter_1_power_factor_t
       address: 38844
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -522,7 +522,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Meter 2 Voltage R"
-      unique_id: foxess_inv1_meter_2_volt_R
+      unique_id: foxess_inv1_meter_2_voltage_r
       address: 38902
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -533,7 +533,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Voltage S"
-      unique_id: foxess_inv1_meter_2_volt_S
+      unique_id: foxess_inv1_meter_2_voltage_s
       address: 38904
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -544,7 +544,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Voltage T"
-      unique_id: foxess_inv1_meter_2_volt_T
+      unique_id: foxess_inv1_meter_2_voltage_t
       address: 38906
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -555,7 +555,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Current R"
-      unique_id: foxess_inv1_meter_2_current_R
+      unique_id: foxess_inv1_meter_2_current_r
       address: 38908
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -566,7 +566,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Current S"
-      unique_id: foxess_inv1_meter_2_current_S
+      unique_id: foxess_inv1_meter_2_current_s
       address: 38910
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -577,7 +577,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Current T"
-      unique_id: foxess_inv1_meter_2_current_T
+      unique_id: foxess_inv1_meter_2_current_t
       address: 38912
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -599,7 +599,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Power R"
-      unique_id: foxess_inv1_meter_2_power_R
+      unique_id: foxess_inv1_meter_2_power_r
       address: 38916
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -610,7 +610,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Power S"
-      unique_id: foxess_inv1_meter_2_power_S
+      unique_id: foxess_inv1_meter_2_power_s
       address: 38918
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -621,7 +621,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Power T"
-      unique_id: foxess_inv1_meter_2_power_T
+      unique_id: foxess_inv1_meter_2_power_t
       address: 38920
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -643,7 +643,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Reactive Power R"
-      unique_id: foxess_inv1_meter_2_reactive_R
+      unique_id: foxess_inv1_meter_2_reactive_power_r
       address: 38924
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -654,7 +654,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Reactive Power S"
-      unique_id: foxess_inv1_meter_2_reactive_S
+      unique_id: foxess_inv1_meter_2_reactive_power_s
       address: 38926
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -665,7 +665,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Reactive Power T"
-      unique_id: foxess_inv1_meter_2_reactive_T
+      unique_id: foxess_inv1_meter_2_reactive_power_t
       address: 38928
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -687,7 +687,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Apparent Power R"
-      unique_id: foxess_inv1_meter_2_apparent_R
+      unique_id: foxess_inv1_meter_2_apparent_power_r
       address: 38932
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -698,7 +698,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Apparent Power S"
-      unique_id: foxess_inv1_meter_2_apparent_S
+      unique_id: foxess_inv1_meter_2_apparent_power_s
       address: 38934
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -709,7 +709,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Apparent Power T"
-      unique_id: foxess_inv1_meter_2_apparent_T
+      unique_id: foxess_inv1_meter_2_apparent_power_t
       address: 38936
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -729,7 +729,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Power Factor R"
-      unique_id: foxess_inv1_meter_2_power_factor_R
+      unique_id: foxess_inv1_meter_2_power_factor_r
       address: 38940
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -738,7 +738,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Power Factor S"
-      unique_id: foxess_inv1_meter_2_power_factor_S
+      unique_id: foxess_inv1_meter_2_power_factor_s
       address: 38942
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -747,7 +747,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Meter 2 Power Factor T"
-      unique_id: foxess_inv1_meter_2_power_factor_T
+      unique_id: foxess_inv1_meter_2_power_factor_t
       address: 38944
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -992,7 +992,7 @@
       scan_interval: !secret scan_interval_high
       # Reserved uint16: 39120, 39121, 39122
     - name: "Voltage R"
-      unique_id: foxess_inv1_grid_voltage_R
+      unique_id: foxess_inv1_voltage_r
       address: 39123
       slave: !secret foxess_inv1_slave
       data_type: int16
@@ -1003,7 +1003,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Voltage S"
-      unique_id: foxess_inv1_grid_voltage_S
+      unique_id: foxess_inv1_voltage_s
       address: 39124
       slave: !secret foxess_inv1_slave
       data_type: int16
@@ -1014,7 +1014,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Voltage T"
-      unique_id: foxess_inv1_grid_voltage_T
+      unique_id: foxess_inv1_voltage_t
       address: 39125
       slave: !secret foxess_inv1_slave
       data_type: int16
@@ -1025,7 +1025,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Current R"
-      unique_id: foxess_inv1_inv_current_R
+      unique_id: foxess_inv1_current_r
       address: 39126
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1036,7 +1036,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Current S"
-      unique_id: foxess_inv1_inv_current_S
+      unique_id: foxess_inv1_current_s
       address: 39128
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1047,7 +1047,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Current T"
-      unique_id: foxess_inv1_inv_current_T
+      unique_id: foxess_inv1_current_t
       address: 39130
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1059,7 +1059,7 @@
       scan_interval: !secret scan_interval_medium
       # Reserved uint32: 39132
     - name: "Active Power"
-      unique_id: foxess_inv1_inv_active_power
+      unique_id: foxess_inv1_active_power
       address: 39134
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1097,7 +1097,7 @@
       scan_interval: !secret scan_interval_low
       # Reserved uint16: 39140
     - name: "Inner Temperature"
-      unique_id: foxess_inv1_ambient_temperature
+      unique_id: foxess_inv1_inner_temperature
       address: 39141
       slave: !secret foxess_inv1_slave
       device_class: temperature
@@ -1128,7 +1128,7 @@
       scan_interval: !secret scan_interval_high
       # Reserved uint32: 39164, 39166
     - name: "Grid Power" # [Meter Collection] Active Power
-      unique_id: foxess_inv1_grid_ct
+      unique_id: foxess_inv1_grid_power
       address: 39168 # also see 38814 Reserved (Meter 1 Power?), duplicate?
       slave: !secret foxess_inv1_slave
       data_type: int32 # >0: export, <0: import
@@ -1142,7 +1142,7 @@
 
       # Reserved uint16: 39200
     - name: "EPS Voltage R"
-      unique_id: foxess_inv1_eps_voltage_R
+      unique_id: foxess_inv1_eps_voltage_r
       address: 39201
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -1153,7 +1153,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS Voltage S"
-      unique_id: foxess_inv1_eps_voltage_S
+      unique_id: foxess_inv1_eps_voltage_s
       address: 39202
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -1164,7 +1164,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS Voltage T"
-      unique_id: foxess_inv1_eps_voltage_T
+      unique_id: foxess_inv1_eps_voltage_t
       address: 39203
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -1175,7 +1175,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS Current R"
-      unique_id: foxess_inv1_eps_current_R
+      unique_id: foxess_inv1_eps_current_r
       address: 39204
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1186,7 +1186,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS Current S"
-      unique_id: foxess_inv1_eps_current_S
+      unique_id: foxess_inv1_eps_current_s
       address: 39206
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1197,7 +1197,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS Current T"
-      unique_id: foxess_inv1_eps_current_T
+      unique_id: foxess_inv1_eps_current_t
       address: 39208
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1208,7 +1208,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "EPS Power R"
-      unique_id: foxess_inv1_eps_power_R
+      unique_id: foxess_inv1_eps_power_r
       address: 39210
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1219,7 +1219,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "EPS Power S"
-      unique_id: foxess_inv1_eps_power_S
+      unique_id: foxess_inv1_eps_power_s
       address: 39212
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1230,7 +1230,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "EPS Power T"
-      unique_id: foxess_inv1_eps_power_T
+      unique_id: foxess_inv1_eps_power_t
       address: 39214
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1262,7 +1262,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Load Power R"
-      unique_id: foxess_inv1_load_power_R
+      unique_id: foxess_inv1_load_power_r
       address: 39219
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1273,7 +1273,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Load Power S"
-      unique_id: foxess_inv1_load_power_S
+      unique_id: foxess_inv1_load_power_s
       address: 39221
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1284,7 +1284,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Load Power T"
-      unique_id: foxess_inv1_load_power_T
+      unique_id: foxess_inv1_load_power_t
       address: 39223
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1383,7 +1383,7 @@
       # Reserved int16: 39239, 39240, 39241
       # Reserved int32: 39242, 39244, 39246
     - name: "Active Power R"
-      unique_id: foxess_inv1_active_power_R
+      unique_id: foxess_inv1_active_power_r
       address: 39248
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1394,7 +1394,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Active Power S"
-      unique_id: foxess_inv1_active_power_S
+      unique_id: foxess_inv1_active_power_s
       address: 39250
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1405,7 +1405,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Active Power T"
-      unique_id: foxess_inv1_active_power_T
+      unique_id: foxess_inv1_active_power_t
       address: 39252
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1417,7 +1417,7 @@
       scan_interval: !secret scan_interval_high
       # Reserved int32: 39254 - Active Power (combined RST)?
     - name: "Reactive Power R"
-      unique_id: foxess_inv1_reactive_power_R
+      unique_id: foxess_inv1_reactive_power_r
       address: 39256
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1428,7 +1428,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Reactive Power S"
-      unique_id: foxess_inv1_reactive_power_S
+      unique_id: foxess_inv1_reactive_power_s
       address: 39258
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1439,7 +1439,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Reactive Power T"
-      unique_id: foxess_inv1_reactive_power_T
+      unique_id: foxess_inv1_reactive_power_t
       address: 39260
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1451,7 +1451,7 @@
       scan_interval: !secret scan_interval_high
       # Reserved int32: 39262 - Reactive Power (combined RST)?
     - name: "Apparent Power R"
-      unique_id: foxess_inv1_apparent_power_R
+      unique_id: foxess_inv1_apparent_power_r
       address: 39264
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1462,7 +1462,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Apparent Power S"
-      unique_id: foxess_inv1_apparent_power_S
+      unique_id: foxess_inv1_apparent_power_s
       address: 39266
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1473,7 +1473,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Apparent Power T"
-      unique_id: foxess_inv1_apparent_power_T
+      unique_id: foxess_inv1_apparent_power_t
       address: 39268
       slave: !secret foxess_inv1_slave
       data_type: int32
@@ -1495,7 +1495,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_high
     - name: "Frequency R"
-      unique_id: foxess_inv1_frequency_R
+      unique_id: foxess_inv1_frequency_r
       address: 39272
       slave: !secret foxess_inv1_slave
       device_class: frequency
@@ -1505,7 +1505,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Frequency S"
-      unique_id: foxess_inv1_frequency_S
+      unique_id: foxess_inv1_frequency_s
       address: 39273
       slave: !secret foxess_inv1_slave
       device_class: frequency
@@ -1515,7 +1515,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Frequency T"
-      unique_id: foxess_inv1_eps_frequency_T
+      unique_id: foxess_inv1_eps_frequency_t
       address: 39274
       slave: !secret foxess_inv1_slave
       device_class: frequency
