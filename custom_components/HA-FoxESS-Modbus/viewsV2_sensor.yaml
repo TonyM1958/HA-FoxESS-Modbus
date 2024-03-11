@@ -11,9 +11,9 @@ views:
       - type: entities
         title: Firmware
         entities:
-          - entity: sensor.master_version
-          - entity: sensor.slave_version
-          - entity: sensor.manager_version
+          - entity: sensor.master_version_code
+          - entity: sensor.slave_version_code
+          - entity: sensor.manager_version_code
       - type: entities
         title: BMS 1
         entities:
@@ -29,6 +29,9 @@ views:
           - entity: sensor.bms_1_temperature
           - entity: sensor.bms_1_soc
           - entity: sensor.bms_1_residual_energy
+          - entity: sensor.bms_1_voltage
+          - entity: sensor.bms_1_current
+          - entity: sensor.bms_1_power
       - type: entities
         title: BMS 2
         entities:
@@ -44,6 +47,9 @@ views:
           - entity: sensor.bms_2_temperature
           - entity: sensor.bms_2_soc
           - entity: sensor.bms_2_residual_energy
+          - entity: sensor.bms_2_voltage
+          - entity: sensor.bms_2_current
+          - entity: sensor.bms_2_power
       - type: entities
         title: Meter 1
         entities:
@@ -100,7 +106,7 @@ views:
       - type: entities
         title: Status
         entities:
-          - entity: sensor.protocol_version
+          - entity: sensor.protocol_version_code
           - entity: sensor.inverter_part_no
           - entity: sensor.inverter_model_id
           - entity: sensor.number_of_strings
@@ -120,12 +126,16 @@ views:
         entities:
           - entity: sensor.pv1_voltage
           - entity: sensor.pv1_current
+          - entity: sensor.pv1_power
           - entity: sensor.pv2_voltage
           - entity: sensor.pv2_current
+          - entity: sensor.pv2_power
           - entity: sensor.pv3_voltage
           - entity: sensor.pv3_current
+          - entity: sensor.pv3_power
           - entity: sensor.pv4_voltage
           - entity: sensor.pv4_current
+          - entity: sensor.pv4_power
           - entity: sensor.pv_power
       - type: entities
         title: Operation 1
@@ -164,12 +174,6 @@ views:
           - entity: sensor.load_power_s
           - entity: sensor.load_power_t
           - entity: sensor.load_power
-          - entity: sensor.battery_voltage
-          - entity: sensor.battery_current
-          - entity: sensor.bms_1_power
-          - entity: sensor.bms_2_voltage
-          - entity: sensor.bms_2_current
-          - entity: sensor.bms_2_power
           - entity: sensor.battery_power
           - entity: sensor.active_power_r
           - entity: sensor.active_power_s
@@ -183,13 +187,9 @@ views:
           - entity: sensor.apparent_power
           - entity: sensor.frequency_r
           - entity: sensor.frequency_s
-          - entity: sensor.eps_frequency_t
+          - entity: sensor.frequency_t
           - entity: sensor.available_import_power
           - entity: sensor.available_export_power
-          - entity: sensor.pv1_power
-          - entity: sensor.pv2_power
-          - entity: sensor.pv3_power
-          - entity: sensor.pv4_power
       - type: entities
         title: Utility Meters
         entities:
