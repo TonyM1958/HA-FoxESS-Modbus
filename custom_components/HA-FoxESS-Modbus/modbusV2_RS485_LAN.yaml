@@ -134,6 +134,13 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_static
+    - name: "BMS 1 Slave 9 Version code"
+      unique_id: foxess_inv1_bms_1_slave_9_version_code
+      address: 37041
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_static
       # etc up to 32 slaves per BMS
     - name: "BMS 1 Temperature"
       unique_id: foxess_inv1_bms_1_temperature
@@ -262,6 +269,13 @@
     - name: "BMS 2 Slave 8 Version code"
       unique_id: foxess_inv1_bms_2_slave_8_version_code
       address: 37738
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_static
+    - name: "BMS 2 Slave 9 Version code"
+      unique_id: foxess_inv1_bms_2_slave_9_version_code
+      address: 37739
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement

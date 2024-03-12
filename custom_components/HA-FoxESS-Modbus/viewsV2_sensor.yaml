@@ -26,6 +26,7 @@ views:
           - entity: sensor.bms_1_slave_6_version_code
           - entity: sensor.bms_1_slave_7_version_code
           - entity: sensor.bms_1_slave_8_version_code
+          - entity: sensor.bms_1_slave_9_version_code
           - entity: sensor.bms_1_temperature
           - entity: sensor.bms_1_soc
           - entity: sensor.bms_1_residual_energy
@@ -44,6 +45,7 @@ views:
           - entity: sensor.bms_2_slave_6_version_code
           - entity: sensor.bms_2_slave_7_version_code
           - entity: sensor.bms_2_slave_8_version_code
+          - entity: sensor.bms_2_slave_9_version_code
           - entity: sensor.bms_2_temperature
           - entity: sensor.bms_2_soc
           - entity: sensor.bms_2_residual_energy
