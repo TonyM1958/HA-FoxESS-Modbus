@@ -3,6 +3,8 @@
 # START: modbus V2 include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN
+# Version: 1.4.0
+# Date: 13/03/2024
 
 - name: FoxESSInverterModbus
 
