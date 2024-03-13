@@ -17,7 +17,11 @@ views:
       - type: entities
         title: BMS 1
         entities:
+          - entity: sensor.bms_1_connection_status
           - entity: sensor.bms_1_version_code
+          - entity: sensor.bms_1_master_type_code
+          - entity: sensor.bms_1_master_sn
+          - entity: sensor.bms_1_slave_count
           - entity: sensor.bms_1_slave_1_version_code
           - entity: sensor.bms_1_slave_2_version_code
           - entity: sensor.bms_1_slave_3_version_code
@@ -27,16 +31,39 @@ views:
           - entity: sensor.bms_1_slave_7_version_code
           - entity: sensor.bms_1_slave_8_version_code
           - entity: sensor.bms_1_slave_9_version_code
-          - entity: sensor.bms_1_temperature
-          - entity: sensor.bms_1_soc
-          - entity: sensor.bms_1_residual_energy
+          - entity: sensor.bms_1_slave_1_sn
+          - entity: sensor.bms_1_slave_2_sn
+          - entity: sensor.bms_1_slave_3_sn
+          - entity: sensor.bms_1_slave_4_sn
+          - entity: sensor.bms_1_slave_5_sn
+          - entity: sensor.bms_1_slave_6_sn
+          - entity: sensor.bms_1_slave_7_sn
+          - entity: sensor.bms_1_slave_8_sn
+          - entity: sensor.bms_1_slave_9_sn
           - entity: sensor.bms_1_voltage
           - entity: sensor.bms_1_current
-          - entity: sensor.bms_1_power
+          - entity: sensor.bms_1_temperature
+          - entity: sensor.bms_1_soc
+          - entity: sensor.bms_1_cell_temp_max
+          - entity: sensor.bms_1_cell_temp_min
+          - entity: sensor.bms_1_cell_mv_max
+          - entity: sensor.bms_1_cell_mv_min
+          - entity: sensor.bms_1_soh
+          - entity: sensor.bms_1_fault_1_code
+          - entity: sensor.bms_1_fault_2_code
+          - entity: sensor.bms_1_fault_3_code
+          - entity: sensor.bms_1_fault_4_code
+          - entity: sensor.bms_1_fault_5_code
+          - entity: sensor.bms_1_fault_6_code
+          - entity: sensor.bms_1_residual_energy
       - type: entities
         title: BMS 2
         entities:
+          - entity: sensor.bms_2_connection_status
           - entity: sensor.bms_2_version_code
+          - entity: sensor.bms_2_master_type_code
+          - entity: sensor.bms_2_master_sn
+          - entity: sensor.bms_2_slave_count
           - entity: sensor.bms_2_slave_1_version_code
           - entity: sensor.bms_2_slave_2_version_code
           - entity: sensor.bms_2_slave_3_version_code
@@ -46,12 +73,31 @@ views:
           - entity: sensor.bms_2_slave_7_version_code
           - entity: sensor.bms_2_slave_8_version_code
           - entity: sensor.bms_2_slave_9_version_code
-          - entity: sensor.bms_2_temperature
-          - entity: sensor.bms_2_soc
-          - entity: sensor.bms_2_residual_energy
+          - entity: sensor.bms_2_slave_1_sn
+          - entity: sensor.bms_2_slave_2_sn
+          - entity: sensor.bms_2_slave_3_sn
+          - entity: sensor.bms_2_slave_4_sn
+          - entity: sensor.bms_2_slave_5_sn
+          - entity: sensor.bms_2_slave_6_sn
+          - entity: sensor.bms_2_slave_7_sn
+          - entity: sensor.bms_2_slave_8_sn
+          - entity: sensor.bms_2_slave_9_sn
           - entity: sensor.bms_2_voltage
           - entity: sensor.bms_2_current
-          - entity: sensor.bms_2_power
+          - entity: sensor.bms_2_temperature
+          - entity: sensor.bms_2_soc
+          - entity: sensor.bms_2_cell_temp_max
+          - entity: sensor.bms_2_cell_temp_min
+          - entity: sensor.bms_2_cell_mv_max
+          - entity: sensor.bms_2_cell_mv_min
+          - entity: sensor.bms_2_soh
+          - entity: sensor.bms_2_fault_1_code
+          - entity: sensor.bms_2_fault_2_code
+          - entity: sensor.bms_2_fault_3_code
+          - entity: sensor.bms_2_fault_4_code
+          - entity: sensor.bms_2_fault_5_code
+          - entity: sensor.bms_2_fault_6_code
+          - entity: sensor.bms_2_residual_energy
       - type: entities
         title: Meter 1
         entities:
@@ -62,9 +108,10 @@ views:
           - entity: sensor.meter_1_current_r
           - entity: sensor.meter_1_current_s
           - entity: sensor.meter_1_current_t
-          - entity: sensor.meter_1_power_r
-          - entity: sensor.meter_1_power_s
-          - entity: sensor.meter_1_power_t
+          - entity: sensor.meter_1_active_power
+          - entity: sensor.meter_1_active_power_r
+          - entity: sensor.meter_1_actve_power_s
+          - entity: sensor.meter_1_active_power_t
           - entity: sensor.meter_1_reactive_power
           - entity: sensor.meter_1_reactive_power_r
           - entity: sensor.meter_1_reactive_power_s
@@ -88,10 +135,10 @@ views:
           - entity: sensor.meter_2_current_r
           - entity: sensor.meter_2_current_s
           - entity: sensor.meter_2_current_t
-          - entity: sensor.meter_2_power
-          - entity: sensor.meter_2_power_r
-          - entity: sensor.meter_2_power_s
-          - entity: sensor.meter_2_power_t
+          - entity: sensor.meter_2_active_power
+          - entity: sensor.meter_2_active_power_r
+          - entity: sensor.meter_2_active_power_s
+          - entity: sensor.meter_2_active_power_t
           - entity: sensor.meter_2_reactive_power
           - entity: sensor.meter_2_reactive_power_r
           - entity: sensor.meter_2_reactive_power_s
@@ -176,6 +223,12 @@ views:
           - entity: sensor.load_power_s
           - entity: sensor.load_power_t
           - entity: sensor.load_power
+          - entity: sensor.battery_1_voltage
+          - entity: sensor.battery_1_curent
+          - entity: sensor.battery_1_power
+          - entity: sensor.battery_2_voltage
+          - entity: sensor.battery_2_curent
+          - entity: sensor.battery_2_power
           - entity: sensor.battery_power
           - entity: sensor.active_power_r
           - entity: sensor.active_power_s
