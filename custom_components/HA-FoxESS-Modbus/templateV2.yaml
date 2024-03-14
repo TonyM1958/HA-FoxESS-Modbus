@@ -222,7 +222,7 @@
         {% set result = 'Force Discharge' if code == 7 else result %}
         {{ result }}
     - name: "Grid Standard Setting"
-      unique_id: foxess_inv1_grid_safety_setting
+      unique_id: foxess_inv1_grid_standard_setting
       icon: "mdi:transmission-tower"
       state: >
         {% set code = states('sensor.grid_standard_code') | int(default=-1) %}
@@ -295,7 +295,7 @@
       icon: "mdi:cog"
       state: >
         {% set code = states('sensor.eps_frequency_code') | int(default=-1) %}
-        {% set result = 60.0 if code == 1 else 50.0 %}
+        {% set result = 50.0 if code == 1 else 60.0 %}
         {{ result }}
     - name: "Time Period 1"
       unique_id: foxess_inv1_time_period_1
