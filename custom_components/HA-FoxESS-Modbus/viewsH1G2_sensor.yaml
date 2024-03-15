@@ -1,0 +1,156 @@
+title: Sensors
+views:
+  - path: default_view
+    title: Sensors
+    cards:
+      - type: entities
+        title: Device
+        entities:
+          - entity: sensor.inverter_model
+          - entity: sensor.inverter_serial_no
+      - type: entities
+        title: Operation 1
+        entities:
+          - entity: sensor.rvolt
+          - entity: sensor.rcurrent
+          - entity: sensor.rpower
+          - entity: sensor.grid_frequency
+          - entity: sensor.eps_rvolt
+          - entity: sensor.eps_rcurrent
+          - entity: sensor.eps_rpower
+          - entity: sensor.eps_frequency
+          - entity: sensor.grid_ct
+          - entity: sensor.ct2
+          - entity: sensor.load_power_ct1
+          - entity: sensor.inverter_temperature
+          - entity: sensor.inner_temperature
+          - entity: sensor.invbatvolt
+          - entity: sensor.invbatcurrent
+          - entity: sensor.battery_power
+          - entity: sensor.battery_soc
+          - entity: sensor.bms_max_charge_current
+          - entity: sensor.bms_max_discharge_current
+          - entity: sensor.bms_status_code
+          - entity: sensor.bms_connection_code
+      - type: entities
+        title: Utility Meters
+        entities:
+          - entity: sensor.pv_energy_total
+          - entity: sensor.pv_energy_today
+          - entity: sensor.charge_energy_total
+          - entity: sensor.charge_energy_today
+          - entity: sensor.discharge_energy_total
+          - entity: sensor.discharge_energy_today
+          - entity: sensor.feed_in_energy_total
+          - entity: sensor.feed_in_energy_today
+          - entity: sensor.grid_consumption_energy_total
+          - entity: sensor.grid_consumption_energy_today
+          - entity: sensor.output_energy_total
+          - entity: sensor.output_energy_today
+          - entity: sensor.input_energy_total
+          - entity: sensor.input_energy_today
+          - entity: sensor.load_energy_total
+          - entity: sensor.load_energy_today
+      - type: entities
+        title: Firmware
+        entities:
+          - entity: sensor.master_version_code
+          - entity: sensor.slave_version_code
+          - entity: sensor.manager_version_code
+      - type: entities
+        title: BMS 1
+        entities:
+          - entity: sensor.bms_1_master_version_code
+          - entity: sensor.bms_1_master_type_code
+          - entity: sensor.bms_1_slave_1_version_code
+          - entity: sensor.bms_1_slave_2_version_code
+          - entity: sensor.bms_1_slave_3_version_code
+          - entity: sensor.bms_1_slave_4_version_code
+          - entity: sensor.bms_1_slave_5_version_code
+          - entity: sensor.bms_1_slave_6_version_code
+          - entity: sensor.bms_1_slave_7_version_code
+          - entity: sensor.bms_1_slave_8_version_code
+          - entity: sensor.bms_1_slave_9_version_code
+          - entity: sensor.bms_1_temperature
+          - entity: sensor.bms_1_soc
+          - entity: sensor.bms_1_soh
+          - entity: sensor.bms_1_fault_1_code
+          - entity: sensor.bms_1_fault_2_code
+          - entity: sensor.bms_1_fault_3_code
+          - entity: sensor.bms_1_fault_4_code
+          - entity: sensor.bms_1_fault_5_code
+          - entity: sensor.bms_1_fault_6_code
+          - entity: sensor.bms_1_residual_energy
+        title: Status
+        entities:
+          - entity: sensor.protocol_version_code
+          - entity: sensor.inverter_part_no
+          - entity: sensor.inverter_model_id
+          - entity: sensor.number_of_strings
+          - entity: sensor.number_of_mppt
+          - entity: sensor.rated_power
+          - entity: sensor.max_active_power
+          - entity: sensor.max_apparent_power
+          - entity: sensor.max_reactive_export
+          - entity: sensor.max_reactive_import
+          - entity: sensor.inverter_status_1_code
+          - entity: sensor.inverter_status_3_code
+          - entity: sensor.inverter_alarm_1_code
+          - entity: sensor.inverter_alarm_2_code
+          - entity: sensor.inverter_alarm_3_code
+      - type: entities
+        title: PV Inputs
+        entities:
+          - entity: sensor.pv1_voltage
+          - entity: sensor.pv1_current
+          - entity: sensor.pv1_power
+          - entity: sensor.pv2_voltage
+          - entity: sensor.pv2_current
+          - entity: sensor.pv2_power
+          - entity: sensor.pv3_voltage
+          - entity: sensor.pv3_current
+          - entity: sensor.pv3_power
+          - entity: sensor.pv4_voltage
+          - entity: sensor.pv4_current
+          - entity: sensor.pv4_power
+          - entity: sensor.pv_power
+      - type: entities
+        title: Settings
+        entities:
+          - entity: sensor.grid_code
+          - entity: sensor.pv_config_code
+          - entity: sensor.drm0_state
+          - entity: sensor.meter_1_code
+          - entity: sensor.meter_2_code
+          - entity: sensor.modbus_address
+          - entity: sensor.password
+          - entity: sensor.work_mode_code
+          - entity: sensor.charge_from_grid
+          - entity: sensor.time_period_1_enabled
+          - entity: sensor.time_period_1_start
+          - entity: sensor.time_period_1_end
+          - entity: sensor.time_period_2_enabled
+          - entity: sensor.time_period_2_start
+          - entity: sensor.time_period_2_end
+          - entity: sensor.time_period_2_end_minute
+          - entity: sensor.max_charge_current
+          - entity: sensor.max_discharge_current
+          - entity: sensor.min_soc
+          - entity: sensor.max_soc
+          - entity: sensor.min_soc_on_grid
+          - entity: sensor.export_limit
+          - entity: sensor.system_enable
+          - entity: sensor.eps_frequency_code
+          - entity: sensor.eps_enable
+          - entity: sensor.import_power_limit
+      - type: entities
+        title: Remote Control
+        entities:
+          - entity: sensor.remote_control_code
+          - entity: sensor.remote_timeout_set
+          - entity: sensor.remote_control_active_power_command
+          - entity: sensor.remote_control_reactive_power_command
+          - entity: sensor.remote_timeout_countdown
+          - entity: sensor.remote_take_effect
+          - entity: sensor.remote_pwr_limit_bat_up
+          - entity: sensor.remote_pwr_limit_bat_dn

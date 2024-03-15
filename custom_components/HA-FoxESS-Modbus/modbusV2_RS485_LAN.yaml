@@ -3,8 +3,8 @@
 # START: modbus V2 include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN
-# Version: 1.4.0
-# Date: 13/03/2024
+# Version: 1.4.2
+# Date:    15/03/2024
 
 - name: FoxESSInverterModbus
 
@@ -317,7 +317,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS 1 SoH"
-      unique_id: foxess_inv1_bms_1_soc
+      unique_id: foxess_inv1_bms_1_soh
       address: 37624
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -620,7 +620,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "BMS 2 SoH"
-      unique_id: foxess_inv1_bms_2_soc
+      unique_id: foxess_inv1_bms_2_soh
       address: 38322
       slave: !secret foxess_inv1_slave
       data_type: uint16
@@ -1280,7 +1280,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Inverter Status 1 Code"
-      unique_id: foxess_inv1_status_1_code
+      unique_id: foxess_inv1_inverter_status_1_code
       address: 39063
       slave: !secret foxess_inv1_slave
       data_type: uint16 # bitfield, bit0: Standby, bit2: Operation, bit6: Fault (1)
@@ -1288,28 +1288,28 @@
       scan_interval: !secret scan_interval_medium
       # reserved. 39064 Inverter Status 2 Code?
     - name: "Inverter Status 3 Code"
-      unique_id: foxess_inv1_status_3_code
+      unique_id: foxess_inv1_inverter_status_3_code
       address: 39065
       slave: !secret foxess_inv1_slave
       data_type: uint32 # bitfield, bit0: On-Grid/Off-grid (0/1)
       state_class: measurement
       scan_interval: !secret scan_interval_medium
-    - name: "Alarm 1 Code"
-      unique_id: foxess_inv1_alarm_1_code
+    - name: "Inverter Alarm 1 Code"
+      unique_id: foxess_inv1_inverter_alarm_1_code
       address: 39067
       slave: !secret foxess_inv1_slave
       data_type: uint16 # bitfield - see Alarm code table
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Alarm 2 Code"
-      unique_id: foxess_inv1_alarm_2_code
+    - name: "Inverter Alarm 2 Code"
+      unique_id: foxess_inv1_inverter_alarm_2_code
       address: 39068
       slave: !secret foxess_inv1_slave
       data_type: uint16 # bitfield - see Alarm code table
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Alarm 3 Code"
-      unique_id: foxess_inv1_alarm_3_code
+    - name: "Inverter Alarm 3 Code"
+      unique_id: foxess_inv1_inverter_alarm_3_code
       address: 39069
       slave: !secret foxess_inv1_slave
       data_type: uint16 # bitfield - see Alarm code table
@@ -2217,8 +2217,8 @@
     # Remote Control
     # -------------------------------------------------------------------------
     # Reserved uint16: 46000
-    - name: "Remote Control"
-      unique_id: foxess_inv1_remote_control
+    - name: "Remote Control Code"
+      unique_id: foxess_inv1_remote_control_code
       address: 46001 # R/W
       slave: !secret foxess_inv1_slave
       data_type: uint16 # bitfield: bit0: Disable/Enable, bit1: Export/Import, bit2: AC/Battery (0/1)
@@ -2257,9 +2257,9 @@
       slave: !secret foxess_inv1_slave
       data_type: int16 # seconds
       scan_interval: !secret scan_interval_low
-    - name: "Pwr_Limit Bat_Up"
-      unique_id: foxess_inv1_pwr_limit_bat_up
-      address: 46018
+    - name: "Remote Pwr_Limit Bat_Up"
+      unique_id: foxess_inv1_remote_pwr_limit_bat_up
+      address: 46018 # R/W
       slave: !secret foxess_inv1_slave
       data_type: int32
       device_class: power
@@ -2268,8 +2268,8 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Pwr_Limit Bat_Dn"
-      unique_id: foxess_inv1_pwr_limit_bat_dn
+    - name: "Remote Pwr_Limit Bat_Dn"
+      unique_id: foxess_inv1_remote_pwr_limit_bat_dn
       address: 46020
       slave: !secret foxess_inv1_slave
       data_type: int32
