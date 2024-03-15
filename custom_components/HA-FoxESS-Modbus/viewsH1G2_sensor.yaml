@@ -81,6 +81,7 @@ views:
           - entity: sensor.bms_1_fault_5_code
           - entity: sensor.bms_1_fault_6_code
           - entity: sensor.bms_1_residual_energy
+      - type: entities
         title: Status
         entities:
           - entity: sensor.protocol_version_code
