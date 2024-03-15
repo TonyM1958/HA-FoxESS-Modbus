@@ -1307,7 +1307,7 @@
       unique_id: foxess_inv1_max_soc
       address: 41010
       input_type: input
-      slave: !secret foxess_inv1_medium
+      slave: !secret foxess_inv1_slave
       device_class: battery
       unit_of_measurement: "%"
       state_class: measurement
