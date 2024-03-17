@@ -6,30 +6,6 @@
 # these templates perform maths operations on sensor values to create derrived values
 
 - sensor:
-    # system installation date for calculating ageing
-    # ----------- enter your installation date here ------------------
-    - name: "Install Date"
-      unique_id: foxess_inv1_install_date
-      state: >
-        {{ '17-01-2023' }}
-    # HV2600: 2.56, MIRA HV25: 2.45
-    # ECS2800: 2.76, ECS2900: 2.88, ECS4100: 4.03, ECS4300H: 4.14, ECS4800: 4.74
-    # ----------- enter the size of your battery here ----------------
-    - name: "Battery Size"
-      unique_id: foxess_inv1_battery_size
-      state: >
-        {{ 2.56 }}
-    # ----- use this setting to configure how CT2 is handled ---------
-    # 0 = normal, 1 = invert, 2 = add to load, 3 = invert and add to load
-    - name: "CT2 handling"
-      unique_id: foxess_inv1_ct2_handling
-      state: >
-        {{ 3 }}
-    # number of battery cycles available
-    - name: "Battery Cycles Available"
-      unique_id: foxess_inv1_battery_cycles_available
-      state: >
-        {{ 6000 }}
     # total battery size
     - name: "Battery Specification"
       unique_id: foxess_inv1_battery_specification
@@ -37,7 +13,7 @@
       unit_of_measurement: "kWh"
       state_class: measurement
       state: >
-        {% set c = states('sensor.battery_size') | float(default=0) %}
+        {% set c = states('input_number.battery_size') | float(default=2.56) %}
         {% set n = states('sensor.battery_count') | float(default=0) %}
         {% set result = c * n | round(2) if n > 0 and c > 0 else -1 %}
         {{ result }}
@@ -199,7 +175,7 @@
       unique_id: foxess_inv1_installed_days
       unit_of_measurement: "days"
       state: >
-        {% set date_install = as_timestamp(strptime(states('sensor.install_date'), '%d-%m-%Y')) %}
+        {% set date_install = as_timestamp(states('input_datetime.install_date')) %}
         {% set date_now = as_timestamp(now()) %}
         {% set days = (date_now - date_install) | int // 60 // 60 // 24 %}
         {{ days }}
@@ -211,7 +187,7 @@
       state: >
         {% set days = states('sensor.installed_days') | float(default=-1) %}
         {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
-        {% set available = states('sensor.battery_cycles_available') | float(default=6000) %}
+        {% set available = states('input_number.battery_cycles_available') | float(default=6000) %}
         {% set years = (days / cycles * available - days) / 365 if days > 0 and cycles > 0 else -50 %}
         {% set result = years | round(1) if years > -50 else -1 %}
         {{ result }}
@@ -461,7 +437,7 @@
         {% set tgrid = states('sensor.meter_tpower') | float(default=0) %}
         {% set grid = ct1 + rgrid + sgrid + tgrid %}
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
-        {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
+        {% set ct2_handling = states('input_number.ct2_handling') | int(default=1) %}
         {% set ct2 = 0.0 if ct2_handling == 0 else ct2 | abs %}
         {% set rpower = states('sensor.rpower') | float(default=0) %}
         {% set spower = states('sensor.spower') | float(default=0) %}
@@ -482,7 +458,8 @@
       state_class: total
       state: >
         {% set value = states('sensor.load_energy_total') | float(default=0) %}
-        {% set value = (value - 201_536_307.2) | round(1) if value >= 201_536_307.2 else value %}
+        {% set correction = states('input_number.load_correction') | float(default=0) %}
+        {% set value = (value - correction) | round(1) if value >= correction else value %}
         {{ value }}
     - name: "BatPower"
       device_class: "power"
@@ -517,7 +494,7 @@
       state_class: measurement
       state: >
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
-        {% set ct2_handling = states('sensor.ct2_handling') | int(default=0) %}
+        {% set ct2_handling = states('input_number.ct2_handling') | int(default=1) %}
         {% set ct2 = -ct2 if ct2_handling == 1 or ct2_handling == 3 else ct2 %}
         {% set ct2 = 0.0 if ct2 < 0.0 else (ct2 / 0.92) | round(3) %}
         {{ ct2 }}
