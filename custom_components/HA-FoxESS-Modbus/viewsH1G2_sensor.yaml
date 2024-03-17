@@ -118,7 +118,7 @@ views:
       - type: entities
         title: Settings
         entities:
-          - entity: sensor.grid_code
+          - entity: sensor.grid_standard_code
           - entity: sensor.pv_config_code
           - entity: sensor.drm0_state
           - entity: sensor.meter_1_code
