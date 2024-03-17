@@ -37,7 +37,28 @@ recorder: !include custom_components/HA-FoxESS-Modbus/recorder_ha.yaml
 
 # optional upload generation and consumption data to pvoutput
 rest_command: !include custom_components/HA-FoxESS-Modbus/rest_command.yaml
-#
+
+# input values for configuring integration:
+input_datetime:
+  install_date:
+    # install date for battery life calculation.
+    name: Install Date
+    has_date: true
+    has_time: false
+input_number:
+  battery_size:
+    # rated size of 1 battery for SoH calcuation.
+    name: Battery Size
+    mode: box
+    max: 10
+    min: 2
+    step: 0.01
+  ct2_handling:
+    # how to use CT2
+    name: CT2 Handling
+    mode: box
+    max: 3
+    min: 0
 #-----------------------------------------------------------------------------
 # END: HA-FoxESS-Modbus configuration
 #-----------------------------------------------------------------------------

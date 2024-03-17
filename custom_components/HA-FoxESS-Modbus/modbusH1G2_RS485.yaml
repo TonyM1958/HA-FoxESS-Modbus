@@ -317,7 +317,7 @@
       scan_interval: !secret scan_interval_low
     - name: "Discharge Energy Total"
       unique_id: foxess_inv1_discharge_energy_total
-      address: 31006
+      address: 32006
       slave: !secret foxess_inv1_slave
       data_type: uint32
       device_class: energy
@@ -1091,8 +1091,8 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "EPS Enable"
-      unique_id: foxess_inv1_eps_enable
+    - name: "EPS Enable Code"
+      unique_id: foxess_inv1_eps_enable_code
       address: 41015
       input_type: input
       slave: !secret foxess_inv1_slave
@@ -1119,7 +1119,7 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Remote Active Power Command"
+    - name: "Remote Control Active Power Command"
       unique_id: foxess_inv1_remote_control_active_power_command
       address: 44002
       input_type: input
@@ -1130,7 +1130,7 @@
       precision: 0
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "Remote Control Reactve Power Command"
+    - name: "Remote Control Reactive Power Command"
       unique_id: foxess_inv1_remote_control_reactive_power_command
       address: 44003
       input_type: input

@@ -1091,8 +1091,8 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "EPS Enable"
-      unique_id: foxess_inv1_eps_enable
+    - name: "EPS Enable Code"
+      unique_id: foxess_inv1_eps_enable_code
       address: 41015
       input_type: input
       slave: !secret foxess_inv1_slave
