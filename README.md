@@ -60,3 +60,6 @@ Access to your inverter data can be acheived by connecting the inverter's RS485 
 * Create a full backup of your HA instance
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
+## Change Log
+v1.4.4: moved preset values to input helpers to avoid over-writing values during HACS update. This requires some additional settings to be added to configuration.yaml. See 'template_configuration.yaml'.<p>
+v1.4.3: moved database settings to recorder_ha.yaml and recorder_maria.yaml so the database being used for history does not change during HACS update.<p>
