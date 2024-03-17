@@ -1,6 +1,5 @@
 # optional if you use mariadb instead of built-in db
-#db_url: !secret mariadb_url
+db_url: !secret mariadb_url
 
 # recorder settings
 purge_keep_days: 30
-
