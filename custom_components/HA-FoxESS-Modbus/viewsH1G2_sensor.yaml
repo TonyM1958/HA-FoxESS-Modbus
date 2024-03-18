@@ -155,3 +155,58 @@ views:
           - entity: sensor.remote_take_effect
           - entity: sensor.remote_pwr_limit_bat_up
           - entity: sensor.remote_pwr_limit_bat_dn
+      - type: entities
+        title: Templates
+        entities:
+          - entity: sensor.battery_specification
+          - entity: sensor.battery_count
+          - entity: sensor.battery_throughput
+          - entity: sensor.battery_capacity
+          - entity: sensor.battery_state
+          - entity: sensor.battery_energy
+          - entity: sensor.battery_duration
+          - entity: sensor.battery_end_time
+          - entity: sensor.battery_production
+          - entity: sensor.installed_days
+          - entity: sensor.battery_life_remaining
+          - entity: sensor.battery_warranty_remaining
+          - entity: sensor.battery_efficiency_total
+          - entity: sensor.system_losses
+          - entity: sensor.inverter_efficiency
+          - entity: sensor.inverter_efficiency_daily
+          - entity: sensor.grid_dependency_today
+          - entity: sensor.grid_balance_today
+          - entity: sensor.net_self_sufficiency_today
+          - entity: sensor.net_self_sufficiency_total
+          - entity: sensor.battery_energy_total
+          - entity: sensor.battery_energy_per_cycle
+          - entity: sensor.work_mode
+          - entity: sensor.grid_standard_setting
+          - entity: sensor.pv_config_setting
+          - entity: sensor.meter_1_setting
+          - entity: sensor.meter_1_connection
+          - entity: sensor.meter_2_setting
+          - entity: sensor.meter_2_connection
+          - entity: sensor.bms_connection
+          - entity: sensor.bms_status
+          - entity: sensor.eps_frequency_setting
+          - entity: sensor.eps_enable_setting
+          - entity: sensor.inverter_status
+          - entity: sensor.time_period_1
+          - entity: sensor.time_period_2
+          - entity: sensor.protocol_version
+          - entity: sensor.master_version
+          - entity: sensor.slave_version
+          - entity: sensor.manager_version
+          - entity: sensor.bms_1_master_version
+          - entity: sensor.bms_1_slave_1_version
+          - entity: sensor.bms_1_slave_2_version
+          - entity: sensor.bms_1_slave_3_version
+          - entity: sensor.bms_1_slave_4_version
+          - entity: sensor.bms_1_slave_5_version
+          - entity: sensor.bms_1_slave_6_version
+          - entity: sensor.bms_1_slave_7_version
+          - entity: sensor.bms_1_slave_8_version
+          - entity: sensor.bms_1_slave_9_version
+          - entity: sensor.pvoutput_data
+
