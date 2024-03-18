@@ -1,0 +1,795 @@
+---
+#-----------------------------------------------------------------------------
+# START: templateH1G2.yaml include file for HA-FoxESS-Modbus
+#-----------------------------------------------------------------------------
+
+# these templates perform maths operations on sensor values to create derrived values
+
+- sensor:
+    # total battery size
+    - name: "Battery Specification"
+      unique_id: foxess_inv1_battery_specification
+      device_class: energy_storage
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {% set c = states('input_number.battery_size') | float(default=2.56) %}
+        {% set n = states('sensor.battery_count') | float(default=0) %}
+        {% set result = c * n | round(2) if n > 0 and c > 0 else -1 %}
+        {{ result }}
+    # work out the number of batteries
+    - name: "Battery Count"
+      unique_id: foxess_inv1_battery_count
+      state_class: measurement
+      state: >
+        {% set result = 1 if states('sensor.bms_1_slave_1_version_code') | int(default=0) > 0 else 0 %}
+        {% set result = 2 if states('sensor.bms_1_slave_2_version_code') | int(default=0) > 0 else result %}
+        {% set result = 3 if states('sensor.bms_1_slave_3_version_code') | int(default=0) > 0 else result %}
+        {% set result = 4 if states('sensor.bms_1_slave_4_version_code') | int(default=0) > 0 else result %}
+        {% set result = 5 if states('sensor.bms_1_slave_5_version_code') | int(default=0) > 0 else result %}
+        {% set result = 6 if states('sensor.bms_1_slave_6_version_code') | int(default=0) > 0 else result %}
+        {% set result = 7 if states('sensor.bms_1_slave_7_version_code') | int(default=0) > 0 else result %}
+        {% set result = 8 if states('sensor.bms_1_slave_8_version_code') | int(default=0) > 0 else result %}
+        {% set result = 9 if states('sensor.bms_1_slave_9_version_code') | int(default=0) > 0 else result %}
+        {{ result }}
+    # battery energy throughput for 10 year period
+    - name: "Battery Throughput"
+      unique_id: foxess_inv1_battery_throughput
+      state_class: measurement
+      state: >
+        {% set size = states('sensor.battery_size') | float(default=0) %}
+        {% set count = states('sensor.battery_count') | float(default=0) %}
+        {% set result = 12100 if size >= 2.76 else 11800 %}
+        {% set result = 12200 if size >= 2.88 else result %}
+        {% set result = 17300 if size >= 4.03 else result %}
+        {% set result = 17500 if size >= 4.14 else result %}
+        {% set result = 17800 if size >= 4.74 else result %}
+        {% set result = result * count %}
+        {{ result }}
+    # battery capacity
+    - name: "Battery Capacity"
+      unique_id: foxess_inv1_battery_capacity
+      device_class: energy_storage
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {% set capacity = states('sensor.battery_specification') | float(default=-1) %}
+        {% set remaining = states('sensor.bms_kwh_remaining') | float(default=-1) %}
+        {% set soc = states('sensor.battery_soc') | float(default=-1) %}
+        {% set result = remaining * 100 / soc if remaining > 0.0 and soc > 0.0 else -1 %}
+        {% set result = (capacity * 0.93 if result < 0.0 else result) | round(2) %}
+        {{ result }}
+    # battery state of health
+    - name: "Battery SoH"
+      unique_id: foxess_inv1_battery_soh
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set capacity = states('sensor.battery_specification') | float(default=-1) * 1.0 %}
+        {% set current = states('sensor.battery_capacity') | float(default=-1) %}
+        {% set result = (current / capacity * 100) | round(0) if current >= 0.0 and capacity >= 0.0 else -1 %}
+        {{ result }}
+    # battery state
+    - name: "Battery State"
+      unique_id: foxess_inv1_battery_state
+      state: >
+        {% set current = states('sensor.invbatcurrent') | float(default=0) %}
+        {% set result = 'Charging' if current < 0.0 else 'Idle' %}
+        {% set result = 'Discharging' if current > 0.0 else result %}
+        {{ result }}
+    # the energy in battery
+    - name: "Battery Energy"
+      unique_id: foxess_inv1_battery_energy
+      device_class: energy_storage
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
+        {% set soc = states('sensor.battery_soc') | float(default=-1) %}
+        {% set calculated = (capacity * soc / 100) | round(2) if capacity >= 0.0 and soc >= 0.0 else -1 %}
+        {% set energy = states('sensor.bms_1_residual_energy') | float(default=-1) %}
+        {% set energy = calculated if energy <= 0.0 else energy %}
+        {{ energy }}
+    # the number of hours that the battery can power the current load for with
+    # 5% loss allowance for converting battery DC to house AC power
+    - name: "Battery Duration"
+      unique_id: foxess_inv1_battery_duration
+      icon: "mdi:timer-play"
+      unit_of_measurement: "hours"
+      state_class: measurement
+      state: >
+        {% set capacity = states('sensor.battery_capacity') | float(default=-1) %}
+        {% set min_soc = states('sensor.min_soc_on_grid') | float(default=10) %}
+        {% set reserve = capacity * min_soc / 100 if capacity >= 0.0 else -1 %}
+        {% set energy = states('sensor.battery_energy') | float(default=-1) %}
+        {% set power = states('sensor.load_power_rolling') | float(default=-1) * 1.05 %}
+        {% set hours = ((energy - reserve) / power) | round(1) if energy >= 0.0 and reserve >= 0.0 and power > 0.0 else 0  %}
+        {% set hours = 0 if hours is number and hours < 0 else hours  %}
+        {{ hours }}
+    # the number of hours that the battery can power the current load for with
+    # 5% loss allowance for converting battery DC to house AC power
+    - name: "Battery End Time"
+      unique_id: foxess_inv1_battery_end_time
+      icon: "mdi:timer-play"
+      state: >
+        {% set duration = states('sensor.battery_duration') | float(default=0) %}
+        {% set date_now = as_timestamp(now()) %}
+        {% set tod = (date_now + duration * 60 * 60) | timestamp_custom('%H:%M') %}
+        {% set days = (duration / 24) | int | string %}
+        {% set result = tod + ' / ' + days + 'd' %}
+        {{ result }}
+    # cell imbalance as % using the difference between min and max cell voltage
+    - name: "Battery Cell Imbalance"
+      unique_id: foxess_inv1_battery_cell_imbalance
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set cell_high = states('sensor.bms_1_cell_mv_high') | float(default=-1) %}
+        {% set cell_low = states('sensor.bms_1_cell_mv_low') | float(default=-1) %}
+        {% set imbalance = ((cell_high - cell_low) | abs) / (cell_high + cell_low) * 200 %}
+        {% set imbalance = -1 if cell_high <= -1 or cell_low <= -1 else imbalance | round(2) %}
+        {{ imbalance }}
+    # average cell temperature using the min and max cell temperature
+    - name: "Battery Cell Temperature"
+      unique_id: foxess_inv1_battery_cell_temperature
+      device_class: temperature
+      unit_of_measurement: "°C"
+      state_class: measurement
+      state: >
+        {% set temp_high = states('sensor.bms_1_cell_temp_high') | float(default=-50) %}
+        {% set temp_low = states('sensor.bms_1_cell_temp_low') | float(default=-50) %}
+        {% set temp = (temp_high + temp_low) / 2 %}
+        {% set temp = -50 if temp_high <= -50 or temp_low <= -50 else temp | round(1) %}
+        {{ temp }}
+    # the amount of energy taken from the battery today
+    - name: "Battery Production"
+      unique_id: foxess_inv1_battery_production
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {% set discharge = states('sensor.bat_discharge_daily') | float(default=-1) %}
+        {% set charge = states('sensor.bat_charge_daily') | float(default=-1) %}
+        {% set result = (discharge - charge) | round(3) if charge >= 0.0 and discharge >= 0.0 else 0 %}
+        {{ result }}
+    # days since the system was installed
+    - name: "Installed Days"
+      unique_id: foxess_inv1_installed_days
+      unit_of_measurement: "days"
+      state: >
+        {% set date_install = as_timestamp(states('input_datetime.install_date')) %}
+        {% set date_now = as_timestamp(now()) %}
+        {% set days = (date_now - date_install) | int // 60 // 60 // 24 %}
+        {{ days }}
+    # years of battery life remaining, based on available cycles
+    - name: "Battery Life Remaining"
+      unique_id: foxess_inv1_battery_life_remaining
+      unit_of_measurement: "years"
+      state_class: measurement
+      state: >
+        {% set days = states('sensor.installed_days') | float(default=-1) %}
+        {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
+        {% set available = states('input_number.battery_cycles_available') | float(default=6000) %}
+        {% set years = (days / cycles * available - days) / 365 if days > 0 and cycles > 0 else -50 %}
+        {% set result = years | round(1) if years > -50 else -1 %}
+        {{ result }}
+    # years of battery life remaining, based on energy throughput
+    - name: "Battery Warranty Remaining"
+      unique_id: foxess_inv1_battery_warranty_remaining
+      unit_of_measurement: "years"
+      state_class: measurement
+      state: >
+        {% set days = states('sensor.installed_days') | float(default=-1) %}
+        {% set used = states('sensor.battery_energy_total') | float(default=-1) %}
+        {% set available = states('sensor.battery_throughput') | float(default=-1) %}
+        {% set years = (days / used * available - days) / 365 if days > 0 and used > 0 else -50 %}
+        {% set result = years | round(1) if years > -50 else -1 %}
+        {{ result }}
+    # battery efficiency, total discharge / charge %
+    - name: "Battery Efficiency Total"
+      unique_id: foxess_inv1_battery_efficiency
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set input = states('sensor.charge_energy_total') | float(default=-1) %}
+        {% set holding = states('sensor.battery_energy') | float(default=0) %}
+        {% set output = states('sensor.discharge_energy_total') | float(default=-1) %}
+        {% set used = input - holding %}
+        {% set result = (output / used * 100) | round(1) if used > 0 and output > 0 else -1 %}
+        {{ result }}
+
+    # calculate power flowing into inverter from solar, battery and grid
+    - name: "Inverter Power In"
+      device_class: "power"
+      unique_id: foxess_inv1_inverter_power_in
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set pv_power_in = states('sensor.pv_power_now') | float(default=0) %}
+        {% set rpower = states('sensor.rpower') | float(default=0) %}
+        {% set rpower = 0.0 if rpower > 0.0 else rpower * -1.0 %}
+        {% set bat_power_in = states('sensor.battery_discharge') | float(default=0) %}
+        {% set power_in = pv_power_in + rpower + bat_power_in %}
+        {{ power_in | round(3) }}
+    # calculate power flowing out of inverter
+    - name: "Inverter Power Out"
+      device_class: "power"
+      unique_id: foxess_inv1_inverter_power_out
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set rpower = states('sensor.rpower') | float(default=0) %}
+        {% set rpower = 0 if rpower < 0.0 else rpower %}
+        {% set eps_rpower = states('sensor.eps_rpower') | float(default=0) %}
+        {% set bat_power_out = states('sensor.battery_charge') | float(default=0) %}
+        {% set power_out = rpower + eps_rpower + bat_power_out %}
+        {{ power_out | round(3) }}
+    # calculate sytem losses. Clip range between -1kw and +1kw to remove sampling errors and spikes
+    - name: "System Losses"
+      device_class: "power"
+      unique_id: foxess_inv1_system_losses
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set power_in = states('sensor.inverter_power_in') | float(default=0) %}
+        {% set power_out = states('sensor.inverter_power_out') | float(default=0) %}
+        {% set losses = (power_in - power_out) | round(3) %}
+        {{ losses }}
+    # calculate inverter efficiency % using the difference between power in and power out
+    - name: "Inverter Efficiency"
+      unique_id: foxess_inv1_inverter_efficiency
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set power_out = states('sensor.inverter_power_out') | float(default=0) %}
+        {% set power_in = states('sensor.inverter_power_in') | float(default=0) %}
+        {% set efficiency = power_out / power_in * 100 if power_in > 0.0 else 100 %}
+        {% set efficiency = 100 if efficiency > 100 else efficiency %}
+        {{ efficiency | round(1) }}
+    # calculate inverter efficiency % using the difference between energy in and energy out
+    - name: "Inverter Efficiency Daily"
+      unique_id: foxess_inv1_inverter_efficiency_daily
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set energy_out = states('sensor.inverter_energy_out_daily') | float(default=0) %}
+        {% set energy_in = states('sensor.inverter_energy_in_daily') | float(default=0) %}
+        {% set efficiency = energy_out / energy_in * 100 if energy_in > 0.0 else 100 %}
+        {% set efficiency = 100 if efficiency > 100 else efficiency %}
+        {{ efficiency | round(1) }}
+
+    # calculate grid dependency - difference between load power consumed and solar power generated
+    - name: "Grid Dependency Today"
+      unique_id: foxess_inv1_grid_dependency_today
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {% set load = states('sensor.load_daily') | float(default=-1) %}
+        {% set pv = states('sensor.pv_energy_daily') | float(default=-1) %}
+        {% set dependency = (load - pv) | round(2) if load >= 0.0 or pv >= 0.0 else 0 %}
+        {{ dependency }}
+    # calculate grid balance - difference between grid power imported and exported
+    - name: "Grid Balance Today"
+      unique_id: foxess_inv1_grid_balance_today
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {% set grid = states('sensor.grid_daily') | float(default=-1) %}
+        {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
+        {% set balance = (feedin - grid) | round(2) if grid >= 0.0 and feedin >= 0.0 else 0 %}
+        {{ balance }}
+
+    # calculate self sufficiency today - ratio of grid usage to house load
+    - name: "Self Sufficiency Today"
+      unique_id: foxess_inv1_self_sufficiency_today
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set grid = states('sensor.grid_daily') | float(default=-1) %}
+        {% set load = states('sensor.load_daily') | float(default=-1) %}
+        {% set load = 0.01 if load == 0.0 else load %}
+        {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else -1 %}
+        {{ result }}
+
+    # calculate self sufficiency total - ratio of grid usage to house load
+    - name: "Self Sufficiency Total"
+      unique_id: foxess_inv1_self_sufficiency_total
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set grid = states('sensor.grid_consumption_energy_total') | float(default=-1) %}
+        {% set load = states('sensor.load_energy_correction') | float(default=-1) %}
+        {% set load = 0.01 if load == 0.0 else load %}
+        {% set result = (100 - grid / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 else -1 %}
+        {{ result }}
+
+    # calculate net self sufficiency today - ratio of net grid usage to house load
+    - name: "Net Self Sufficiency Today"
+      unique_id: foxess_inv1_net_self_sufficiency_today
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set grid = states('sensor.grid_daily') | float(default=-1) %}
+        {% set feedin = states('sensor.feedin_daily') | float(default=-1) %}
+        {% set load = states('sensor.load_daily') | float(default=-1) %}
+        {% set load = 0.01 if load == 0.0 else load %}
+        {% set result = (100 - (grid - feedin) / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 and feedin >= 0.0 else -1 %}
+        {{ result }}
+
+    # calculate net self sufficiency total - ratio of net grid usage to house load
+    - name: "Net Self Sufficiency Total"
+      unique_id: foxess_inv1_net_self_sufficiency_total
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set grid = states('sensor.grid_consumption_energy_total') | float(default=-1) %}
+        {% set feedin = states('sensor.feed_in_energy_total') | float(default=-1) %}
+        {% set load = states('sensor.load_energy_correction') | float(default=-1) %}
+        {% set load = 0.01 if load == 0.0 else load %}
+        {% set result = (100 - (grid - feedin) / load * 100) | round(1) if grid >= 0.0 and load >= 0.0 and feedin >= 0.0 else -1 %}
+        {{ result }}
+
+    # battery charge and discharge
+    - name: "Battery Discharge"
+      device_class: "power"
+      unique_id: foxess_inv1_battery_discharge
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set result = states('sensor.batpower') | float(default=0) %}
+        {% set result = 0.0 if result < 0.0 else result %}
+        {{ result }}
+    - name: "Battery Charge"
+      device_class: "power"
+      unique_id: foxess_inv1_battery_charge
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set result = states('sensor.batpower') | float(default=0) %}
+        {% set result = 0.0 if result > 0.0 else result * -1 %}
+        {{ result }}
+    # running total of the charge and discharge energy through the battery
+    - name: "Battery Energy Total"
+      device_class: "energy"
+      unique_id: foxess_inv1_battery_energy_total
+      unit_of_measurement: "kWh"
+      state_class: total
+      state: >
+        {% set charge = states('sensor.charge_energy_total') | float(default=-1) %}
+        {% set discharge = states('sensor.discharge_energy_total') | float(default=-1) %}
+        {% set result = charge + discharge if charge >= 0.0 and discharge > 0.0 else -1 %}
+        {{ result }}
+    # battery energy average per BMS cycle
+    - name: "Battery Energy per Cycle"
+      unique_id: foxess_inv1_battery_energy_per_cycle
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {% set total = states('sensor.battery_energy_total') | float(default=-1) %}
+        {% set cycles = states('sensor.bms_cycle_count') | float(default=-1) %}
+        {% set result = (total / cycles) | round(1) if total >= 0.0 and cycles > 0.0 else -1 %}
+        {{ result }}
+    # separate grid import and export power based on sign of grid CT and/or meter
+    - name: "Feed In Power"
+      device_class: "power"
+      unique_id: foxess_inv1_feed_in_power
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set power = states('sensor.grid_ct') | float(default=0) %}
+        {% set result = 0 if power < 0.0 else power | round(3) %}
+        {{ result }}
+    - name: "Grid Consumption"
+      device_class: "power"
+      unique_id: foxess_inv1_grid_consumption
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set power = states('sensor.grid_ct') | float(default=0) %}
+        {% set result = 0 if power > 0.0 else (power * -1.0) | round(3) %}
+        {{ result }}
+    - name: "Load Power"
+      device_class: "power"
+      unique_id: foxess_inv1_load_power
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set grid = states('sensor.grid_ct') | float(default=0) %}
+        {% set ct2 = states('sensor.ct2') | float(default=0) %}
+        {% set ct2_handling = states('input_number.ct2_handling') | int(default=1) %}
+        {% set ct2 = 0.0 if ct2_handling == 0 else ct2 | abs %}
+        {% set rpower = states('sensor.rpower') | float(default=0) %}
+        {% set power = rpower + spower + tpower %}
+        {% set eps_rpower = states('sensor.eps_rpower') | float(default=0) %}
+        {% set result = rpower + eps_rpower - grid + ct2 %}
+        {% set result = 0.3 if result < 0 else result | round(3) %}
+        {{ result }}
+    # correct Load Energy Total sensor value
+    - name: "Load Energy Correction"
+      device_class: "energy"
+      unique_id: foxess_inv1_load_energy_corrected
+      unit_of_measurement: "kWh"
+      state_class: total
+      state: >
+        {% set value = states('sensor.load_energy_total') | float(default=0) %}
+        {% set correction = states('input_number.load_correction') | float(default=0) %}
+        {% set value = (value - correction) | round(1) if value >= correction else value %}
+        {{ value }}
+    - name: "BatPower"
+      device_class: "power"
+      unique_id: foxess_inv1_batpower
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set power = states('sensor.battery_power') | float(default=0) %}
+        {% set result = power * 1.0 %}
+        {{ result }}
+    # sum power being produced by PV strings
+    - name: "PV Power Now"
+      device_class: "power"
+      unique_id: foxess_inv1_pv_power_now
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set pv = states('sensor.pv_power') | float(default=0) %}
+        {% set pv = 0.0 if pv < 0.0 else pv %}
+        {{ pv }}
+    - name: "CT2 Power Now"
+      device_class: "power"
+      unique_id: foxess_inv1_ct2_power_now
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set ct2 = states('sensor.ct2') | float(default=0) %}
+        {% set ct2_handling = states('input_number.ct2_handling') | int(default=1) %}
+        {% set ct2 = -ct2 if ct2_handling == 1 or ct2_handling == 3 else ct2 %}
+        {% set ct2 = 0.0 if ct2 < 0.0 else (ct2 / 0.92) | round(3) %}
+        {{ ct2 }}
+    - name: "Work Mode"
+      unique_id: foxess_inv1_work_mode
+      icon: "mdi:cog"
+      state: >
+        {% set code = states('sensor.work_mode_code') | int(default=-1) %}
+        {% set result = 'Self Use' if code == 0 else 'Unavailable' %}
+        {% set result = 'Feed In First' if code == 1 else result %}
+        {% set result = 'Backup' if code == 2 else result %}
+        {% set result = 'WeakGridAdj' if code == 3 else result %}
+        {% set result = 'Power Station' if code == 4 else result %}
+        {% set result = 'Peak Shaving' if code == 5 else result %}
+        {% set result = 'ForceCharge' if code == 6 else result %}
+        {% set result = 'ForceDischarge' if code == 7 else result %}
+        {{ result }}
+    - name: "Grid Standard Setting"
+      unique_id: foxess_inv1_grid_standard_setting
+      icon: "mdi:transmission-tower"
+      state: >
+        {% set code = states('sensor.grid_standard_code') | int(default=-1) %}
+        {% set result = 'AS4777_AU' if code == 0 else 'Unavailable' %}
+        {% set result = 'AS4777_NZ' if code == 1 else result %}
+        {% set result = 'G98_UK' if code == 2 else result %}
+        {% set result = 'G99_UK' if code == 3 else result %}
+        {% set result = 'EN50549_NL' if code == 4 else result %}
+        {% set result = 'CEI021_A' if code == 5 else result %}
+        {% set result = 'VDE0126' if code == 6 else result %}
+        {% set result = 'VDE4015_DE' if code == 7 else result %}
+        {% set result = 'NBR-220_BR' if code == 8 else result %}
+        {% set result = 'NBR-240_BR' if code == 9 else result %}
+        {% set result = 'IEC61727' if code == 10 else result %}
+        {% set result = 'Philippines' if code == 11 else result %}
+        {% set result = 'NRS_SA' if code == 12 else result %}
+        {% set result = 'Vietnam' if code == 13 else result %}
+        {% set result = 'EN50549_PL' if code == 14 else result %}
+        {% set result = 'EN50549_PT' if code == 15 else result %}
+        {% set result = 'PPDS_CR' if code == 16 else result %}
+        {% set result = 'UNE-206_SP' if code == 17 else result %}
+        {% set result = 'RD1699_SP' if code == 18 else result %}
+        {% set result = 'Belgium' if code == 19 else result %}
+        {% set result = code if code > 19 else result %}
+        {{ result }}
+    - name: "PV Config Setting"
+      unique_id: foxess_inv1_pv_config_setting
+      icon: "mdi:view-parallel"
+      state: >
+        {% set code = states('sensor.pv_config_code') | int(default=-1) %}
+        {% set result = 'Independent' if code == 0 else 'Unavailable' %}
+        {% set result = 'Parallel' if code == 1 else result %}
+        {% set result = code if code > 1 else result %}
+        {{ result }}
+    - name: "Meter 1 Setting"
+      unique_id: foxess_inv1_meter1_setting
+      icon: "mdi:meter-electric"
+      state: >
+        {% set code = states('sensor.meter_1_code') | int(default=-1) %}
+        {% set result = 'Meter_1ph' if code == 0 else 'Unavailable' %}
+        {% set result = 'CT' if code == 1 else result %}
+        {% set result = 'Disabled' if code == 2 else result %}
+        {% set result = 'Meter_3ph' if code == 3 else result %}
+        {% set result = code if code > 3 else result %}
+        {{ result }}
+    - name: "Meter 1 Connection"
+      unique_id: foxess_inv1_meter1_connection
+      icon: "mdi:network"
+      state: >
+        {% set code = states('sensor.meter_1_connection_code') | int(default=-1) %}
+        {% set result = 'Not Connected' if code == 0 else 'Unavailable' %}
+        {% set result = 'OK' if code == 1 else result %}
+        {% set result = code if code > 1 else result %}
+        {{ result }}
+    - name: "Meter 2 Setting"
+      unique_id: foxess_inv1_meter2_setting
+      icon: "mdi:meter-electric"
+      state: >
+        {% set code = states('sensor.meter_2_code') | int(default=-1) %}
+        {% set result = 'Meter_1ph' if code == 0 else 'Unavailable' %}
+        {% set result = 'CT' if code == 1 else result %}
+        {% set result = 'Disabled' if code == 2 else result %}
+        {% set result = 'Meter_3ph' if code == 3 else result %}
+        {% set result = code if code > 3 else result %}
+        {{ result }}
+    - name: "Meter 2 Connection"
+      unique_id: foxess_inv1_meter2_connection
+      icon: "mdi:network"
+      state: >
+        {% set code = states('sensor.meter_2_connection_code') | int(default=-1) %}
+        {% set result = 'Not Connected' if code == 0 else 'Unavailable' %}
+        {% set result = 'OK' if code == 1 else result %}
+        {% set result = code if code > 1 else result %}
+        {{ result }}
+    - name: "BMS Connection"
+      unique_id: foxess_inv1_bms_connection
+      icon: "mdi:network"
+      state: >
+        {% set code = states('sensor.bms_connection_code') | int(default=-1) %}
+        {% set result = 'Initialising' if code == 0 else 'Unavailable' %}
+        {% set result = 'OK' if code == 1 else result %}
+        {% set result = 'Not Connected' if code == 2 else result %}
+        {% set result = code if code > 2 else result %}
+        {{ result }}
+    - name: "BMS Status"
+      unique_id: foxess_inv1_bms_status
+      icon: "mdi:list-status"
+      state: >
+        {% set code = states('sensor.battery_status_code') | int(default=-1) %}
+        {% set result = 'Idle' if code == 0 else 'Unavailable' %}
+        {% set result = 'Normal' if code == 1 else result %}
+        {% set result = 'Offline' if code == 2 else result %}
+        {% set result = code if code > 2 else result %}
+        {{ result }}
+    - name: "EPS Frequency Setting"
+      unique_id: foxess_inv1_eps_frequency_setting
+      device_class: frequency
+      unit_of_measurement: "Hz"
+      icon: "mdi:cog"
+      state: >
+        {% set code = states('sensor.eps_frequency_code') | int(default=-1) %}
+        {% set result = 60.0 if code == 1 else 50.0 %}
+        {{ result }}
+    - name: "EPS Enable Setting"
+      unique_id: foxess_inv1_eps_enable_setting
+      icon: "mdi:cog"
+      state: >
+        {% set code = states('sensor.eps_enable_code') | int(default=-1) %}
+        {% set result = 'Disabled' if code == 0 else 'Unavailable' %}
+        {% set result = 'Enabled' if code == 1 else result %}
+        {% set result = 'UPS Mode' if code == 2 else result %}
+        {{ result }}
+    - name: "Inverter Status"
+      unique_id: foxess_inv1_inverter_status
+      icon: "mdi:play"
+      state: >
+        {% set status1 = state('sensor.inverter_status_1_code') | int(default=-2) %}
+        {% set status3 = state('sensor.inverter_status_3_code') | int(default=-2) %}
+        {% set grid_status = 'Off-grid' if status3 > 0 else 'On-grid' %}
+        {% set operation = 'Fault' if status1 >= 64 else 'Unknown' %}
+        {% set operation = 'Operating' if status1 >= 8 else operation %}
+        {% set operation = 'Standby' if status1 >= 1 else operation %}
+        {% set result = operation + ' / ' + grid_status %}
+        {{ result }}
+    - name: "Time Period 1"
+      unique_id: foxess_inv1_time_period_1
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set s = states('sensor.time_period_1_start') | int(default=-1) %}
+        {% set start_time = ('0' + (s // 256) | string)[-2:] + '.' + ('0' + (s % 256) | string)[-2:] %}
+        {% set e = states('sensor.time_period_1_end') | int(default=-1) %}
+        {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
+        {% set enabled = states('sensor.time_period_1_enabled') | int(default=-1) %}
+        {% set action = 'Charge from grid: ' if enabled == 1 else 'Force charge: ' %}
+        {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
+        {% set result = 'Unavailable' if s <= -1 or e <= -1 or enabled <= -1 else result %}
+        {{ result }}
+    - name: "Time Period 2"
+      unique_id: foxess_inv1_time_period_2
+      icon: "mdi:calendar-clock"
+      state: >
+        {% set s = states('sensor.time_period_2_start') | int(default=-1) %}
+        {% set start_time = ('0' + (s // 256) | string)[-2:] + '.' + ('0' + (s % 256) | string)[-2:] %}
+        {% set e = states('sensor.time_period_2_end') | int(default=-1) %}
+        {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
+        {% set enabled = states('sensor.time_period_2_enabled') | int(default=-1) %}
+        {% set action = 'Charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
+        {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
+        {% set result = 'Unavailable' if s <= -1 or e <= -1 or enabled <= -1 else result %}
+        {{ result }}
+
+    # Inverter firmware version decodes
+    - name: "Protocol Version"
+      unique_id: foxess_inv1_protocol_version
+      state: >
+        {% set version =  states('sensor.protocol_version_code') | int(default=0) %}
+        {% set v4 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v3 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v1 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set result = v1  + '.' + v2 + '.' + v3 + '.' + v4 %}
+        {{ result }}
+    - name: "Master Version"
+      unique_id: foxess_inv1_master_version
+      state: >
+        {% set version =  states('sensor.master_version_code') | int(default=0) %}
+        {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v1 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set result = v1  + '.' + v2 + '.' + v3 + '.' + v4 %}
+        {{ result }}
+    - name: "Slave Version"
+      unique_id: foxess_inv1_slave_version
+      state: >
+        {% set version =  states('sensor.slave_version_code') | int(default=0) %}
+        {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v1 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set result = v1  + '.' + v2 + '.' + v3 + '.' + v4 %}
+        {{ result }}
+    - name: "Manager Version"
+      unique_id: foxess_inv1_manager_version
+      state: >
+        {% set version =  states('sensor.manager_version_code') | int(default=0) %}
+        {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v1 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set result = v1  + '.' + v2 + '.' + v3 + '.' + v4 %}
+        {{ result }}
+
+    # BMS firmware version decode
+    - name: "BMS 1 Master Version"
+      unique_id: foxess_inv1_bms_version
+      state: >
+        {% set c = states('sensor.bms_1_master_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set v1 = ('0' + ((h // 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v3 = ('00' + ((c % 256) | string))[-3:] %}
+        {% set result = 'M: ' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    # Battery firmware version decode
+    - name: "BMS 1 Slave 1 Version"
+      unique_id: foxess_inv1_bms_1_slave_1_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_1_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    - name: "BMS 1 Slave 2 Version"
+      unique_id: foxess_inv1_bms_1_slave_2_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_2_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    - name: "BMS 1 Slave 3 Version"
+      unique_id: foxess_inv1_bms_1_slave_3_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_3_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    - name: "BMS 1 Slave 4 Version"
+      unique_id: foxess_inv1_bms_1_slave_4_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_4_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    - name: "BMS 1 Slave 5 Version"
+      unique_id: foxess_inv1_bms_1_slave_5_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_5_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    - name: "BMS 1 Slave 6 Version"
+      unique_id: foxess_inv1_bms_1_slave_6_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_6_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    - name: "BMS 1 Slave 7 Version"
+      unique_id: foxess_inv1_bms_1_slave_7_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_7_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    - name: "BMS 1 Slave 8 Version"
+      unique_id: foxess_inv1_bms_1_slave_8_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_8_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+    - name: "BMS 1 Slave 9 Version"
+      unique_id: foxess_inv1_bms_1_slave_9_version
+      state: >
+        {% set c = states('sensor.bms_1_slave_9_version_code') | int(default=0) %}
+        {% set h = c // 256 %}
+        {% set l = c % 256 %}
+        {% set n = (h // 16)|string %}
+        {% set v1 = ('0' + ((h % 16) | string))[-2:] %}
+        {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
+        {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
+        {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else 'Unavailable' %}
+        {{ result }}
+
+    # pvoutput.org upload using CSV format
+    # %1 = date YYYYMMDD, %2 = generated Wh, %3 = exported Wh, %11 = imported Wh, %14 = consumption Wh
+    - name: "PVOutput Data"
+      unique_id: foxess_inv1_pvoutput_data
+      state: >
+        {% set dat = now().year|string + ('0' + (now().month|string))[-2:] + ('0' + (now().day|string))[-2:] %}
+        {% set gen = states('sensor.pv_energy_today') | float(default=-1) * 1000 %}
+        {% set gen = '' if gen < 0 else gen | int | string %}
+        {% set exp = states('sensor.feed_in_energy_today') | float(default=-1) * 1000 %}
+        {% set exp = '' if exp < 0 else exp | int | string %}
+        {% set con = states('sensor.load_energy_today') | float(default=-1) * 1000 %}
+        {% set con = '' if con < 0 else con | int | string %}
+        {% set imp = states('sensor.grid_consumption_energy_today') | float(default=-1) * 1000 %}
+        {% set imp = '' if imp < 0 else imp | int | string %}
+        {% set result = dat + ',' + gen + ',' + exp + ',,,,,,,0,' + imp + ',0,0,' + con + ',,,,' %}
+        {{ result }}
+  #-----------------------------------------------------------------------------
+  # END: templateH1G2.yaml include file for HA-FoxESS-Modbus
+  #-----------------------------------------------------------------------------

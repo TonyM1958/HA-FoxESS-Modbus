@@ -38,20 +38,19 @@ Access to your inverter data can be acheived by connecting the inverter's RS485 
 ---
 
 
-## RS485 connection to H1, AC, AIO and KH series inverters (recommended)
+## RS485 connection to H1, AC, AIO, H1-G2, AC-G2 and KH series inverters (recommended)
 * Hardware configuration instructions can be found on Nathan's [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 4 and RS485B to pin 3 of the Meter/CT/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
-* Use modbusH1_RS485.yaml for H1, AC and AIO series in your configuration and select the USB Connection type for RS485 to USB adapter
-* Use modbusH1_RS485_LAN.yaml for H1 when using an RS485 to Wifi/LAN adapter
-* Use modbusKH_RS485.yaml for KH series in your configuration and select the USB Connection type for RS485 to USB adapter
-* Use modbusKH_RS485_LAN.yaml for KH when using an RS485 to Wifi/LAN adapter
+* Use modbusXX_RS485.yaml when using an RS485 to USB adapter
+* Use modbusXX_RS485_LAN.yaml for H1 when using an RS485 to Wifi/LAN adapter
+* where XX is H1 for H1, AC1 or AIO series, H1G2 for H1-G2 or AC-G2 series or KH for K series
 
 ## RS485 connection to H3 or AC3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 1 and RS485B to pin 2 of the Meter/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to inverter front panel, Settings, Communication, RS485, Device ID and set the slave ID for the inverter to 247 (the default is 000)
-* Use modbusH3_RS485.yaml in your configuration and select the USB Connection type for RS485 to USB adapter
+* Use modbusH3_RS485.yaml when using an RS485 to USB adapter
 * Use modbusH3_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
 
 ## Home Assistant Installation Steps
@@ -61,5 +60,7 @@ Access to your inverter data can be acheived by connecting the inverter's RS485 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
+v1.4.5: added 'templateH1G2.yaml' to support H1-G2 and AC-G2 inverters.<p>
 v1.4.4: moved preset values to input helpers to avoid over-writing values during HACS update. This requires some additional settings to be added to configuration.yaml. See 'template_configuration.yaml'.<p>
 v1.4.3: moved database settings to recorder_ha.yaml and recorder_maria.yaml so the database being used for history does not change during HACS update.<p>
+v1.4.2: added 'modbusH1G2_RS485.yaml' and 'modbusH1G2_RS485_LAN.yaml' to support H1-G2 and AC-G2 series inverters.<p>
