@@ -99,6 +99,8 @@ views:
           - entity: sensor.inverter_alarm_1_code
           - entity: sensor.inverter_alarm_2_code
           - entity: sensor.inverter_alarm_3_code
+          - entity: sensor.meter_1_connection_code
+          - entity: sensor.meter_2_connection_code
       - type: entities
         title: PV Inputs
         entities:

@@ -717,7 +717,7 @@
       state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "Inverter Status 1 Code"
-      unique_id: foxess_inv1_status_1_code
+      unique_id: foxess_inv1_inverter_status_1_code
       address: 39063
       slave: !secret foxess_inv1_slave
       data_type: uint16 # bitfield, bit0: Standby, bit2: Operation, bit6: Fault (1)
@@ -725,7 +725,7 @@
       scan_interval: !secret scan_interval_medium
       # reserved. 39064 Inverter Status 2 Code?
     - name: "Inverter Status 3 Code"
-      unique_id: foxess_inv1_status_3_code
+      unique_id: foxess_inv1_inverter_status_3_code
       address: 39065
       slave: !secret foxess_inv1_slave
       data_type: uint32 # bitfield, bit0: On-Grid/Off-grid (0/1)
