@@ -99,6 +99,8 @@ views:
           - entity: sensor.inverter_alarm_1_code
           - entity: sensor.inverter_alarm_2_code
           - entity: sensor.inverter_alarm_3_code
+          - entity: sensor.meter_1_connection_code
+          - entity: sensor.meter_2_connection_code
       - type: entities
         title: PV Inputs
         entities:
@@ -126,14 +128,12 @@ views:
           - entity: sensor.modbus_address
           - entity: sensor.password
           - entity: sensor.work_mode_code
-          - entity: sensor.charge_from_grid
           - entity: sensor.time_period_1_enabled
           - entity: sensor.time_period_1_start
           - entity: sensor.time_period_1_end
           - entity: sensor.time_period_2_enabled
           - entity: sensor.time_period_2_start
           - entity: sensor.time_period_2_end
-          - entity: sensor.time_period_2_end_minute
           - entity: sensor.max_charge_current
           - entity: sensor.max_discharge_current
           - entity: sensor.min_soc
@@ -142,7 +142,7 @@ views:
           - entity: sensor.export_limit
           - entity: sensor.system_enable
           - entity: sensor.eps_frequency_code
-          - entity: sensor.eps_enable
+          - entity: sensor.eps_enable_code
           - entity: sensor.import_power_limit
       - type: entities
         title: Remote Control
