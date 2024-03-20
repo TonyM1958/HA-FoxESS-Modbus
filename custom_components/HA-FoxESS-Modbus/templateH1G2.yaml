@@ -2,6 +2,8 @@
 #-----------------------------------------------------------------------------
 # START: templateH1G2.yaml include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
+# Version: 1.4.6
+# Date:    18/03/2024
 
 # these templates perform maths operations on sensor values to create derrived values
 
@@ -74,8 +76,8 @@
       unique_id: foxess_inv1_battery_state
       state: >
         {% set current = states('sensor.invbatcurrent') | float(default=0) %}
-        {% set result = 'Charging' if current < 0.0 else 'Idle' %}
-        {% set result = 'Discharging' if current > 0.0 else result %}
+        {% set result = 'Charging' if current < -0.1 else 'Idle' %}
+        {% set result = 'Discharging' if current > 0.1 else result %}
         {{ result }}
     # the energy in battery
     - name: "Battery Energy"
@@ -548,7 +550,7 @@
       unique_id: foxess_inv1_bms_status
       icon: "mdi:list-status"
       state: >
-        {% set code = states('sensor.battery_status_code') | int(default=-1) %}
+        {% set code = states('sensor.bms_status_code') | int(default=-1) %}
         {% set result = 'Idle' if code == 0 else 'Unavailable' %}
         {% set result = 'Normal' if code == 1 else result %}
         {% set result = 'Offline' if code == 2 else result %}
@@ -561,7 +563,7 @@
       icon: "mdi:cog"
       state: >
         {% set code = states('sensor.eps_frequency_code') | int(default=-1) %}
-        {% set result = 60.0 if code == 1 else 50.0 %}
+        {% set result = 50.0 if code == 1 else 60.0 %}
         {{ result }}
     - name: "EPS Enable Setting"
       unique_id: foxess_inv1_eps_enable_setting

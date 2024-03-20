@@ -82,8 +82,8 @@
       unique_id: foxess_inv1_battery_state
       state: >
         {% set current = states('sensor.invbatcurrent') | float(default=0) %}
-        {% set result = 'Charging' if current < 0.0 else 'Idle' %}
-        {% set result = 'Discharging' if current > 0.0 else result %}
+        {% set result = 'Charging' if current < -0.1 else 'Idle' %}
+        {% set result = 'Discharging' if current > 0.1 else result %}
         {{ result }}
     # the energy in battery
     - name: "Battery Energy"
@@ -471,7 +471,7 @@
         {% set current = states('sensor.batcurrent') | float(default=0) %}
         {% set power = states('sensor.battery_discharge_power') | float(default=0) %}
         {% set batpower = (volt * current / 1000 * -1.0) | round(3) %}
-        {% set result = batpower if volt >= 0 else power %}
+        {% set result = power %}
         {{ result }}
     # sum power being produced by PV strings
     - name: "PV Power Now"
