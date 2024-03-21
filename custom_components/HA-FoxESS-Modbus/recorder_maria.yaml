@@ -2,4 +2,4 @@
 db_url: !secret mariadb_url
 
 # recorder settings
-purge_keep_days: 30
+purge_keep_days: !secret purge_keep_days

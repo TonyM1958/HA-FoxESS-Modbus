@@ -60,8 +60,23 @@ Access to your inverter data can be acheived by connecting the inverter's RS485 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
-v1.4.6: updates to 'modbusH1G2_RS485..yaml', 'templateH1G2.yaml' and 'viewsH1G2_sensor.yaml'
-v1.4.5: added 'templateH1G2.yaml' to support H1-G2 and AC-G2 inverters.<br>
-v1.4.4: moved preset values to input helpers to avoid over-writing values during HACS update. This requires some additional settings to be added to configuration.yaml. See 'template_configuration.yaml'.<br>
-v1.4.3: moved database settings to recorder_ha.yaml and recorder_maria.yaml so the database being used for history does not change during HACS update.<br>
-v1.4.2: added 'modbusH1G2_RS485.yaml' and 'modbusH1G2_RS485_LAN.yaml' to support H1-G2 and AC-G2 series inverters.<br>
+v1.4.7:<br>
+Improve handling of unknonw values in 'template.yaml' and 'templateH1G2.yaml'.
+Setting for the number of days to keep moved to 'secrets.yaml'. See [note](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/20) for info on configuring this.
+
+v1.4.6:<br>
+Updates to 'modbusH1G2_RS485..yaml', 'templateH1G2.yaml' and 'viewsH1G2_sensor.yaml'.
+
+v1.4.5:<br>
+Added 'templateH1G2.yaml' to support H1-G2 and AC-G2 inverters.
+
+v1.4.4:<br>
+Moved preset values to input helpers to avoid over-writing values during HACS update. This requires some additional settings to be added to configuration.yaml. See 'template_configuration.yaml'.
+See [note](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/19) for info on configuring this.
+
+v1.4.3:<br>
+Moved database settings to recorder_ha.yaml and recorder_maria.yaml so the database being used for history does not change during HACS update.
+See [note](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/18) if you get a configuration error after updating.
+
+v1.4.2:<br>
+Added 'modbusH1G2_RS485.yaml' and 'modbusH1G2_RS485_LAN.yaml' to support H1-G2 and AC-G2 series inverters.<br>
