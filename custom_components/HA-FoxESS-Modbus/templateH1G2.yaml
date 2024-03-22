@@ -39,7 +39,7 @@
       unique_id: foxess_inv1_battery_throughput
       state_class: measurement
       state: >
-        {% set size = states('sensor.battery_size') | float(default=0) %}
+        {% set size = states('input_number.battery_size') | float(default=0) %}
         {% set count = states('sensor.battery_count') | float(default=0) %}
         {% set allowance = 11800 if size >= 2.45 else 0 %}
         {% set allowance = 12100 if size >= 2.76 else allowance %}
