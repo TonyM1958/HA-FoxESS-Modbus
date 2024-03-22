@@ -10,22 +10,13 @@
 # create a local include file in your CONFIG folder, merge the contents of the
 # relevant file and reference your local include here.
 
-# Select 1 modbus file to match your inverter and connection
-# RS485 to USB connection:
-modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1_RS485.yaml
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1G2_RS485.yaml
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusKH_RS485.yaml
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusH3_RS485.yaml
-# RS485 to LAN adapter
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1_RS485_LAN.yaml
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusH1G2_RS485_LAN.yaml
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusKH_RS485_LAN.yaml
-#modbus: !include custom_components/HA-FoxESS-Modbus/modbusH3_RS485_LAN.yaml
+# Select a modbus file to match your inverter and connection. Change XX to H1, H1G2, KH or H3
+modbus: !include custom_components/HA-FoxESS-Modbus/modbusXX_RS485.yaml
+#modbus: !include custom_components/HA-FoxESS-Modbus/modbusXX_RS485_LAN.yaml
 
-# Select a template that matches your inverter
+# Select a template to matches your inverter
 template: !include custom_components/HA-FoxESS-Modbus/template.yaml
 #template: !include custom_components/HA-FoxESS-Modbus/templateH1G2.yaml
-#template: !include custom_components/HA-FoxESS-Modbus/templateV2.yaml
 
 # Riemann sum and utility meters
 sensor: !include custom_components/HA-FoxESS-Modbus/sensor.yaml
