@@ -130,6 +130,20 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_static
+    - name: "Battery 9 Version code"
+      unique_id: foxess_inv1_battery_9_version_code
+      address: 30028
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_static
+    - name: "Protocol Version Code"
+      unique_id: foxess_inv1_protocol_version_code
+      address: 30100
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_static
 
     # -------------------------------------------------------------------------
     # Inverter operating sensors
@@ -806,20 +820,17 @@
       unique_id: foxess_inv1_time_period_1_enabled
       address: 41001  # tbc
       slave: !secret foxess_inv1_slave
-      input_type: input
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 Start"
       unique_id: foxess_inv1_time_period_1_start
       address: 41002  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 End"
       unique_id: foxess_inv1_time_period_1_end
       address: 41003  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
@@ -827,20 +838,17 @@
       unique_id: foxess_inv1_time_period_2_enabled
       address: 41004  # tbc
       slave: !secret foxess_inv1_slave
-      input_type: input
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 Start"
       unique_id: foxess_inv1_time_period_2_start
-      address: 41005  # tnc
-      input_type: input
+      address: 41005  # tbc
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 End"
       unique_id: foxess_inv1_time_period_2_end
       address: 41006  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
@@ -891,7 +899,6 @@
     - name: "Export Limit"
       unique_id: foxess_inv1_export_limit
       address: 41012  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       device_class: power
@@ -903,7 +910,6 @@
     - name: "System Enable"
       unique_id: foxess_inv1_system_enable
       address: 41013  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -911,7 +917,6 @@
     - name: "EPS Frequency Code"
       unique_id: foxess_inv1_eps_frequency_code
       address: 41014  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -919,7 +924,6 @@
     - name: "EPS Enable Code"
       unique_id: foxess_inv1_eps_enable_code
       address: 41015  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement

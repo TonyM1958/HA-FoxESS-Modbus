@@ -130,6 +130,20 @@
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_static
+    - name: "Battery 9 Version code"
+      unique_id: foxess_inv1_battery_9_version_code
+      address: 30028
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_static
+    - name: "Protocol Version Code"
+      unique_id: foxess_inv1_protocol_version_code
+      address: 30100
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_static
 
     # -------------------------------------------------------------------------
     # Inverter operating sensors
@@ -806,20 +820,17 @@
       unique_id: foxess_inv1_time_period_1_enabled
       address: 41001  # tbc
       slave: !secret foxess_inv1_slave
-      input_type: input
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 Start"
       unique_id: foxess_inv1_time_period_1_start
       address: 41002  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 End"
       unique_id: foxess_inv1_time_period_1_end
       address: 41003  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
@@ -827,20 +838,17 @@
       unique_id: foxess_inv1_time_period_2_enabled
       address: 41004  # tbc
       slave: !secret foxess_inv1_slave
-      input_type: input
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 Start"
       unique_id: foxess_inv1_time_period_2_start
-      address: 41005  # tnc
-      input_type: input
+      address: 41005  # tbc
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 End"
       unique_id: foxess_inv1_time_period_2_end
       address: 41006  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
@@ -891,7 +899,6 @@
     - name: "Export Limit"
       unique_id: foxess_inv1_export_limit
       address: 41012  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       device_class: power
@@ -903,7 +910,6 @@
     - name: "System Enable"
       unique_id: foxess_inv1_system_enable
       address: 41013  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -911,7 +917,6 @@
     - name: "EPS Frequency Code"
       unique_id: foxess_inv1_eps_frequency_code
       address: 41014  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -919,7 +924,6 @@
     - name: "EPS Enable Code"
       unique_id: foxess_inv1_eps_enable_code
       address: 41015  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -931,7 +935,6 @@
     - name: "Remote Control Code"
       unique_id: foxess_inv1_remote_control_code
       address: 44000
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -939,7 +942,6 @@
     - name: "Remote Timeout Set"
       unique_id: foxess_inv1_remote_timeout_set
       address: 44001
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -947,7 +949,6 @@
     - name: "Remote Control Active Power Command"
       unique_id: foxess_inv1_remote_control_active_power_command
       address: 44002
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: int32
       device_class: power
@@ -959,7 +960,6 @@
     - name: "Remote Control Reactive Power Command"
       unique_id: foxess_inv1_remote_control_reactive_power_command
       address: 44004
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: int32
       device_class: power
@@ -971,7 +971,6 @@
     - name: "Remote Timeout Countdown"
       unique_id: foxess_inv1_remote_timeout_countdown
       address: 44006  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -979,7 +978,6 @@
     - name: "Remote Take Effect"
       unique_id: foxess_inv1_take_effect
       address: 44007  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -987,7 +985,6 @@
     - name: "Remote Not Active Reason Code"
       unique_id: foxess_inv1_remote_not_active_reason_code
       address: 44008  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -995,7 +992,6 @@
     - name: "Remote Pwr_Limit Bat_Up"
       unique_id: foxess_inv1_remote_pwr_limit_bat_up
       address: 44012  # tbc
-      input_type: input
       slave: !secret foxess_inv1_slave
       device_class: power
       unit_of_measurement: "W"
@@ -1006,7 +1002,6 @@
     - name: "Remote Pwr_Limit Bat_Dn"
       unique_id: foxess_inv1_remote_pwr_limit_bat_dn
       address: 44013  #t bc
-      input_type: input
       slave: !secret foxess_inv1_slave
       device_class: power
       unit_of_measurement: "W"
