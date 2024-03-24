@@ -4,6 +4,8 @@
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN and direct LAN connection for
 # single phase H1, AC, AIO and KH series inverters
+# Version: 1.4.9
+# Date:    24/03/2024
 
 - name: FoxESSInverterModbus
 
@@ -548,13 +550,13 @@
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "31042"
+    - name: "BMS Connection Code"
       unique_id: foxess_inv1_31042
       address: 31042
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_low
-    - name: "31043"
+    - name: "Meter 1 Connection Code"
       unique_id: foxess_inv1_31043
       address: 31043
       slave: !secret foxess_inv1_slave
@@ -792,7 +794,6 @@
 
     # -------------------------------------------------------------------------
     # Inverter Control registers
-    # these entities will be unavailable when using direct LAN connection
     # -------------------------------------------------------------------------
 
     - name: "Work Mode Code"
