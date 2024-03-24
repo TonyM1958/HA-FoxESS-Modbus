@@ -60,6 +60,9 @@ Access to your inverter data can be acheived by connecting the inverter's RS485 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
+v1.4.9:<br>
+Update H3 registers by cross-reference to other inverter models. Addresses to be confirmed are marked tbc in 'modbusH3_RS485_LAN.yaml'
+
 v1.4.8:<br>
 Fix errors in 'template.yaml' and 'templateH1G2.yaml' affecting Battery Warranty Remaining and Battery Life Remaining.<br>
 Improve handling of unknonw values in 'template.yaml' and 'templateH1G2.yaml'.<br>
