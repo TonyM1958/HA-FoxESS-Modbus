@@ -33,35 +33,35 @@ The changes from the main branch include:
 Access to your inverter data can be achieved by connecting the inverter's RS485 Modbus to an RS485 to USB adapter or RS485 to WiFi/LAN adapter. Note: this requires basic electronics competencies to connect 2 wires to the inverter's CT / COM connector.
 
 ---
-** Please note: April 2023, @nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_Modbus - you may wish to look at that as well!
+** Please note: April 2023, @nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus - you may wish to look at that as well!
 
 ---
 
 
 ## RS485 connection to H1, AC, AIO, H1-G2, AC-G2 and KH series inverters (recommended)
-* Hardware configuration instructions can be found on Nathan's [wiki](https://github.com/nathanmarlor/foxess_Modbus/wiki)
+* Hardware configuration instructions can be found on Nathan's [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 4 and RS485B to pin 3 of the Meter/CT/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
-* Use ModbusXX_RS485.yaml when using an RS485 to USB adapter
-* Use ModbusXX_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
+* Use modbusXX_RS485.yaml when using an RS485 to USB adapter
+* Use modbusXX_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
 * where XX is H1 for H1, AC1 or AIO series, H1G2 for H1-G2 or AC-G2 series or KH for K series
 
 ## RS485 connection to H3 or AC3 series inverter
-* Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/nathanmarlor/foxess_Modbus/wiki)
+* Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 1 and RS485B to pin 2 of the Meter/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to inverter front panel, Settings, Communication, RS485, Device ID and set the slave ID for the inverter to 247 (the default is 000)
-* Use ModbusH3_RS485.yaml when using an RS485 to USB adapter
-* Use ModbusH3_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
+* Use modbusH3_RS485.yaml when using an RS485 to USB adapter
+* Use modbusH3_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
 
 ## Home Assistant Installation Steps
 
-* See [Installing Home Assistant on a USFF PC](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-Home-Assistant-on-a-USFF-PC) for info on setting up a host computer to run Home Assistant
+* See [Installing Home Assistant on a USFF PC](https://github.com/TonyM1958/HA-FoxESS-modbus/wiki/Installing-Home-Assistant-on-a-USFF-PC) for info on setting up a host computer to run Home Assistant
 * Create a full backup of your HA instance
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
 v1.4.9:<br>
-Update H3 registers by cross-reference to other inverter models. Addresses to be confirmed are marked tbc in 'ModbusH3_RS485_LAN.yaml'
+Update H3 registers by cross-reference to other inverter models. Addresses to be confirmed are marked tbc in 'modbusH3_RS485_LAN.yaml'
 
 v1.4.8:<br>
 Fix errors in 'template.yaml' and 'templateH1G2.yaml' affecting Battery Warranty Remaining and Battery Life Remaining.<br>
@@ -69,7 +69,7 @@ Improve handling of unknown values in 'template.yaml' and 'templateH1G2.yaml'.<b
 Setting for the number of days to keep moved to 'secrets.yaml'. See [note](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/20) for info on configuring this.
 
 v1.4.6:<br>
-Updates to 'ModbusH1G2_RS485..yaml', 'templateH1G2.yaml' and 'viewsH1G2_sensor.yaml'.
+Updates to 'modbusH1G2_RS485.yaml', 'templateH1G2.yaml' and 'viewsH1G2_sensor.yaml'.
 
 v1.4.5:<br>
 Added 'templateH1G2.yaml' to support H1-G2 and AC-G2 inverters.
@@ -83,4 +83,4 @@ Moved database settings to recorder_ha.yaml and recorder_maria.yaml so the datab
 See [note](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/18) if you get a configuration error after updating.
 
 v1.4.2:<br>
-Added 'ModbusH1G2_RS485.yaml' and 'ModbusH1G2_RS485_LAN.yaml' to support H1-G2 and AC-G2 series inverters.<br>
+Added 'modbusH1G2_RS485.yaml' and 'modbusH1G2_RS485_LAN.yaml' to support H1-G2 and AC-G2 series inverters.<br>
