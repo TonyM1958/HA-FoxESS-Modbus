@@ -42,16 +42,16 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 * Hardware configuration instructions can be found on Nathan's [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 4 and RS485B to pin 3 of the Meter/CT/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
-* Use modbusXX_RS485.yaml when using an RS485 to USB adapter
-* Use modbusXX_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
-* _where_ XX is H1 for H1, AC1 or AIO series, H1G2 for H1-G2 or AC-G2 series or KH for K series
+* Use 'modbusXX_RS485.yaml' when using an RS485 to USB adapter
+* Use 'modbusXX_RS485_LAN.yaml' when using an RS485 to Wifi/LAN adapter
+* **where XX is replaced by:** 'H1' for H1, AC1 or AIO series, 'H1G2' for H1-G2 or AC-G2 series or 'KH' for K series
 
 ## RS485 connection to H3 or AC3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
 * Connect RS485A to pin 1 and RS485B to pin 2 of the Meter/RS485 connector using a suitable length of UTP cable (e.g. network cable)
 * Go to inverter front panel, Settings, Communication, RS485, Device ID and set the slave ID for the inverter to 247 (the default is 000)
-* Use modbusH3_RS485.yaml when using an RS485 to USB adapter
-* Use modbusH3_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
+* Use 'modbusH3_RS485.yaml' when using an RS485 to USB adapter
+* Use 'modbusH3_RS485_LAN.yaml' when using an RS485 to Wifi/LAN adapter
 
 ## Home Assistant Installation Steps
 
