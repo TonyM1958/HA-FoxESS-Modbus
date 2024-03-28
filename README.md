@@ -13,7 +13,7 @@ This site contains code and information for integrating Fox ESS inverters with H
 
 The changes from the main branch include:
 
-* Simplified configuration: fewer lines are required in your configuration.yaml with modbus, sensors, templates and utility_meter integrations split into separate include files
+* Simplified configuration: fewer lines are required in your configuration.yaml with 'modbus', 'sensors', 'templates' and 'utility_meter' integrations split into separate include files
 * Support for single phase inverters (including H1, AC1 AIO and KH series) and three phase inverter (H3 and AC3 series)
 * Parameterization and grouping of sensor scan_interval so they are more uniform and easier to change consistently when required
 * Revised calculation for inverter power in, power out and system losses
@@ -44,7 +44,7 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
 * Use modbusXX_RS485.yaml when using an RS485 to USB adapter
 * Use modbusXX_RS485_LAN.yaml when using an RS485 to Wifi/LAN adapter
-* where XX is H1 for H1, AC1 or AIO series, H1G2 for H1-G2 or AC-G2 series or KH for K series
+* _where_ XX is H1 for H1, AC1 or AIO series, H1G2 for H1-G2 or AC-G2 series or KH for K series
 
 ## RS485 connection to H3 or AC3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
