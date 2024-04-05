@@ -3,8 +3,8 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for KH inverters
-# Version: 1.4.6
-# Date:    18/03/02024
+# Version: 1.5.0
+# Date:    05/04/02024
 
 - name: FoxESSInverterModbus
 
