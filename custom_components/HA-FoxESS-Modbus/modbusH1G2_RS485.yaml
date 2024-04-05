@@ -109,7 +109,6 @@
     - name: "EPS RCurrent"
       unique_id: foxess_inv1_eps_current_r
       address: 31011
-      input_type: input
       slave: !secret foxess_inv1_slave
       device_class: current
       unit_of_measurement: "A"
@@ -120,7 +119,6 @@
     - name: "EPS RPower"
       unique_id: foxess_inv1_eps_power_r
       address: 31012
-      input_type: input
       slave: !secret foxess_inv1_slave
       device_class: power
       unit_of_measurement: "kW"
@@ -131,7 +129,6 @@
     - name: "EPS Frequency"
       unique_id: foxess_inv1_eps_frequency
       address: 31013
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       device_class: frequency
@@ -243,7 +240,6 @@
     - name: "BMS Max Discharge Current"
       unique_id: foxess_inv1_bms_discharge_rate
       address: 31026
-      input_type: input
       slave: !secret foxess_inv1_slave
       data_type: uint16
       device_class: current
@@ -617,7 +613,6 @@
       unique_id: foxess_inv1_bms_1_residual_energy
       address: 37632
       slave: !secret foxess_inv1_slave
-      input_type: input
       data_type: uint16
       device_class: energy_storage
       unit_of_measurement: "kWh"
