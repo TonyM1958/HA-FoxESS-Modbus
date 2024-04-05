@@ -3,7 +3,7 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for KH inverters
-# Version: 1.5.0
+# Version: 1.5.1
 # Date:    05/04/2024
 
 - name: FoxESSInverterModbus
@@ -756,14 +756,14 @@
       unique_id: foxess_inv1_meter_1_connection_code
       address: 38801
       slave: !secret foxess_inv1_slave
-      data_type: uint16 # bitfield - see Alarm code table
+      data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Meter 2 Connection Code"
       unique_id: foxess_inv1_meter_2_connection_code
       address: 38901
       slave: !secret foxess_inv1_slave
-      data_type: uint16 # bitfield - see Alarm code table
+      data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
 
