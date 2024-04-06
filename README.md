@@ -61,7 +61,7 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 v.1.5.2:<br>
-Add Language Code and Language Settings.
+Add Language Code / Language Settings at 40007 for various models. TBC, may only update on inverter start-up?
 
 v.1.5.0:<br>
 Fix input_type for EPS RCurrent, RPower and RFrequency.
