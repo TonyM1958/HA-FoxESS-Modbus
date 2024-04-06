@@ -505,6 +505,17 @@
         {% set result = 'G99_UK' if code == 3 else result %}
         {% set result = code if code > 3 else result %}
         {{ result }}
+    - name: "Language Setting"
+      unique_id: foxess_inv1_language_setting
+      icon: "mdi:cog"
+      state: >
+        {% set code = states('sensor.language_code') | int(default=0) %}
+        {% set result = 'English' if code == 0 else None %}
+        {% set result = 'German' if code == 1 else result %}
+        {% set result = 'Spanish' if code == 2 else result %}
+        {% set result = 'Italian' if code == 3 else result %}
+        {% set result = code if code > 3 else result %}
+        {{ result }}
     - name: "PV Config Setting"
       unique_id: foxess_inv1_pv_config_setting
       icon: "mdi:view-parallel"
