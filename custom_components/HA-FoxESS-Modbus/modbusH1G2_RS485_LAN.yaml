@@ -3,7 +3,7 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for KH inverters
-# Version: 1.5.2
+# Version: 1.5.3
 # Date:    06/04/2024
 
 - name: FoxESSInverterModbus
@@ -837,68 +837,6 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_high
-    - name: "PV3 Voltage"
-      unique_id: foxess_inv1_pv3_voltage
-      address: 39074
-      slave: !secret foxess_inv1_slave
-      device_class: voltage
-      unit_of_measurement: "V"
-      scale: 0.1
-      precision: 1
-      state_class: measurement
-      scan_interval: !secret scan_interval_medium
-    - name: "PV3 Current"
-      unique_id: foxess_inv1_pv3_current
-      address: 39075
-      slave: !secret foxess_inv1_slave
-      device_class: current
-      unit_of_measurement: "A"
-      scale: 0.01
-      precision: 1
-      state_class: measurement
-      scan_interval: !secret scan_interval_medium
-    - name: "PV3 Power"
-      unique_id: foxess_inv1_pv3_power
-      address: 39283 # out of sequence
-      slave: !secret foxess_inv1_slave
-      data_type: int32
-      device_class: power
-      unit_of_measurement: "kW"
-      scale: 0.001
-      precision: 3
-      state_class: measurement
-      scan_interval: !secret scan_interval_high
-    - name: "PV4 Voltage"
-      unique_id: foxess_inv1_pv4_voltage
-      address: 39076
-      slave: !secret foxess_inv1_slave
-      device_class: voltage
-      unit_of_measurement: "V"
-      scale: 0.1
-      precision: 1
-      state_class: measurement
-      scan_interval: !secret scan_interval_medium
-    - name: "PV4 Current"
-      unique_id: foxess_inv1_pv4_current
-      address: 39077
-      slave: !secret foxess_inv1_slave
-      device_class: current
-      unit_of_measurement: "A"
-      scale: 0.01
-      precision: 1
-      state_class: measurement
-      scan_interval: !secret scan_interval_medium
-    - name: "PV4 Power"
-      unique_id: foxess_inv1_pv4_power
-      address: 39285 # out of sequence
-      slave: !secret foxess_inv1_slave
-      data_type: int32
-      device_class: power
-      unit_of_measurement: "kW"
-      scale: 0.001
-      precision: 3
-      state_class: measurement
-      scan_interval: !secret scan_interval_high
       # ... etc up to 24 PV strings per inverter
     - name: "PV Power" # PV1 - PV24 combined
       unique_id: foxess_inv1_pv_power
@@ -937,7 +875,7 @@
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_static
     - name: "PV Config Code"
       unique_id: foxess_inv1_pv_config_code
       address: 40008

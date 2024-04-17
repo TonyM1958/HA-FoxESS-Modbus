@@ -4,7 +4,7 @@
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN
 # Version: 1.4.2
-# Date:    15/03/2024
+# Date:    07/04/2024
 
 - name: FoxESSInverterModbus
 
@@ -2281,9 +2281,10 @@
       scan_interval: !secret scan_interval_low
 
     # -------------------------------------------------------------------------
-    # Charge Time Control
+    # Peak Shaving Control
     # -------------------------------------------------------------------------
-    # Reserved uint16: 46500 R/W
+
+      # Reserved uint16: 46500 R/W
     - name: "Import Power Limit"
       unique_id: foxess_inv1_import_power_limit
       address: 46501 # R/W
@@ -2313,6 +2314,11 @@
       precision: 0
       state_class: measurement
       scan_interval: !secret scan_interval_medium
+
+    # -------------------------------------------------------------------------
+    # Charge Time Control
+    # -------------------------------------------------------------------------
+
     - name: "Charge From Grid"
       unique_id: foxess_inv1_charge_from_grid
       address: 46506 # R/W
