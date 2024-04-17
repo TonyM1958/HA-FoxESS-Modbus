@@ -60,10 +60,13 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
-v.1.5.2:<br>
+v1.5.3:<br>
+Added 'modbusH1G1_RS485.yaml' for testing. This uses holding registers, where available, instead of input registers.
+
+v1.5.2:<br>
 Add Language Code / Language Settings at 40007 for various models. TBC, may only update on inverter start-up?
 
-v.1.5.0:<br>
+v1.5.0:<br>
 Fix input_type for EPS RCurrent, RPower and RFrequency.
 
 v1.4.9:<br>
