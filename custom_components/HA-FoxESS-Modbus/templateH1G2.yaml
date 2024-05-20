@@ -34,19 +34,20 @@
         {% set result = 8 if states('sensor.bms_1_slave_8_version_code') | int(default=0) > 0 else result %}
         {% set result = 9 if states('sensor.bms_1_slave_9_version_code') | int(default=0) > 0 else result %}
         {{ result }}
-    # battery energy throughput for 10 year period
+    # battery energy throughput for warranty period
     - name: "Battery Throughput"
       unique_id: foxess_inv1_battery_throughput
       state_class: measurement
       state: >
         {% set size = states('input_number.battery_size') | float(default=0) %}
         {% set count = states('sensor.battery_count') | float(default=0) %}
-        {% set allowance = 11800 if size >= 2.45 else 0 %}
-        {% set allowance = 12100 if size >= 2.76 else allowance %}
-        {% set allowance = 12200 if size >= 2.88 else allowance %}
-        {% set allowance = 17300 if size >= 4.03 else allowance %}
-        {% set allowance = 17500 if size >= 4.14 else allowance %}
-        {% set allowance = 17800 if size >= 4.74 else allowance %}
+        {% set allowance =  8200 if size >= 2.45 else 0 %}
+        {% set allowance =  9100 if size >= 2.56 else allowance %}
+        {% set allowance = 10000 if size >= 2.76 else allowance %}
+        {% set allowance = 10100 if size >= 2.88 else allowance %}
+        {% set allowance = 14500 if size >= 4.03 else allowance %}
+        {% set allowance = 14900 if size >= 4.14 else allowance %}
+        {% set allowance = 16700 if size >= 4.66 else allowance %}
         {% set result = (allowance * count) | round(2) if allowance > 0 and count > 0 else None %}
         {{ result }}
     # battery capacity
