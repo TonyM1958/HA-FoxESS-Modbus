@@ -34,10 +34,6 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ---
 ** Please note: April 2023, @nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus - you may wish to look at that as well!
-<br><br>
-This integration currently supports K series inverters with Manager firmware up to 1.18.
-<br>
-**For K Series with Manager firwmare 1.19 or later, please use Nathan's integration.**
 
 ---
 
@@ -48,7 +44,7 @@ This integration currently supports K series inverters with Manager firmware up 
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
 * Use 'modbusXX_RS485.yaml' when using an RS485 to USB adapter
 * Use 'modbusXX_RS485_LAN.yaml' when using an RS485 to Wifi/LAN adapter
-* **where XX is replaced by:** 'H1' for H1, AC1 or AIO series, 'H1G2' for H1-G2 or AC-G2 series or 'KH' for K series
+* **where XX is replaced by:** 'H1G1' for H1, AC1 or AIO series, 'H1G2' for H1-G2 or AC-G2 series, 'KH' for K series pre Manager 1.19 firmware, 'KH119' for K series with Manager 1.19 or later.
 
 ## RS485 connection to H3 or AC3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
@@ -64,6 +60,11 @@ This integration currently supports K series inverters with Manager firmware up 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
+v.1.5.<br>
+Added 'modbusKH119_RS486.yaml' and 'modbusKH119_RS485_LAN.yaml' for testing.
+Updated scan intervals for Max Soc and Min Soc.
+Removed obscure sensors that are not used to reduce modbus scans.
+
 v1.5.3:<br>
 Added 'modbusH1G1_RS485.yaml' for testing. This uses holding registers, where available, instead of input registers.
 

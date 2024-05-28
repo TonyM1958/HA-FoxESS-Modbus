@@ -3,8 +3,8 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for H1, AC, AIO inverters
-# Version: 1.5.2
-# Date: 06/04/2024
+# Version: 1.5.5
+# Date: 28/05/2024
 
 - name: FoxESSInverterModbus
 
@@ -1188,7 +1188,7 @@
       device_class: battery
       unit_of_measurement: "%"
       state_class: measurement
-      scan_interval: !secret scan_interval_medium
+      scan_interval: !secret scan_interval_low
     - name: "Min SoC On Grid"
       unique_id: foxess_inv1_min_soc_on_grid
       address: 41011
@@ -1197,7 +1197,7 @@
       device_class: battery
       unit_of_measurement: "%"
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Export Limit"
       unique_id: foxess_inv1_export_limit
       address: 41012

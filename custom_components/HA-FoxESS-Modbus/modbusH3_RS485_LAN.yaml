@@ -818,37 +818,37 @@
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 Enabled"
       unique_id: foxess_inv1_time_period_1_enabled
-      address: 41001  # tbc
+      address: 41001 # tbc
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 Start"
       unique_id: foxess_inv1_time_period_1_start
-      address: 41002  # tbc
+      address: 41002 # tbc
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 1 End"
       unique_id: foxess_inv1_time_period_1_end
-      address: 41003  # tbc
+      address: 41003 # tbc
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 Enabled"
       unique_id: foxess_inv1_time_period_2_enabled
-      address: 41004  # tbc
+      address: 41004 # tbc
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 Start"
       unique_id: foxess_inv1_time_period_2_start
-      address: 41005  # tbc
+      address: 41005 # tbc
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
     - name: "Time Period 2 End"
       unique_id: foxess_inv1_time_period_2_end
-      address: 41006  # tbc
+      address: 41006 # tbc
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_medium
@@ -895,10 +895,10 @@
       device_class: battery
       unit_of_measurement: "%"
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "Export Limit"
       unique_id: foxess_inv1_export_limit
-      address: 41012  # tbc
+      address: 41012 # tbc
       slave: !secret foxess_inv1_slave
       data_type: uint16
       device_class: power
@@ -909,21 +909,21 @@
       scan_interval: !secret scan_interval_low
     - name: "System Enable"
       unique_id: foxess_inv1_system_enable
-      address: 41013  # tbc
+      address: 41013 # tbc
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "EPS Frequency Code"
       unique_id: foxess_inv1_eps_frequency_code
-      address: 41014  # tbc
+      address: 41014 # tbc
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "EPS Enable Code"
       unique_id: foxess_inv1_eps_enable_code
-      address: 41015  # tbc
+      address: 41015 # tbc
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
@@ -970,28 +970,28 @@
       scan_interval: !secret scan_interval_low
     - name: "Remote Timeout Countdown"
       unique_id: foxess_inv1_remote_timeout_countdown
-      address: 44006  # tbc
+      address: 44006 # tbc
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Remote Take Effect"
       unique_id: foxess_inv1_take_effect
-      address: 44007  # tbc
+      address: 44007 # tbc
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Remote Not Active Reason Code"
       unique_id: foxess_inv1_remote_not_active_reason_code
-      address: 44008  # tbc
+      address: 44008 # tbc
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement
       scan_interval: !secret scan_interval_low
     - name: "Remote Pwr_Limit Bat_Up"
       unique_id: foxess_inv1_remote_pwr_limit_bat_up
-      address: 44012  # tbc
+      address: 44012 # tbc
       slave: !secret foxess_inv1_slave
       device_class: power
       unit_of_measurement: "W"
@@ -1001,7 +1001,7 @@
       scan_interval: !secret scan_interval_low
     - name: "Remote Pwr_Limit Bat_Dn"
       unique_id: foxess_inv1_remote_pwr_limit_bat_dn
-      address: 44013  #t bc
+      address: 44013 #t bc
       slave: !secret foxess_inv1_slave
       device_class: power
       unit_of_measurement: "W"
