@@ -34,6 +34,10 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ---
 ** Please note: April 2023, @nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus - you may wish to look at that as well!
+<br><br>
+This integration currently supports K series inverters with Manager firmware up to 1.18.
+<br>
+**For K Series with Manager firwmare 1.19 or later, please use Nathan's integration.**
 
 ---
 
