@@ -60,7 +60,13 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
-v.1.5.<br>
+v.1.5.6<br>
+Updated sensor.ct2_power_now to check sensor.meter_2_connection_code to set state
+Updated sensors Master, Slave and Manager version to allow hex decode. Please see [this issue](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/23) if the sensors are unavailable after updating.
+Added pv_power_total, pv_total_daily that provide the total PV power and energy including CT2.
+Removed check for load_power < 0 to avoid masking load power calculation errors caused by incorrect CT clamps.
+
+v.1.5.5<br>
 Added 'modbusKH119_RS486.yaml' and 'modbusKH119_RS485_LAN.yaml' for testing.
 Updated scan intervals for Max Soc and Min Soc.
 Removed obscure sensors that are not used to reduce modbus scans.

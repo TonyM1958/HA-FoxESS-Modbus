@@ -2,6 +2,8 @@
 #-----------------------------------------------------------------------------
 # START: utility_meter include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
+# Version: 1.5.6
+# Date:    29/05/2024
 
 # Utility Meters take the integral of power over time (sum) and produce daily or
 # monthly totals that reset. Used by the energy dashboard amongst other things
@@ -40,6 +42,10 @@ ct2_daily:
   cycle: daily
 pv_energy_daily:
   unique_id: foxess_inv1_pv_energy_daily
+  source: sensor.pv_power_sum
+  cycle: daily
+pv_total_daily:
+  unique_id: foxess_inv1_pv_total_daily
   source: sensor.pv_total_sum
   cycle: daily
 bat_charge_daily:

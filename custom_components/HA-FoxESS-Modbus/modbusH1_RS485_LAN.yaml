@@ -50,31 +50,25 @@
       count: 8
       data_type: string
       scan_interval: !secret scan_interval_static
-    - name: "Master Version"
-      unique_id: foxess_inv1_master_version
+    - name: "Master Version Code"
+      unique_id: foxess_inv1_master_version_code
       address: 30016
       slave: !secret foxess_inv1_slave
       data_type: uint16
-      scale: 0.01
-      precision: 2
       state_class: measurement
       scan_interval: !secret scan_interval_static
-    - name: "Slave Version"
-      unique_id: foxess_inv1_slave_version
+    - name: "Slave Version Code"
+      unique_id: foxess_inv1_slave_version_code
       address: 30017
       slave: !secret foxess_inv1_slave
       data_type: uint16
-      scale: 0.01
-      precision: 2
       state_class: measurement
       scan_interval: !secret scan_interval_static
-    - name: "Manager Version"
+    - name: "Manager Version Code"
       unique_id: foxess_inv1_manager_version
       address: 30018
       slave: !secret foxess_inv1_slave
       data_type: uint16
-      scale: 0.01
-      precision: 2
       state_class: measurement
       scan_interval: !secret scan_interval_static
     - name: "BMS Version code"

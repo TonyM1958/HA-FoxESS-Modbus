@@ -2,8 +2,8 @@
 #-----------------------------------------------------------------------------
 # START: template.yaml include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
-# Version: 1.4.7
-# Date:    21/03/2024
+# Version: 1.5.6
+# Date:    31/05/2024
 
 # these templates perform maths operations on sensor values to create derrived values
 
@@ -166,6 +166,15 @@
         {% set date_now = as_timestamp(now()) %}
         {% set days = (date_now - date_install) | int // 60 // 60 // 24 %}
         {{ days }}
+    # set to 1 if Inverter versions are encoded in hex instead of decimal
+    - name: "Hex Encoding"
+      unique_id: foxess_inv1_hex_encoding
+      state: >
+        {% set model = states('sensor.inverter_model') %}
+        {% set manager =  states('sensor.manager_version_code') | int(default=0) %}
+        {% set result = 1 if 'G2' in model else 0 %}
+        {% set result = 1 if model[0] == 'K' and manager > 118 else result %}
+        {{ result }}
     # years of battery life remaining, based on available cycles
     - name: "Battery Life Remaining"
       unique_id: foxess_inv1_battery_life_remaining
@@ -433,7 +442,6 @@
         {% set eps_tpower = states('sensor.eps_tpower') | float(default=0) %}
         {% set eps_power = eps_rpower + eps_spower + eps_tpower %}
         {% set result = power + eps_power - grid + ct2 %}
-        {% set result = 0.3 if result < 0 else result | round(3) %}
         {{ result }}
     # correct Load Energy Total sensor value
     - name: "Load Energy Correction"
@@ -452,10 +460,7 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set volt = states('sensor.batvolt') | float(default=-1) %}
-        {% set current = states('sensor.batcurrent') | float(default=0) %}
         {% set power = states('sensor.battery_discharge_power') | float(default=0) %}
-        {% set batpower = (volt * current / 1000 * -1.0) | round(3) %}
         {% set result = power %}
         {{ result }}
     # sum power being produced by PV strings
@@ -478,11 +483,23 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
+        {% set enable = states('sensor.meter_2_connection_code') | int(default=1) %}
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
-        {% set ct2_handling = states('input_number.ct2_handling') | int(default=1) %}
-        {% set ct2 = -ct2 if ct2_handling == 1 or ct2_handling == 3 else ct2 %}
-        {% set result = 0.0 if ct2 < 0.0 else (ct2 / 0.92) | round(3) %}
+        {% set ct2_handling = states('input_number.ct2_handling') | int(default=2) %}
+        {% set ct2 = -ct2 if ct2_handling in [1,3] else ct2 %}
+        {% set result = 0.0 if enable == 0 or ct2 < 0.0 else (ct2 / 0.92) | round(3) %}
         {{ result }}
+    - name: "PV Power Total"
+      device_class: "power"
+      unique_id: foxess_inv1_pv_power_total
+      unit_of_measurement: "kW"
+      state_class: measurement
+      state: >
+        {% set pv1 = states('sensor.pv_power_now') | float(default=0) %}
+        {% set ct2 = states('sensor.ct2_power_now') | float(default=0) %}
+        {% set pv = pv1 + ct2 %}
+        {% set pv = 0.0 if pv < 0.0 else pv %}
+        {{ pv }}
     - name: "Work Mode"
       unique_id: foxess_inv1_work_mode
       icon: "mdi:cog"
@@ -640,6 +657,43 @@
         {% set result = None if s <= -1 or e <= -1 or enabled <= -1 else result %}
         {{ result }}
 
+    # Inverter Version decode
+    - name: "Master Version"
+      unique_id: foxess_inv1_master_version
+      state: >
+        {% set version =  states('sensor.master_version_code') | int(default=0) %}
+        {% set result = (version / 100) | round(2) %}
+        {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v1 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set hex_result = v1  + '.' + v2 %}
+        {% set hex_encoding =  states('sensor.hex_encoding') | int(default=0) %}
+        {% set result = hex_result if hex_encoding == 1 else result %}
+        {{ result }}
+    - name: "Slave Version"
+      unique_id: foxess_inv1_slave_version
+      state: >
+        {% set version =  states('sensor.slave_version_code') | int(default=0) %}
+        {% set result = (version / 100) | round(2) %}
+        {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v1 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set hex_result = v1  + '.' + v2 %}
+        {% set hex_encoding =  states('sensor.hex_encoding') | int(default=0) %}
+        {% set result = hex_result if hex_encoding == 1 else result %}
+        {{ result }}
+    - name: "Manager Version"
+      unique_id: foxess_inv1_manager_version
+      state: >
+        {% set version =  states('sensor.manager_version_code') | int(default=0) %}
+        {% set result = (version / 100) | round(2) %}
+        {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set version = version // 256 %}
+        {% set v1 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
+        {% set hex_result = v1  + '.' + v2 %}
+        {% set hex_encoding =  states('sensor.hex_encoding') | int(default=0) %}
+        {% set result = hex_result if hex_encoding == 1 else result %}
+        {{ result }}
     # BMS Module Type decode
     - name: "BMS Model"
       unique_id: foxess_inv1_bms_model
@@ -772,11 +826,11 @@
       unique_id: foxess_inv1_pvoutput_data
       state: >
         {% set dat = now().year|string + ('0' + (now().month|string))[-2:] + ('0' + (now().day|string))[-2:] %}
-        {% set gen = states('sensor.pv_energy_today') | float(default=-1) * 1000 %}
+        {% set gen = states('sensor.pv_total_daily') | float(default=-1) * 1000 %}
         {% set gen = '' if gen < 0 else gen | int | string %}
         {% set exp = states('sensor.feed_in_energy_today') | float(default=-1) * 1000 %}
         {% set exp = '' if exp < 0 else exp | int | string %}
-        {% set con = states('sensor.load_energy_today') | float(default=-1) * 1000 %}
+        {% set con = states('sensor.load_daily') | float(default=-1) * 1000 %}
         {% set con = '' if con < 0 else con | int | string %}
         {% set imp = states('sensor.grid_consumption_energy_today') | float(default=-1) * 1000 %}
         {% set imp = '' if imp < 0 else imp | int | string %}
