@@ -1,0 +1,35 @@
+battery_size:
+  name: Battery Size
+  mode: box
+  max: 10
+  min: 2
+  step: 0.01
+ct1_handling:
+  name: CT1 Handling
+  mode: box
+  max: 1
+  min: 0
+ct2_handling:
+  name: CT2 Handling
+  mode: box
+  max: 3
+  min: 0
+residual_handling:
+  name: Residual Handling
+  mode: box
+  max: 2
+  min: 0
+load_correction:
+  # fix out of bounds load energy values
+  name: Load Correction
+  mode: box
+  max: 429_496_729.5
+  min: 0
+  step: 0.1
+throughput_correction:
+  # fix incorrect Energy Throughput
+  name: Throughput Correction
+  mode: box
+  max: 1000.0
+  min: 0
+  step: 0.1

@@ -1,0 +1,4 @@
+install_date:
+  name: Install Date
+  has_date: true
+  has_time: false

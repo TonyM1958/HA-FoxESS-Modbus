@@ -60,6 +60,15 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
+v.1.5.7<br>
+Added input_number ct1_handling. Setting to 1 inverts the processing of grid_ct.
+Added input_number residual_handling. Set to 0 if bms_kwh_remaining is not available, 1 when bms_kwh_remaining is available, 2 when bms_kwh_remaining returns current bayyery capacity.
+Moved input_datetime and input_number configuration to include files to simplify configuration.yaml.
+Update battery energy allowances to match Battery Warranty Policy 1.4 (June).
+Updated battery ageing (when capacity is not available) to use exponential decay instead of linear decay.
+
+
+
 v.1.5.6<br>
 Updated sensor.ct2_power_now to check sensor.meter_2_connection_code to set state
 Updated sensors Master, Slave and Manager version to allow hex decode. Please see [this issue](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/23) if the sensors are unavailable after updating.
