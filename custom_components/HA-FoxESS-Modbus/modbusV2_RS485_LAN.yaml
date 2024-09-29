@@ -3,8 +3,8 @@
 # START: modbus V2 include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN
-# Version: 1.4.2
-# Date:    07/04/2024
+# Version: 1.5.7
+# Date:    29/09/2024
 
 - name: FoxESSInverterModbus
 
@@ -48,6 +48,13 @@
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
+    - name: "Inverter ID"
+      unique_id: foxess_inv1_inverter_id
+      address: 30032
+      slave: !secret foxess_inv1_slave
+      count: 16
+      data_type: string
+      scan_interval: !secret scan_interval_static
 
     # -------------------------------------------------------------------------
     # Firmware
@@ -69,6 +76,64 @@
       address: 36003
       slave: !secret foxess_inv1_slave
       data_type: uint16 # hex byte encoded 0x130 = v1.30
+      scan_interval: !secret scan_interval_static
+
+    # -------------------------------------------------------------------------
+    # Meter Info
+    # -------------------------------------------------------------------------
+    - name: "Meter 1 SN"
+      unique_id: foxess_inv1_meter_1_sn
+      address: 36100
+      slave: !secret foxess_inv1_slave
+      count: 16
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Meter 1 ID"
+      unique_id: foxess_inv1_meter_1_id
+      address: 36116
+      slave: !secret foxess_inv1_slave
+      count: 16
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Meter 1 Type"
+      unique_id: foxess_inv1_meter_1_type
+      address: 36132
+      slave: !secret foxess_inv1_slave
+      count: 16
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Meter 1 Version"
+      unique_id: foxess_inv1_meter_1_version
+      address: 36148
+      slave: !secret foxess_inv1_slave
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Meter 2 SN"
+      unique_id: foxess_inv1_meter_2_sn
+      address: 36200
+      slave: !secret foxess_inv1_slave
+      count: 16
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Meter 2 ID"
+      unique_id: foxess_inv1_meter_2_id
+      address: 36216
+      slave: !secret foxess_inv1_slave
+      count: 16
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Meter 2 Type"
+      unique_id: foxess_inv1_meter_2_type
+      address: 36232
+      slave: !secret foxess_inv1_slave
+      count: 16
+      data_type: string
+      scan_interval: !secret scan_interval_static
+    - name: "Meter 2 Version"
+      unique_id: foxess_inv1_meter_2_version
+      address: 36248
+      slave: !secret foxess_inv1_slave
+      data_type: string
       scan_interval: !secret scan_interval_static
 
     # -------------------------------------------------------------------------
@@ -373,6 +438,30 @@
       precision: 3
       state_class: measurement
       scan_interval: !secret scan_interval_low
+    - name: "BMS 1 FCC Capacity"
+      unique_id: foxess_inv1_bms_1_fcc_capacity
+      address: 37633
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      data_type: uint16
+      device_class: energy_storage
+      unit_of_measurement: "Ah"
+      scale: 0.1
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS 1 Design Energy"
+      unique_id: foxess_inv1_bms_1_design_energy
+      address: 37635
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      data_type: uint16
+      device_class: energy_storage
+      unit_of_measurement: "kWh"
+      scale: 0.01
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
 
     # -------------------------------------------------------------------------
     # BMS 2
@@ -667,6 +756,30 @@
     - name: "BMS 2 Residual Energy"
       unique_id: foxess_inv1_bms_2_residual_energy
       address: 38330
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      data_type: uint16
+      device_class: energy_storage
+      unit_of_measurement: "kWh"
+      scale: 0.01
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS 2 FCC Capacity"
+      unique_id: foxess_inv1_bms_2_fcc_capacity
+      address: 37633
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      data_type: uint16
+      device_class: energy_storage
+      unit_of_measurement: "Ah"
+      scale: 0.1
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS 2 Design Energy"
+      unique_id: foxess_inv1_bms_2_design_energy
+      address: 37635
       slave: !secret foxess_inv1_slave
       input_type: input
       data_type: uint16
@@ -2214,6 +2327,16 @@
       scan_interval: !secret scan_interval_low
 
     # -------------------------------------------------------------------------
+    # Inverter Control
+    # -------------------------------------------------------------------------
+    - name: "Factory Reset"
+      unique_id: foxess_inv1_factory_reset
+      address: 45001 # R/W
+      slave: !secret foxess_inv1_slave
+      data_type: uint16 # write 1 to activate
+      scan_interval: !secret scan_interval_low
+
+    # -------------------------------------------------------------------------
     # Remote Control
     # -------------------------------------------------------------------------
     # Reserved uint16: 46000
@@ -2284,7 +2407,7 @@
     # Peak Shaving Control
     # -------------------------------------------------------------------------
 
-      # Reserved uint16: 46500 R/W
+    # Reserved uint16: 46500 R/W
     - name: "Import Power Limit"
       unique_id: foxess_inv1_import_power_limit
       address: 46501 # R/W

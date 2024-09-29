@@ -3,8 +3,8 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for H1, AC, AIO inverters
-# Version: 1.5.5
-# Date: 28/05/2024
+# Version: 1.5.6
+# Date: 29/08/2024
 
 - name: FoxESSInverterModbus
 
@@ -995,6 +995,94 @@
       address: 41015
       slave: !secret foxess_inv1_slave
       data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+
+    # ---------------------------------------------------------------------------
+    # Remote Control registers: 44000 - 44013
+    # ---------------------------------------------------------------------------
+    - name: "Remote Control Code"
+      unique_id: foxess_inv1_remote_control_code
+      address: 44000
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Remote Timeout Set"
+      unique_id: foxess_inv1_remote_timeout_set
+      address: 44001
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Remote Control Active Power Command"
+      unique_id: foxess_inv1_remote_control_active_power_command
+      address: 44002
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "W"
+      scale: 1
+      precision: 0
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Remote Control Reactive Power Command"
+      unique_id: foxess_inv1_remote_control_reactive_power_command
+      address: 44003
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "VAR"
+      scale: 1
+      precision: 0
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Remote Timeout Countdown"
+      unique_id: foxess_inv1_remote_timeout_countdown
+      address: 44004
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Remote Take Effect"
+      unique_id: foxess_inv1_take_effect
+      address: 44005
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Remote Not Active Reason Code"
+      unique_id: foxess_inv1_remote_not_active_reason_code
+      address: 44006
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Remote Pwr_Limit Bat_Up"
+      unique_id: foxess_inv1_remote_pwr_limit_bat_up
+      address: 44012
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "W"
+      scale: 1
+      precision: 0
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "Remote Pwr_Limit Bat_Dn"
+      unique_id: foxess_inv1_remote_pwr_limit_bat_dn
+      address: 44013
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      device_class: power
+      unit_of_measurement: "W"
+      scale: 1
+      precision: 0
       state_class: measurement
       scan_interval: !secret scan_interval_low
 
