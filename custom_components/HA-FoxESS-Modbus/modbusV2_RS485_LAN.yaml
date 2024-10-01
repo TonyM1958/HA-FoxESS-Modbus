@@ -3,8 +3,8 @@
 # START: modbus V2 include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN
-# Version: 1.5.7
-# Date:    29/09/2024
+# Version: 1.5.8
+# Date:    30/09/2024
 
 - name: FoxESSInverterModbus
 
@@ -107,6 +107,7 @@
       address: 36148
       slave: !secret foxess_inv1_slave
       data_type: string
+      count: 1
       scan_interval: !secret scan_interval_static
     - name: "Meter 2 SN"
       unique_id: foxess_inv1_meter_2_sn
@@ -134,6 +135,7 @@
       address: 36248
       slave: !secret foxess_inv1_slave
       data_type: string
+      count: 1
       scan_interval: !secret scan_interval_static
 
     # -------------------------------------------------------------------------
@@ -235,63 +237,63 @@
       scan_interval: !secret scan_interval_static
       # etc up to 32 slaves per BMS
     - name: "BMS 1 Slave 1 SN"
-      unique_id: foxess_inv1_bms_1_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_1_sn
       address: 37097
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 2 SN"
-      unique_id: foxess_inv1_bms_2_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_2_sn
       address: 37113
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 3 SN"
-      unique_id: foxess_inv1_bms_3_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_3_sn
       address: 37129
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 4 SN"
-      unique_id: foxess_inv1_bms_4_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_4_sn
       address: 37145
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 5 SN"
-      unique_id: foxess_inv1_bms_5_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_5_sn
       address: 37161
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 6 SN"
-      unique_id: foxess_inv1_bms_6_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_6_sn
       address: 37177
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 7 SN"
-      unique_id: foxess_inv1_bms_7_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_7_sn
       address: 37193
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 8 SN"
-      unique_id: foxess_inv1_bms_8_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_8_sn
       address: 37209
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 1 Slave 9 SN"
-      unique_id: foxess_inv1_bms_9_slave_sn
+      unique_id: foxess_inv1_bms_1_slave_9_sn
       address: 37225
       slave: !secret foxess_inv1_slave
       count: 16
@@ -562,63 +564,63 @@
       scan_interval: !secret scan_interval_static
       # etc up to 32 slaves per BMS
     - name: "BMS 2 Slave 1 SN"
-      unique_id: foxess_inv1_bms_2_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_1_sn
       address: 37795
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 2 Slave 2 SN"
-      unique_id: foxess_inv1_bms_2_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_2_sn
       address: 37811
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 2 Slave 3 SN"
-      unique_id: foxess_inv1_bms_3_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_3_sn
       address: 37827
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 2 Slave 4 SN"
-      unique_id: foxess_inv1_bms_4_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_4_sn
       address: 37843
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 2 Slave 5 SN"
-      unique_id: foxess_inv1_bms_5_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_5_sn
       address: 37859
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 2 Slave 6 SN"
-      unique_id: foxess_inv1_bms_6_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_6_sn
       address: 37875
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 2 Slave 7 SN"
-      unique_id: foxess_inv1_bms_7_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_7_sn
       address: 37891
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 2 Slave 8 SN"
-      unique_id: foxess_inv1_bms_8_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_8_sn
       address: 37907
       slave: !secret foxess_inv1_slave
       count: 16
       data_type: string
       scan_interval: !secret scan_interval_static
     - name: "BMS 2 Slave 9 SN"
-      unique_id: foxess_inv1_bms_9_slave_sn
+      unique_id: foxess_inv1_bms_2_slave_9_sn
       address: 37923
       slave: !secret foxess_inv1_slave
       count: 16
