@@ -660,6 +660,7 @@
         {{ hex_result }}
     - name: "Master Version"
       unique_id: foxess_inv1_master_version
+      state_class: measurement
       state: >
         {% set version =  states('sensor.master_version_code') | int(default=0) %}
         {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
@@ -669,6 +670,7 @@
         {{ hex_result }}
     - name: "Slave Version"
       unique_id: foxess_inv1_slave_version
+      state_class: measurement
       state: >
         {% set version =  states('sensor.slave_version_code') | int(default=0) %}
         {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
@@ -678,6 +680,7 @@
         {{ hex_result }}
     - name: "Manager Version"
       unique_id: foxess_inv1_manager_version
+      state_class: measurement
       state: >
         {% set version =  states('sensor.manager_version_code') | int(default=0) %}
         {% set v2 = ("0" + ("%0x" | format(version % 256)))[-2:] %}
