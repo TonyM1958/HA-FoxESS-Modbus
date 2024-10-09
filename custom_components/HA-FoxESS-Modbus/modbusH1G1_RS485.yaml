@@ -3,8 +3,8 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for H1, AC, AIO inverters
-# Version: 1.5.6
-# Date: 29/08/2024
+# Version: 1.5.9
+# Date: 09/10/2024
 
 - name: FoxESSInverterModbus
 

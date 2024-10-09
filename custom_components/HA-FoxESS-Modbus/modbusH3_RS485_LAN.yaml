@@ -4,8 +4,8 @@
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN and direct LAN connection for
 # single phase H1, AC, AIO and KH series inverters
-# Version: 1.4.9
-# Date:    24/03/2024
+# Version: 1.5.9
+# Date:    09/10/2024
 
 - name: FoxESSInverterModbus
 
