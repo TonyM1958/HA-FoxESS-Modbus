@@ -367,7 +367,7 @@
       device_class: battery
       unit_of_measurement: "%"
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "BMS Max Charge Current"
       unique_id: foxess_inv1_bms_charge_rate
       address: 31025
