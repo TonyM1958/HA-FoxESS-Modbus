@@ -61,6 +61,9 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
+v1.5.9<br>
+Increase SoC scan rate from low to medium.
+
 v1.5.8<br>
 Correct unique_id for BMS 1 and 2 Salve serial numbers in Modbus v2.
 Add Modbus v2 registers from specification 20240516 v1.05.
