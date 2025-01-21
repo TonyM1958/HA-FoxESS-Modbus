@@ -1,6 +1,6 @@
 
 {
-  "name": "FoxESS Community Modbus Integration v1.5.9",
+  "name": "FoxESS Community Modbus Integration v1.6.0",
   "hacs": "1.20.0",
   "homeassistant": "2024.3.0",
   "country": "GB",

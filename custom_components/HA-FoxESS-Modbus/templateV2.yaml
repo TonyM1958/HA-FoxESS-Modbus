@@ -308,7 +308,7 @@
         {% set start_time = ('0' + sh | string)[-2:] + '.' + ('0' + sm | string)[-2:] %}
         {% set end_time =   ('0' + eh | string)[-2:] + '.' + ('0' + em | string)[-2:] %}
         {% set enabled = states('sensor.charge_from_grid') | int(default=-1) %}
-        {% set action = 'Charge from grid: ' if enabled == 1 or enabled == 3 else 'Force charge: ' %}
+        {% set action = 'Charge from grid: ' if enabled == 1 or enabled == 3 else 'Battery Hold: ' %}
         {% set result = 'Not configured' if sh == 0 and sm == 0 and eh == 0 and em == 0 else action + start_time + ' - ' + end_time %}
         {% set result = 'Unavailable' if sh <= -1 or sm <= -1 or eh <= -1 or em <= -1 or enabled <= -1 else result %}
         {{ result }}
@@ -323,7 +323,7 @@
         {% set start_time = ('0' + sh | string)[-2:] + '.' + ('0' + sm | string)[-2:] %}
         {% set end_time =   ('0' + eh | string)[-2:] + '.' + ('0' + em | string)[-2:] %}
         {% set enabled = states('sensor.charge_from_grid') | int(default=-1) %}
-        {% set action = 'Charge from grid: ' if enabled == 2 or enabled == 3 else 'Force charge: ' %}
+        {% set action = 'Charge from grid: ' if enabled == 2 or enabled == 3 else 'Battery Hold: ' %}
         {% set result = 'Not configured' if sh == 0 and sm == 0 and eh == 0 and em == 0 else action + start_time + ' - ' + end_time %}
         {% set result = 'Unavailable' if sh <= -1 or sm <= -1 or eh <= -1 or em <= -1 or enabled <= -1 else result %}
         {{ result }}

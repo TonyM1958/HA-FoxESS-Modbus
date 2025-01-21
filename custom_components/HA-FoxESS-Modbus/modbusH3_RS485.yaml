@@ -4,8 +4,8 @@
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN and direct LAN connection for
 # single phase H1, AC, AIO and KH series inverters
-# Version: 1.5.9
-# Date:    09/10/2024
+# Version: 1.6.0
+# Date:    21/01/2025
 
 - name: FoxESSInverterModbus
 
@@ -804,6 +804,13 @@
     # Inverter Control registers
     # -------------------------------------------------------------------------
 
+    - name: "RTC Hour"
+      unique_id: foxess_inv1_rtc_hour
+      address: 40003
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
     - name: "Work Mode Code"
       unique_id: foxess_inv1_work_mode_code
       address: 41000
@@ -903,14 +910,7 @@
       scan_interval: !secret scan_interval_low
     - name: "System Enable"
       unique_id: foxess_inv1_system_enable
-      address: 41013 # tbc
-      slave: !secret foxess_inv1_slave
-      data_type: uint16
-      state_class: measurement
-      scan_interval: !secret scan_interval_low
-    - name: "EPS Frequency Code"
-      unique_id: foxess_inv1_eps_frequency_code
-      address: 41014 # tbc
+      address: 41014
       slave: !secret foxess_inv1_slave
       data_type: uint16
       state_class: measurement

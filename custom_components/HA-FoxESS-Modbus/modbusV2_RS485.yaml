@@ -340,7 +340,7 @@
       device_class: battery
       unit_of_measurement: "%"
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "BMS 1 Cell Temp Max"
       unique_id: foxess_inv1_bms_1_cell_temp_max
       address: 37617
@@ -667,7 +667,7 @@
       device_class: battery
       unit_of_measurement: "%"
       state_class: measurement
-      scan_interval: !secret scan_interval_low
+      scan_interval: !secret scan_interval_medium
     - name: "BMS 2 Cell Temp Max"
       unique_id: foxess_inv1_bms_2_cell_temp_max
       address: 38315

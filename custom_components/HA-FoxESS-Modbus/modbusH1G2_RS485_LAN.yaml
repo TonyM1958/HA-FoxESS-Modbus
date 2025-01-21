@@ -3,8 +3,8 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for KH inverters
-# Version: 1.5.9
-# Date:    09/10/2024
+# Version: 1.6.0
+# Date:    23/11/2024
 
 - name: FoxESSInverterModbus
 
@@ -564,6 +564,48 @@
       unit_of_measurement: "%"
       state_class: measurement
       scan_interval: !secret scan_interval_low
+    - name: "BMS 1 Cell Temp Max"
+      unique_id: foxess_inv1_bms_1_cell_temp_max
+      address: 37617
+      slave: !secret foxess_inv1_slave
+      device_class: temperature
+      unit_of_measurement: "°C"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS 1 Cell Temp Min"
+      unique_id: foxess_inv1_bms_1_cell_temp_min
+      address: 37618
+      slave: !secret foxess_inv1_slave
+      device_class: temperature
+      unit_of_measurement: "°C"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS 1 Cell mV Max"
+      unique_id: foxess_inv1_bms_1_cell_mv_max
+      address: 37619
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: voltage
+      unit_of_measurement: "mV"
+      scale: 100
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS 1 Cell mV Min"
+      unique_id: foxess_inv1_bms_1_cell_mv_min
+      address: 37620
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: battery
+      unit_of_measurement: "mV"
+      scale: 100
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
     - name: "BMS 1 SoH"
       unique_id: foxess_inv1_bms_1_soh
       address: 37624
@@ -613,6 +655,30 @@
       unique_id: foxess_inv1_bms_1_residual_energy
       address: 37632
       slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy_storage
+      unit_of_measurement: "kWh"
+      scale: 0.01
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS 1 FCC Capacity"
+      unique_id: foxess_inv1_bms_1_fcc_capacity
+      address: 37633
+      slave: !secret foxess_inv1_slave
+      input_type: input
+      data_type: uint16
+      device_class: energy_storage
+      unit_of_measurement: "Ah"
+      scale: 0.1
+      precision: 3
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS 1 Design Energy"
+      unique_id: foxess_inv1_bms_1_design_energy
+      address: 37635
+      slave: !secret foxess_inv1_slave
+      input_type: input
       data_type: uint16
       device_class: energy_storage
       unit_of_measurement: "kWh"
@@ -851,15 +917,18 @@
       scan_interval: !secret scan_interval_high
       # Reserved uint16: 39120, 39121, 39122
 
-    # ---------------------------------------------------------------------------
-    # Note: ommitted registers 40000 - 40005
-    # Inverter Year, Month, Day, Hour, Minute, Second
-    # ---------------------------------------------------------------------------
-
     # -------------------------------------------------------------------------
     # Inverter Control registers
     # -------------------------------------------------------------------------
 
+    - name: "RTC Hour"
+      unique_id: foxess_inv1_rtc_hour
+      address: 40003
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
     - name: "Grid Standard Code"
       unique_id: foxess_inv1_grid_standard_code
       address: 40006

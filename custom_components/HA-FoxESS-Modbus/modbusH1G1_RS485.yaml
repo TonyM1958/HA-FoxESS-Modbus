@@ -3,8 +3,8 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for H1, AC, AIO inverters
-# Version: 1.5.9
-# Date: 09/10/2024
+# Version: 1.6.0
+# Date: 05/11/2024
 
 - name: FoxESSInverterModbus
 
@@ -799,15 +799,18 @@
       state_class: total
       scan_interval: !secret scan_interval_low
 
-    # ---------------------------------------------------------------------------
-    # Note: ommitted registers 11093, 11094, 11095
-    # Inverter (Year, Month), (Day, Hour), (Minute, Second)
-    # ---------------------------------------------------------------------------
-
     # -------------------------------------------------------------------------
     # Inverter Control registers
     # -------------------------------------------------------------------------
 
+    - name: "RTC Hour"
+      unique_id: foxess_inv1_rtc_hour
+      address: 40003
+      input_type: input
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
     - name: "Grid Code"
       unique_id: foxess_inv1_grid_code
       address: 40006

@@ -382,8 +382,8 @@
       state_class: measurement
       state: >
         {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
-        {% set handling = states('input_number.ct1_handling') | int(default=0) %}
-        {% set ct1 = ct1 * -1.0 if handling == 1 else ct1 %}
+        {% set ct1_handling = states('input_number.ct1_handling') | int(default=0) %}
+        {% set ct1 = ct1 * -1.0 if ct1_handling == 1 else ct1 %}
         {% set result = 0 if ct1 < 0.0 else ct1 | round(3) %}
         {{ result }}
     - name: "Grid Consumption"
@@ -393,8 +393,8 @@
       state_class: measurement
       state: >
         {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
-        {% set handling = states('input_number.ct1_handling') | int(default=0) %}
-        {% set ct1 = ct1 * -1.0 if handling == 1 else ct1 %}
+        {% set ct1_handling = states('input_number.ct1_handling') | int(default=0) %}
+        {% set ct1 = ct1 * -1.0 if ct1_handling == 1 else ct1 %}
         {% set result = 0 if ct1 > 0.0 else (ct1 * -1.0) | round(3) %}
         {{ result }}
     - name: "Load Power"
@@ -403,14 +403,16 @@
       unit_of_measurement: "kW"
       state_class: measurement
       state: >
-        {% set grid = states('sensor.grid_ct') | float(default=0) %}
+        {% set ct1 = states('sensor.grid_ct') | float(default=0) %}
+        {% set ct1_handling = states('input_number.ct1_handling') | int(default=0) %}
+        {% set ct1 = ct1 * -1.0 if ct1_handling == 1 else ct1 %}
         {% set ct2 = states('sensor.ct2') | float(default=0) %}
         {% set ct2_handling = states('input_number.ct2_handling') | int(default=1) %}
         {% set ct2 = 0.0 if ct2_handling == 0 else ct2 | abs %}
         {% set rpower = states('sensor.rpower') | float(default=0) %}
         {% set power = rpower + spower + tpower %}
         {% set eps_rpower = states('sensor.eps_rpower') | float(default=0) %}
-        {% set result = rpower + eps_rpower - grid + ct2 %}
+        {% set result = rpower + eps_rpower - ct1 + ct2 %}
         {{ result }}
     # correct Load Energy Total sensor value
     - name: "Load Energy Correction"
@@ -626,7 +628,7 @@
         {% set e = states('sensor.time_period_1_end') | int(default=-1) %}
         {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
         {% set enabled = states('sensor.time_period_1_enabled') | int(default=-1) %}
-        {% set action = 'Charge from grid: ' if enabled == 1 else 'Force charge: ' %}
+        {% set action = 'Charge from grid: ' if enabled == 1 else 'Battery Hold: ' %}
         {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
         {% set result = None if s <= -1 or e <= -1 or enabled <= -1 else result %}
         {{ result }}
@@ -639,7 +641,7 @@
         {% set e = states('sensor.time_period_2_end') | int(default=-1) %}
         {% set end_time = ('0' + (e // 256) | string)[-2:] + '.' + ('0' + (e % 256) | string)[-2:] %}
         {% set enabled = states('sensor.time_period_2_enabled') | int(default=-1) %}
-        {% set action = 'Charge from grid: ' if enabled == 'on' else 'Force charge: ' %}
+        {% set action = 'Charge from grid: ' if enabled == 1 else 'Battery Hold: ' %}
         {% set result = 'Not configured' if s == 0 and e == 0 else action + start_time + ' - ' + end_time %}
         {% set result = None if s <= -1 or e <= -1 or enabled <= -1 else result %}
         {{ result }}

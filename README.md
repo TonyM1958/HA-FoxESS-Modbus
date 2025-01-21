@@ -44,7 +44,7 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 * Go to the inverter front panel Settings, Communication, RS485, Device ID and check the slave ID for the inverter is set to 247
 * Use 'modbusXX_RS485.yaml' when using an RS485 to USB adapter
 * Use 'modbusXX_RS485_LAN.yaml' when using an RS485 to Wifi/LAN adapter
-* **where XX is replaced by:** 'H1G1' for H1, AC1 or AIO series, 'H1G2' for H1-G2 or AC-G2 series, 'KH' for K series pre Manager 1.19 firmware, 'KH119' for K series with Manager 1.19 or later.
+* **where XX is replaced by:** 'H1G1' for H1, AC1 or AIO series, 'H1G2' for H1-G2 or AC-G2 series, 'KH' for K series pre Manager 1.19 firmware, 'KH119' for K series with Manager 1.19 to 1.32, KH133 for K series with Manager 1.33 or later.
 
 ## RS485 connection to H3 or AC3 series inverter
 * Hardware configuration instructions for connection to RS485 can be found on the [wiki](https://github.com/nathanmarlor/foxess_modbus/wiki)
@@ -60,6 +60,13 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 * See [Installing and Configuring HA-FoxESS-Modbus](https://github.com/TonyM1958/HA-FoxESS-Modbus/wiki/Installing-and-Configuring-HA-FoxESS-Modbus) for info on setting up the Fox ESS integration in Home Assistant
 
 ## Change Log
+
+v1.6.0<br>
+Add "RTC Hour" to allow tracking of when time changes when clocks go forwards / backwards.
+Add BMS 1 Cell temps and mV sensors to H1-G2.
+Start adding new sensors for KH with Manager 1.33 or later (not complete or tested).
+Upate address for System Enable on H3.
+Rename 'Force Charge' to 'Battery Hold' when decoding charge times to avoid confusion with Force Charge in schedules.
 
 v1.5.9<br>
 Increase SoC scan rate from low to medium.
