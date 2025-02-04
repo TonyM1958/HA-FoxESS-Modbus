@@ -18,7 +18,7 @@
   description: change inverter work mode to Self Use
   trigger:
   - platform: time
-    at: 07:00:00
+    at: 05:00:00
   condition: []
   action:
   - service: modbus.write_register
@@ -55,8 +55,8 @@
       value: 6000
   mode: single
 - id: '1685023771341'
-  alias: Set Max Charge Current 26A
-  description: change max charge current to 26A
+  alias: Set Max Charge Current 25A
+  description: change max charge current to 25A
   trigger: []
   condition: []
   action:
@@ -65,7 +65,7 @@
       hub: FoxESSInverterModbus
       address: 41007
       slave: 247
-      value: 260
+      value: 250
   mode: single
 - id: '1685023877031'
   alias: Set Max SoC 100%
@@ -81,8 +81,8 @@
       hub: FoxESSInverterModbus
   mode: single
 - id: '1685024207064'
-  alias: Set Max Charge Current 13A
-  description: change max charge current to 13A
+  alias: Set Max Charge Current 15A
+  description: change max charge current to 15A
   trigger: []
   condition: []
   action:
@@ -91,7 +91,7 @@
       hub: FoxESSInverterModbus
       address: 41007
       slave: 247
-      value: 130
+      value: 150
   mode: single
 - id: '1685024237616'
   alias: Set Max SoC 50%
@@ -120,13 +120,12 @@
       value: 0
   mode: single
 - id: '1685265384959'
-  alias: Set Force Charge 2am to 5am
-  description: change time period 1 to force charge between 2am and 5am
-  trigger: []
-  condition: []
-  action:
-  - service: modbus.write_register
-    data:
+  alias: Charge from Grid 2am to 5am
+  description: Set charge between 2am and 5am
+  triggers: []
+  conditions: []
+  actions:
+  - data:
       hub: FoxESSInverterModbus
       address: 41001
       slave: 247
@@ -137,34 +136,15 @@
       - 0
       - 0
       - 0
-  mode: single
-- id: '1685266721662'
-  alias: Set Force Charge from Grid 2am to 5am
-  description: change time period 1 to force charge from grid between 2am and 5am
-  trigger: []
-  condition: []
-  action:
-  - service: modbus.write_register
-    data:
-      hub: FoxESSInverterModbus
-      address: 41001
-      slave: 247
-      value:
-      - 1
-      - 512
-      - 1280
-      - 0
-      - 0
-      - 0
+    action: modbus.write_register
   mode: single
 - id: '1685266798577'
-  alias: Disable Force Charge
-  description: change time period 1 to 00:00 - 00:00
-  trigger: []
-  condition: []
-  action:
-  - service: modbus.write_register
-    data:
+  alias: Disable Charge from Grid
+  description: Set time period 1 to 00:00 - 00:00
+  triggers: []
+  conditions: []
+  actions:
+  - data:
       hub: FoxESSInverterModbus
       address: 41001
       slave: 247
@@ -175,6 +155,7 @@
       - 0
       - 0
       - 0
+    action: modbus.write_register
   mode: single
 - id: '1685267956539'
   alias: Set Min SoC to 10%
@@ -203,8 +184,8 @@
       value: 12
   mode: single
 - id: '1686476265795'
-  alias: Set Export Limit to 100w
-  description: change inverter export limit to 100w
+  alias: Set Export Limit
+  description: change inverter export limit
   trigger: []
   condition: []
   action:
@@ -213,7 +194,7 @@
       hub: FoxESSInverterModbus
       address: 41012
       slave: 247
-      value: 100
+      value: 3600
   mode: single
 - id: '1686652252779'
   alias: Renew Certificate
@@ -254,13 +235,86 @@
   mode: single
 - id: '1691342611707'
   alias: Upload pvoutput data every hour
-  description: ''
   trigger:
   - platform: time_pattern
-    minutes: '00'
-    seconds: '10'
-  condition: []
+    minutes: '59'
   action:
   - service: rest_command.pvoutput_upload
     data: {}
+  mode: single
+- id: '1712678883739'
+  alias: System Disable
+  description: Set System Enable to 0
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41013
+      slave: 247
+      value: 0
+  mode: single
+- id: '1712678959626'
+  alias: System Enable
+  description: Set System Enable to 1
+  trigger: []
+  condition: []
+  action:
+  - service: modbus.write_register
+    data:
+      hub: FoxESSInverterModbus
+      address: 41013
+      slave: 247
+      value: 1
+  mode: single
+- id: '1738665422459'
+  alias: Remote Control Start
+  description: Start remote control charge / discharge
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.remote_enable
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - data:
+      hub: FoxESSInverterModbus
+      address: 44000
+      slave: 247
+      value: 1
+    action: modbus.write_register
+  - data:
+      hub: FoxESSInverterModbus
+      address: 44001
+      slave: 247
+      value: '{% set seconds = (states(''input_number.remote_time'') | int(default=1))
+        * 60 %} {{ seconds }}'
+    action: modbus.write_register
+  - data:
+      hub: FoxESSInverterModbus
+      address: 44002
+      slave: 247
+      value: '{% set power = states(''input_number.remote_power'') | int(default=0)
+        %} {{ (65536 + power) if power < 0 else power }}'
+    action: modbus.write_register
+  mode: single
+- id: '1738687203008'
+  alias: Remote Control Stop
+  description: Stop remote control command
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.remote_enable
+    from: 'on'
+    to: 'off'
+  conditions: []
+  actions:
+  - data:
+      hub: FoxESSInverterModbus
+      address: 44000
+      slave: 247
+      value: 0
+    action: modbus.write_register
   mode: single

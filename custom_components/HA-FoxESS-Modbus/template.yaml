@@ -2,8 +2,8 @@
 #-----------------------------------------------------------------------------
 # START: template.yaml include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
-# Version: 1.6.0
-# Date:    05/11/2024
+# Version: 1.6.1
+# Date:    04/02/2025
 
 # these templates perform maths operations on sensor values to create derrived values
 
@@ -825,6 +825,15 @@
         {% set v2 = ('0' + ((l // 16) | string))[-2:] %}
         {% set v3 = ('0' + ((l % 16) | string))[-2:] %}
         {% set result = 'S' + n + ': 0' + n + '.' + v1 + '.' + v2 + '.' + v3 if c > 0 else None %}
+        {{ result }}
+    - name: "Remote Setting"
+      unique_id: foxess_inv1_remote_setting
+      state: >
+        {% set time = states('input_number.remote_time') | int(default=0) | string %}
+        {% set power = states('input_number.remote_power') | int(default=0) %}
+        {% set fn = 'Charge' if power < 0 else 'Discharge' if power > 0 else 'None' %}
+        {% set power = (power / 1000) | abs | string %}
+        {% set result = fn + ': ' + power + ' kW, ' + time + ' mins' %}
         {{ result }}
 
     # pvoutput.org upload using CSV format

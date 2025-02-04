@@ -61,6 +61,10 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
+v1.6.1<br>
+Add Remote Enable button and Remote Time and Remote Power inputs.
+Add automations and UI button for remote control enable and disable.
+
 v1.6.0<br>
 Add "RTC Hour" to allow tracking of when time changes when clocks go forwards / backwards.
 Add BMS 1 Cell temps and mV sensors to H1-G2.
