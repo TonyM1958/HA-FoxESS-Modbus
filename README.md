@@ -61,7 +61,8 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
-v1.6.1<br>
+v1.6.2<br>
+Refine remote power input to use kW instead of W.
 Add Remote Enable button and Remote Time and Remote Power inputs.
 Add automations and UI button for remote control enable and disable.
 
@@ -74,60 +75,34 @@ Rename 'Force Charge' to 'Battery Hold' when decoding charge times to avoid conf
 
 v1.5.9<br>
 Increase SoC scan rate from low to medium.
-
-v1.5.8<br>
 Correct unique_id for BMS 1 and 2 Salve serial numbers in Modbus v2.
 Add Modbus v2 registers from specification 20240516 v1.05.
 Update template.yaml to add state_class to inverter firmware version decodes to stop missing state_class notifications in HA.
-
-v.1.5.7<br>
 Added input_number ct1_handling. Setting to 1 inverts the processing of grid_ct.
 Added input_number residual_handling. Set to 0 if bms_kwh_remaining is not available, 1 when bms_kwh_remaining is available, 2 when bms_kwh_remaining returns current bayyery capacity.
 Moved input_datetime and input_number configuration to include files to simplify configuration.yaml.
 Update battery energy allowances to match Battery Warranty Policy 1.4 (June).
 Updated battery ageing (when capacity is not available) to use exponential decay instead of linear decay.
-
-v.1.5.6<br>
 Updated sensor.ct2_power_now to check sensor.meter_2_connection_code to set state
 Updated sensors Master, Slave and Manager version to allow hex decode. Please see [this issue](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/23) if the sensors are unavailable after updating.
 Added pv_power_total, pv_total_daily that provide the total PV power and energy including CT2.
 Removed check for load_power < 0 to avoid masking load power calculation errors caused by incorrect CT clamps.
-
-v.1.5.5<br>
 Added 'modbusKH119_RS486.yaml' and 'modbusKH119_RS485_LAN.yaml' for testing.
 Updated scan intervals for Max Soc and Min Soc.
 Removed obscure sensors that are not used to reduce modbus scans.
-
-v1.5.3:<br>
 Added 'modbusH1G1_RS485.yaml' for testing. This uses holding registers, where available, instead of input registers.
-
-v1.5.2:<br>
 Add Language Code / Language Settings at 40007 for various models. TBC, may only update on inverter start-up?
-
-v1.5.0:<br>
 Fix input_type for EPS RCurrent, RPower and RFrequency.
 
 v1.4.9:<br>
 Update H3 registers by cross-reference to other inverter models. Addresses to be confirmed are marked tbc in 'modbusH3_RS485_LAN.yaml'
-
-v1.4.8:<br>
 Fix errors in 'template.yaml' and 'templateH1G2.yaml' affecting Battery Warranty Remaining and Battery Life Remaining.<br>
 Improve handling of unknown values in 'template.yaml' and 'templateH1G2.yaml'.<br>
 Setting for the number of days to keep moved to 'secrets.yaml'. See [note](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/20) for info on configuring this.
-
-v1.4.6:<br>
 Updates to 'modbusH1G2_RS485.yaml', 'templateH1G2.yaml' and 'viewsH1G2_sensor.yaml'.
-
-v1.4.5:<br>
 Added 'templateH1G2.yaml' to support H1-G2 and AC-G2 inverters.
-
-v1.4.4:<br>
 Moved preset values to input helpers to avoid overwriting values during HACS update. This requires some additional settings to be added to configuration.yaml. See 'template_configuration.yaml'.<br>
 See [note](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/19) for info on configuring this.
-
-v1.4.3:<br>
 Moved database settings to recorder_ha.yaml and recorder_maria.yaml so the database being used for history does not change during HACS update.<br>
 See [note](https://github.com/TonyM1958/HA-FoxESS-Modbus/issues/18) if you get a configuration error after updating.
-
-v1.4.2:<br>
 Added 'modbusH1G2_RS485.yaml' and 'modbusH1G2_RS485_LAN.yaml' to support H1-G2 and AC-G2 series inverters.<br>

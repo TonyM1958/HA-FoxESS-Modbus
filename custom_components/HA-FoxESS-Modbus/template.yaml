@@ -830,10 +830,10 @@
       unique_id: foxess_inv1_remote_setting
       state: >
         {% set time = states('input_number.remote_time') | int(default=0) | string %}
-        {% set power = states('input_number.remote_power') | int(default=0) %}
+        {% set power = states('input_number.remote_power') | float(default=0) %}
         {% set fn = 'Charge' if power < 0 else 'Discharge' if power > 0 else 'None' %}
-        {% set power = (power / 1000) | abs | string %}
-        {% set result = fn + ': ' + power + ' kW, ' + time + ' mins' %}
+        {% set kw = power | abs | string %}
+        {% set result = fn + ': ' + kw + ' kW, ' + time + ' mins' %}
         {{ result }}
 
     # pvoutput.org upload using CSV format
@@ -851,6 +851,14 @@
         {% set imp = states('sensor.grid_consumption_energy_today') | float(default=-1) * 1000 %}
         {% set imp = '' if imp < 0 else imp | int | string %}
         {% set result = dat + ',' + gen + ',' + exp + ',,,,,,,0,' + imp + ',0,0,' + con + ',,,,' %}
+        {{ result }}
+
+    # certificate expiry
+    - name: "Certificate Expiry"
+      unique_id: foxess_inv1_certificate_expiry
+      state: >
+        {% set t = as_timestamp(states('sensor.cert_expiry_timestamp_ha_quasair_co_uk_8126')) %}
+        {% set result = t | timestamp_custom('%d-%b-%Y %H:%S') %}
         {{ result }}
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus

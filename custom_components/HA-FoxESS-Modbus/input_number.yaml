@@ -33,3 +33,17 @@ throughput_correction:
   max: 1000.0
   min: 0
   step: 0.1
+remote_time:
+  # remote control time setting in minutes
+  name: Remote Time
+  mode: box
+  max: 300
+  min: 1
+  step: 1
+remote_power:
+  # remote control power setting in kW
+  name: Remote Power
+  mode: box
+  max: 6.0
+  min: -6.0
+  step: 0.1

@@ -171,17 +171,17 @@
       value: 10
   mode: single
 - id: '1685268004260'
-  alias: Set Min SoC (On Grid) to 12%
-  description: change Min SoC (On Grid) to 12%
-  trigger: []
-  condition: []
-  action:
-  - service: modbus.write_register
-    data:
+  alias: Set Min SoC (On Grid) to 10%
+  description: change Min SoC (On Grid) to 10%
+  triggers: []
+  conditions: []
+  actions:
+  - data:
       hub: FoxESSInverterModbus
       address: 41011
       slave: 247
-      value: 12
+      value: 10
+    action: modbus.write_register
   mode: single
 - id: '1686476265795'
   alias: Set Export Limit
@@ -296,8 +296,8 @@
       hub: FoxESSInverterModbus
       address: 44002
       slave: 247
-      value: '{% set power = states(''input_number.remote_power'') | int(default=0)
-        %} {{ (65536 + power) if power < 0 else power }}'
+      value: '{% set power = (states(''input_number.remote_power'') | float(default=0)
+        * 1000) | int %} {{ (65536 + power) if power < 0 else power }}'
     action: modbus.write_register
   mode: single
 - id: '1738687203008'
