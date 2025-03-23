@@ -2,8 +2,8 @@
 #-----------------------------------------------------------------------------
 # START: templateV2.yaml include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
-# Version: 1.6.1
-# Date:    05/02/2025
+# Version: 1.6.3
+# Date:    23/03/2025
 
 # these templates perform maths operations on sensor values to create derrived values
 
@@ -48,6 +48,14 @@
         {% set result = (output / used * 100) | round(1) if used > 0 and output > 0 else -1 %}
         {{ result }}
 
+    # Flag when the inverter is in EPS Mode
+    - name: "EPS Mode"
+      unique_id: foxess_inv1_eps_mode
+      state_class: measurement
+      state: >
+        {% set rvolt = states('sensor.rvolt') | float(default=0) %}
+        {% set eps_mode = 0 if rvolt > 80 else 1 %}
+        {{ eps_mode }}
     # calculate power flowing into inverter from solar, battery and grid
     - name: "Inverter Power In"
       device_class: "power"
@@ -71,10 +79,12 @@
         {% set grid = states('sensor.active_power') | float(default=0) %}
         {% set grid = 0 if grid < 0.0 else grid %}
         {% set eps = states('sensor.eps_power') | float(default=0) %}
+        {% set eps_mode = states('sensor.eps_mode') | int(default=0) %}
+        {% set eps = 0.0 if eps_mode == 0 else eps %}
         {% set bat = states('sensor.battery_charge') | float(default=0) %}
         {% set power_out = grid + eps + bat %}
         {{ power_out | round(3) }}
-    # calculate sytem losses. Clip range between -1kw and +1kw to remove sampling errors and spikes
+    # calculate sytem losses
     - name: "System Losses"
       device_class: "power"
       unique_id: foxess_inv1_system_losses
@@ -83,8 +93,8 @@
       state: >
         {% set power_in = states('sensor.inverter_power_in') | float(default=0) %}
         {% set power_out = states('sensor.inverter_power_out') | float(default=0) %}
-        {% set losses = (power_in - power_out) | round(3) %}
-        {{ losses }}
+        {% set losses = power_in - power_out %}
+        {{ losses | round(3) }}
     # calculate inverter efficiency % using the difference between power in and power out
     - name: "Inverter Efficiency"
       unique_id: foxess_inv1_inverter_efficiency
@@ -578,8 +588,8 @@
     - name: "Certificate Expiry"
       unique_id: foxess_inv1_certificate_expiry
       state: >
-        {% set t = as_timestamp(states('sensor.cert_expiry_timestamp_ha_quasair_co_uk_8126')) %}
-        {% set result = t | timestamp_custom('%d-%b-%Y %H:%S') %}
+        {% set t = states('sensor.cert_expiry_timestamp_ha_quasair_co_uk_8126') | as_timestamp(default=0) %}
+        {% set result = (t | timestamp_custom('%d-%b-%Y %H:%S')) if t > 0 else None %}
         {{ result }}
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus

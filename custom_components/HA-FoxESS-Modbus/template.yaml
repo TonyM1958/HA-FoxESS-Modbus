@@ -2,8 +2,8 @@
 #-----------------------------------------------------------------------------
 # START: template.yaml include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
-# Version: 1.6.1
-# Date:    04/02/2025
+# Version: 1.6.3
+# Date:    23/03/2025
 
 # these templates perform maths operations on sensor values to create derrived values
 
@@ -210,6 +210,14 @@
         {% set result = (output / used * 100) | round(1) if used > 0 and output > 0 and holding > 0 else None %}
         {{ result }}
 
+    # Flag when the inverter is in EPS Mode
+    - name: "EPS Mode"
+      unique_id: foxess_inv1_eps_mode
+      state_class: measurement
+      state: >
+        {% set rvolt = states('sensor.rvolt') | float(default=0) %}
+        {% set eps_mode = 0 if rvolt > 80 else 1 %}
+        {{ eps_mode }}
     # calculate power flowing into inverter from solar, battery and grid
     - name: "Inverter Power In"
       device_class: "power"
@@ -219,13 +227,12 @@
       state: >
         {% set pv_power_in = states('sensor.pv_power_now') | float(default=0) %}
         {% set rpower = states('sensor.rpower') | float(default=0) %}
-        {% set rpower = 0.0 if rpower > 0.0 else rpower * -1.0 %}
         {% set spower = states('sensor.spower') | float(default=0) %}
-        {% set spower = 0.0 if spower > 0.0 else spower * -1.0 %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
-        {% set tpower = 0.0 if tpower > 0.0 else tpower * -1.0 %}
+        {% set ac_power = rpower + spower + tpower %}
+        {% set ac_power_in = 0.0 if ac_power > 0.0 else ac_power * -1.0 %}
         {% set bat_power_in = states('sensor.battery_discharge') | float(default=0) %}
-        {% set power_in = pv_power_in + rpower + spower + tpower + bat_power_in %}
+        {% set power_in = pv_power_in + ac_power_in + bat_power_in %}
         {{ power_in | round(3) }}
     # calculate power flowing out of inverter
     - name: "Inverter Power Out"
@@ -235,19 +242,19 @@
       state_class: measurement
       state: >
         {% set rpower = states('sensor.rpower') | float(default=0) %}
-        {% set rpower = 0 if rpower < 0.0 else rpower %}
         {% set spower = states('sensor.spower') | float(default=0) %}
-        {% set spower = 0 if spower < 0.0 else spower %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
-        {% set tpower = 0 if tpower < 0.0 else tpower %}
+        {% set ac_power = rpower + spower + tpower %}
+        {% set ac_power_out = 0 if ac_power < 0.0 else ac_power %}
         {% set eps_rpower = states('sensor.eps_rpower') | float(default=0) %}
         {% set eps_spower = states('sensor.eps_spower') | float(default=0) %}
         {% set eps_tpower = states('sensor.eps_tpower') | float(default=0) %}
-        {% set eps_power = eps_rpower + eps_spower + eps_tpower %}
+        {% set eps_mode = states('sensor.eps_mode') | int(default=0) %}
+        {% set eps_power = 0.0 if eps_mode == 0 else (eps_rpower + eps_spower + eps_tpower) %}
         {% set bat_power_out = states('sensor.battery_charge') | float(default=0) %}
-        {% set power_out = rpower + spower + tpower + eps_power + bat_power_out %}
+        {% set power_out = ac_power_out + eps_power + bat_power_out %}
         {{ power_out | round(3) }}
-    # calculate sytem losses. Clip range between -1kw and +1kw to remove sampling errors and spikes
+    # calculate sytem losses
     - name: "System Losses"
       device_class: "power"
       unique_id: foxess_inv1_system_losses
@@ -256,8 +263,8 @@
       state: >
         {% set power_in = states('sensor.inverter_power_in') | float(default=0) %}
         {% set power_out = states('sensor.inverter_power_out') | float(default=0) %}
-        {% set losses = (power_in - power_out) | round(3) %}
-        {{ losses }}
+        {% set losses = power_in - power_out %}
+        {{ losses | round(3) }}
     # calculate inverter efficiency % using the difference between power in and power out
     - name: "Inverter Efficiency"
       unique_id: foxess_inv1_inverter_efficiency
@@ -443,12 +450,13 @@
         {% set rpower = states('sensor.rpower') | float(default=0) %}
         {% set spower = states('sensor.spower') | float(default=0) %}
         {% set tpower = states('sensor.tpower') | float(default=0) %}
-        {% set power = rpower + spower + tpower %}
+        {% set ac_power = rpower + spower + tpower %}
         {% set eps_rpower = states('sensor.eps_rpower') | float(default=0) %}
         {% set eps_spower = states('sensor.eps_spower') | float(default=0) %}
         {% set eps_tpower = states('sensor.eps_tpower') | float(default=0) %}
-        {% set eps_power = eps_rpower + eps_spower + eps_tpower %}
-        {% set result = power + eps_power - grid + ct2 %}
+        {% set eps_mode = states('sensor.eps_mode') | int(default=0) %}
+        {% set eps_power = (eps_rpower + eps_spower + eps_tpower) if eps_mode == 1 else 0.0 %}
+        {% set result = ac_power + eps_power - grid + ct2 %}
         {{ result }}
     # correct Load Energy Total sensor value
     - name: "Load Energy Correction"
@@ -857,8 +865,8 @@
     - name: "Certificate Expiry"
       unique_id: foxess_inv1_certificate_expiry
       state: >
-        {% set t = as_timestamp(states('sensor.cert_expiry_timestamp_ha_quasair_co_uk_8126')) %}
-        {% set result = t | timestamp_custom('%d-%b-%Y %H:%S') %}
+        {% set t = states('sensor.cert_expiry_timestamp_ha_quasair_co_uk_8126') | as_timestamp(default=0) %}
+        {% set result = (t | timestamp_custom('%d-%b-%Y %H:%S')) if t > 0 else None %}
         {{ result }}
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus

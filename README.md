@@ -61,10 +61,12 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
-v1.6.2<br>
-Refine remote power input to use kW instead of W.
+v1.6.3<br>
+Fix initialisation problem with certificate expiry template.
+Update remote power input to use kW instead of W.
 Add Remote Enable button and Remote Time and Remote Power inputs.
 Add automations and UI button for remote control enable and disable.
+Add 'sensor.eps_mode' and fix load power calculation when using EPS.
 
 v1.6.0<br>
 Add "RTC Hour" to allow tracking of when time changes when clocks go forwards / backwards.
