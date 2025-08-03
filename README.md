@@ -61,6 +61,10 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
+v1.6.4<br>
+Added System Efficiency Total template sensor.
+Removed Certificate Expiry template sensor as no longer required with Tailscale VPN.
+
 v1.6.3<br>
 Fix initialisation problem with certificate expiry template.
 Update remote power input to use kW instead of W.

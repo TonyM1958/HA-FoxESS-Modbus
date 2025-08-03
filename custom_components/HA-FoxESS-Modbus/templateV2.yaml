@@ -2,8 +2,8 @@
 #-----------------------------------------------------------------------------
 # START: templateV2.yaml include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
-# Version: 1.6.3
-# Date:    23/03/2025
+# Version: 1.6.4
+# Date:    03/08/2025
 
 # these templates perform maths operations on sensor values to create derrived values
 
@@ -117,6 +117,17 @@
         {% set efficiency = energy_out / energy_in * 100 if energy_in > 0.0 else 100 %}
         {% set efficiency = 100 if efficiency > 100 else efficiency %}
         {{ efficiency | round(1) }}
+    # calculate system efficiency % using the difference between energy in and energy out
+    - name: "System Efficiency Total"
+      unique_id: foxess_inv1_system_efficiency_total
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >
+        {% set pv_in = states('sensor.pv_energy_total') | float(default=0) %}
+        {% set grid = states('sensor.grid_consumption_energy_total') | float(default=0) %}
+        {% set feedin = states('sensor.feed_in_energy_total') | float(default=0) %}
+        {% set load = states('sensor.load_energy_correction') | float(default=0) %}
+        {% set efficiency = (feedin + load) / (pv_in + grid) * 100 if (pv_in + grid) > 0.0 else None %}
 
     # calculate grid balance - difference between grid power imported and exported
     - name: "Grid Balance Today"
@@ -584,13 +595,6 @@
         {% set result = dat + ',' + gen + ',' + exp + ',,,,,,,0,' + imp + ',0,0,' + con + ',,,,' %}
         {{ result }}
 
-    # certificate expiry
-    - name: "Certificate Expiry"
-      unique_id: foxess_inv1_certificate_expiry
-      state: >
-        {% set t = states('sensor.cert_expiry_timestamp_ha_quasair_co_uk_8126') | as_timestamp(default=0) %}
-        {% set result = (t | timestamp_custom('%d-%b-%Y %H:%S')) if t > 0 else None %}
-        {{ result }}
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus
   #-----------------------------------------------------------------------------
