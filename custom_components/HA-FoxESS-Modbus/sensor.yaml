@@ -2,8 +2,8 @@
 #--------------------------------------------------------------------------
 # START: sensor.yaml include file for HA-FoxESS-Modbus
 #--------------------------------------------------------------------------
-# Version: 1.5.6
-# Date:    29/05/2024
+# Version: 1.6.5
+# Date:    07/08/2024
 
 #--------------------------------------------------------------------------
 # these integrations turn power (kW) into energy (kWh) for the energy
@@ -52,7 +52,7 @@
   source: sensor.pv4_power
   unit_time: h
   round: 1
-- name: pv_sum
+- name: pv_power_sum
   method: left
   platform: integration
   unique_id: foxess_inv1_pv_sum

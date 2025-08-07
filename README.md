@@ -61,6 +61,9 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
+v1.6.5<br>
+Fix problem with renamed sensor pv_power_sum.
+
 v1.6.4<br>
 Added System Efficiency Total template sensor.
 Removed Certificate Expiry template sensor as no longer required with Tailscale VPN.
