@@ -61,6 +61,9 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
+v1.6.6<br>
+Update Battery Throughput with latest warranty details (UK v4.2 20250313)
+
 v1.6.5<br>
 Fix problem with renamed sensor pv_power_sum.
 
