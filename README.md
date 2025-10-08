@@ -10,8 +10,10 @@ This website, code and contents are not supported by or endorsed by Fox ESS. Any
 </h2>
 
 ---
-** Please note: April 2023, this intergation only has limited maintenance and is not being updated to support new inverter models.
-@nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus
+
+**Please note: April 2023, this intergation only has limited maintenance and is not being updated to support new inverter models.
+@nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus **
+
 ---
 
 This site contains code and information for integrating Fox ESS inverters with Home Assistant. It is a refactored and evolved version, derived from https://github.com/StealthChesnut/HA-FoxESS-Modbus.
