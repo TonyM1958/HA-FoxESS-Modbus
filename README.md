@@ -11,8 +11,8 @@ This website, code and contents are not supported by or endorsed by Fox ESS. Any
 
 ---
 
-**Please note: April 2023, this intergation only has limited maintenance and is not being updated to support new inverter models.
-@nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus **
+** Please note: April 2023, this intergation only has limited maintenance and is not being updated to support new inverter models.
+@nathanmarlor has mirrored and extended functionality in this alternative integration: https://github.com/nathanmarlor/foxess_modbus
 
 ---
 
