@@ -9,6 +9,11 @@ This website, code and contents are not supported by or endorsed by Fox ESS. Any
    </br>
 </h2>
 
+---
+** Please note: April 2023, this intergation only has limited maintenance and is not being updated to support new inverter models.
+@nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus
+---
+
 This site contains code and information for integrating Fox ESS inverters with Home Assistant. It is a refactored and evolved version, derived from https://github.com/StealthChesnut/HA-FoxESS-Modbus.
 
 The changes from the main branch include:
@@ -31,11 +36,6 @@ The changes from the main branch include:
 * Added automation to upload generation and consumption data to pvoutput.org
 
 Access to your inverter data can be achieved by connecting the inverter's RS485 Modbus to an RS485 to USB adapter or RS485 to WiFi/LAN adapter. Note: this requires basic electronics competencies to connect 2 wires to the inverter's CT / COM connector.
-
----
-** Please note: April 2023, @nathanmarlor has mirrored and extended functionality in this alternative https://github.com/nathanmarlor/foxess_modbus - you may wish to look at that as well!
-
----
 
 
 ## RS485 connection to H1, AC, AIO, H1-G2, AC-G2 and KH series inverters (recommended)
