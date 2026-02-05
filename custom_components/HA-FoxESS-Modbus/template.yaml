@@ -2,8 +2,8 @@
 #-----------------------------------------------------------------------------
 # START: template.yaml include file for HA-FoxESS-Modbus
 #-----------------------------------------------------------------------------
-# Version: 1.6.6
-# Date:    28/08/2025
+# Version: 1.6.7
+# Date:    05/02/2026
 
 # these templates perform maths operations on sensor values to create derrived values
 
@@ -871,7 +871,7 @@
         {% set con = '' if con < 0 else con | int | string %}
         {% set imp = states('sensor.grid_consumption_energy_today') | float(default=-1) * 1000 %}
         {% set imp = '' if imp < 0 else imp | int | string %}
-        {% set result = dat + ',' + gen + ',' + exp + ',,,,,,,0,' + imp + ',0,0,' + con + ',,,,' %}
+        {% set result = dat + ',' + gen + ',,,,,,,,0,' + imp + ',0,0,' + con + ',0,0,' + exp + ',0' %}
         {{ result }}
 
   #-----------------------------------------------------------------------------
