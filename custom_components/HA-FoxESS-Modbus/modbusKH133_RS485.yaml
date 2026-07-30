@@ -3,8 +3,8 @@
 # START: modbus include file for HA-FoxESS-Modbus RS485 connection
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN for KH inverters with Manager firmware 1.33 or later.
-# Version: 1.6.0
-# Date: 07/12/2024
+# Version: 1.6.1
+# Date: 30/07/2026
 
 - name: FoxESSInverterModbus
 
@@ -559,7 +559,7 @@
       scan_interval: !secret scan_interval_high
     - name: "Grid CT"
       unique_id: foxess_inv1_grid_ct
-      address: 31049
+      address: 39168
       slave: !secret foxess_inv1_slave
       device_class: power
       data_type: int32

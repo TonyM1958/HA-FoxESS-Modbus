@@ -874,6 +874,16 @@
         {% set result = dat + ',' + gen + ',,,,,,,,0,' + imp + ',0,0,' + con + ',0,0,' + exp + ',0' %}
         {{ result }}
 
+    # Earning total
+    - name: "Earnings Total"
+      unique_id: foxess_inv1_earnings_total
+      state: >
+        {% set rate = states('input_number.income_rate') | float(default=-1) %}
+        {% set yield = states('sensor.pv_energy_total') | float(default=0) %}
+        {% set earnings = (yield * rate) | round(2) %}
+        {% set result = '£ ' + (earnings | string) %}
+        {{ result }}
+
   #-----------------------------------------------------------------------------
   # END: template.yaml include file for HA-FoxESS-Modbus
   #-----------------------------------------------------------------------------

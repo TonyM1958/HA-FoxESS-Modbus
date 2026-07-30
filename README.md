@@ -63,6 +63,9 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
+v1.6.7<br>
+Update grid_ct register address for KH133 to 39168.
+
 v1.6.6<br>
 Update Battery Throughput with latest warranty details (UK v4.2 20250313)
 
