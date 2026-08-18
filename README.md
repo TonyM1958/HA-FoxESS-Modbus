@@ -63,6 +63,9 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
+v1.6.8 - 2026/08/18<br>
+Added BMS cell volt, temp, SoH and Residual for H3 (from kinakte).
+
 v1.6.7<br>
 Update grid_ct register address for KH133 to 39168.
 

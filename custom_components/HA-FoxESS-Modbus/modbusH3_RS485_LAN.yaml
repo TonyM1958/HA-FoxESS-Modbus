@@ -4,8 +4,8 @@
 # ---------------------------------------------------------------------------
 # Supports RS-485 to USB, RS485 to Wifi/LAN and direct LAN connection for
 # single phase H1, AC, AIO and KH series inverters
-# Version: 1.6.0
-# Date:    21/01/2025
+# Version: 1.6.8
+# Date:    18/08/2026
 
 - name: FoxESSInverterModbus
 
@@ -618,6 +618,67 @@
       slave: !secret foxess_inv1_slave
       state_class: measurement
       scan_interval: !secret scan_interval_low
+
+    # -------------------------------------------------------------------------
+    # BMS data (from Kinkate, 2026/08/15)
+    # -------------------------------------------------------------------------
+
+    - name: "BMS SoH"
+      unique_id: foxess_inv1_bms_soh
+      address: 31090
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: battery
+      unit_of_measurement: "%"
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Cell Temp High"
+      unique_id: foxess_inv1_bms_cell_temp_high
+      address: 31102
+      slave: !secret foxess_inv1_slave
+      unit_of_measurement: "°C"
+      device_class: temperature
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Cell Temp Low"
+      unique_id: foxess_inv1_bms_cell_temp_low
+      address: 31103
+      slave: !secret foxess_inv1_slave
+      device_class: temperature
+      unit_of_measurement: "°C"
+      scale: 0.1
+      precision: 1
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS kWh Remaining"
+      unique_id: foxess_inv1_bms_kwh_remaining
+      address: 31123
+      slave: !secret foxess_inv1_slave
+      data_type: uint16
+      device_class: energy_storage
+      unit_of_measurement: "kWh"
+      scale: 0.01
+      precision: 2
+      state_class: measurement
+      scan_interval: !secret scan_interval_low
+    - name: "BMS Cell mV High"
+      unique_id: foxess_inv1_bms_cell_mv_high
+      address: 31134
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "mV"
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
+    - name: "BMS Cell mV Low"
+      unique_id: foxess_inv1_bms_cell_mv_low
+      address: 31135
+      slave: !secret foxess_inv1_slave
+      device_class: voltage
+      unit_of_measurement: "mV"
+      state_class: measurement
+      scan_interval: !secret scan_interval_medium
 
     # -------------------------------------------------------------------------
     # Inverter energy meters
