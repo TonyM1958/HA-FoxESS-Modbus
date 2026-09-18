@@ -63,6 +63,9 @@ Access to your inverter data can be achieved by connecting the inverter's RS485 
 
 ## Change Log
 
+v1.6.9 - 2026/09/17<br>
+Added template sensors for Battery Warranty End date and Battery Life End date to 'templateH1G1.yaml' and 'templateH1G2.yaml'. ** you may need to update your template settings in your HA configuration.yaml to use 'templateH1G1.yaml' instead of 'template.yaml'. Files called 'template.yaml' are now reserved for AWS SAM syntax in Studio Code Server **
+
 v1.6.8 - 2026/08/18<br>
 Added BMS cell volt, temp, SoH and Residual for H3 (from kinakte).
 
